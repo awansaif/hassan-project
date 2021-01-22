@@ -15,6 +15,11 @@ class CreateFederationNewsTable extends Migration
     {
         Schema::create('federation_news', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('federation_id')->constrained('federation_movements')->onDelete('Cascade');
+            $table->string('title');
+            $table->string('date_and_time');
+            $table->string('featured_image');
+            $table->text('detail');
             $table->timestamps();
         });
     }

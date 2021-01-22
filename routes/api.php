@@ -42,3 +42,5 @@ Route::get('/federations', [ApiController::class, 'federations']);
 Route::get('/clubs', [ApiController::class, 'clubs']);
 Route::get('/club-detail/{id}', [ApiController::class, 'club_detail']);
 Route::get('/federation-movements', [ApiController::class, 'federation_movements']);
+Route::get('/federation-event/{id}', [ApiController::class, 'federation_events']);
+Route::get('/federation-news/{id}', [ApiController::class, 'federation_news']);

@@ -19,7 +19,9 @@ use App\Models\User;
 use App\Models\Collection;
 use App\Models\CollectionDetail;
 use App\Models\Federation;
+use App\Models\FederationEvent;
 use App\Models\FederationMovement;
+use App\Models\FederationNews;
 use App\Models\Sponsor;
 use Auth;
 
@@ -302,6 +304,17 @@ class ApiController extends Controller
     public function federation_movements()
     {
         $data = FederationMovement::orderBY('id', 'DESC')->get();
+        return response()->json($data);
+    }
+
+    public function federation_events(Request $request)
+    {
+        $data = FederationEvent::with('federations')->where('federation_id', $request->id)->get();
+        return response()->json($data);
+    }
+    public function federation_news(Request $request)
+    {
+        $data = FederationNews::with('federations')->where('federation_id', $request->id)->get();
         return response()->json($data);
     }
 

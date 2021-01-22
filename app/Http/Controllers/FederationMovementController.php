@@ -99,6 +99,23 @@ class FederationMovementController extends Controller
     public function update(Request $request, FederationMovement $federationMovement)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'image' => 'nullable|image',
+            'latest_event' => 'required',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        else{
+            $data = FederationMovement::where('id', $request->id)->update([
+                'name' => $request->name,
+                'latest_event' => $request->latest_event,
+            ]);
+            $request->session()->flash('message', 'Federation movement updated successfully.');
+            return redirect()->back();
+        }
     }
 
     /**

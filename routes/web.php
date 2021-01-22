@@ -8,7 +8,9 @@ use App\Http\Controllers\CollectionDetailController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FederationController;
+use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\FederationMovementController;
+use App\Http\Controllers\FederationNewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SponsorController;
@@ -133,6 +135,15 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/edit-movement', [FederationMovementController::class, 'edit']);
     Route::post('/edit-movement', [FederationMovementController::class, 'update']);
 
+    Route::get('/federation-news', [FederationNewsController::class, 'index']);
+    Route::get('/add-federation-news', [FederationNewsController::class, 'create']);
+    Route::post('/add-federation-news', [FederationNewsController::class, 'store']);
+
+    Route::get('/federation-event', [FederationEventController::class, 'index']);
+    Route::get('/add-federation-event', [FederationEventController::class, 'create']);
+    Route::post('/add-federation-event', [FederationEventController::class, 'store']);
+
+
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
 
   });
@@ -140,4 +151,5 @@ Route::group(['middleware'=> ['auth']],function(){
   Route::group(['prefix' => 'admin'], function () {
       Route::get('/login', [AuthController::class, 'create'])->name('login');
       Route::post('/login', [AuthController::class, 'login']);
-   
+      Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+  });
