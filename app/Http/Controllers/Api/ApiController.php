@@ -18,6 +18,7 @@ use App\Models\Player;
 use App\Models\User;
 use App\Models\Collection;
 use App\Models\CollectionDetail;
+use App\Models\FederaationSponsor;
 use App\Models\Federation;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
@@ -313,6 +314,11 @@ class ApiController extends Controller
         return response()->json($data);
     }
     public function federation_news(Request $request)
+    {
+        $data = FederationNews::with('federations')->where('federation_id', $request->id)->get();
+        return response()->json($data);
+    }
+    public function federation_sponsors(Request $request)
     {
         $data = FederationNews::with('federations')->where('federation_id', $request->id)->get();
         return response()->json($data);
