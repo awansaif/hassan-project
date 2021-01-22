@@ -51,9 +51,13 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/remove-country', [CountryController::class, 'destroy']);
     Route::get('/edit-country', [CountryController::class, 'edit']);
     Route::post('/edit-country', [CountryController::class, 'update']);
-
+    
+    Route::get('/news', [App\Http\Controllers\NewsController::class, 'index']);
     Route::get('/add-news', [App\Http\Controllers\NewsController::class, 'create']);
     Route::post('/add-news', [App\Http\Controllers\NewsController::class, 'store']);
+    Route::get('/edit-news', [App\Http\Controllers\NewsController::class, 'edit']);
+    Route::post('/edit-news', [App\Http\Controllers\NewsController::class, 'update']);
+    Route::delete('/remove-news', [App\Http\Controllers\NewsController::class, 'destroy']);
 
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/add-event', [App\Http\Controllers\EventController::class, 'create']);

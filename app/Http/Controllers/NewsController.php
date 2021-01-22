@@ -15,7 +15,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::orderBy('id', 'DESC')->get();
+        return view('pages.news.main', compact('news'));
     }
 
     /**
@@ -26,7 +27,7 @@ class NewsController extends Controller
     public function create()
     {
         //
-        return view('pages.add-news');
+        return view('pages.news.add-news');
     }
 
     /**
@@ -82,9 +83,10 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit(Request $request, News $news)
     {
-        //
+        $data = News::where('id', $request->id)->first();
+        return view('pages.news.edit-news',compact('data'));
     }
 
     /**
@@ -96,7 +98,38 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'datetime'  => 'required',
+            'details' => 'required',
+            'file' => 'nullable|image'  
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            if($request->file('file'))
+            {
+                $file = $request->file('file');
+                $destinationPath = 'news-pics/';
+                $file_name = time().$file->getClientOriginalName();
+                $check = $file->move($destinationPath,$file_name);
+
+                $update = News::where('id', $request->news_id)->update([
+                    'featured_image'    => 'http://alviawan.tk/'. $destinationPath . $file_name
+                ]);
+            }
+
+            $update = News::where('id', $request->news_id)->update([
+                'title' => $request->title,
+                'date_and_time' => $request->datetime,
+                'detail' => $request->details,
+            ]);
+            
+            $request->session()->flash('message', 'News updated successfully.');
+            return redirect()->back();
+
+        }
     }
 
     /**
@@ -105,8 +138,13 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request)
     {
-        //
+        $check = News::where('id', $request->id)->delete();
+        if($check)
+        {
+            $request->session()->flash('message', 'News data save successfully.');
+            return redirect()->back();
+        }
     }
 }
