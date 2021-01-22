@@ -113,9 +113,10 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function edit(Request $request, Event $event)
     {
-        //
+        $data = Event::where('id', $request->id)->first();
+        return view('pages.events.edit-event',compact('data'));
     }
 
     /**
@@ -127,7 +128,86 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'event_image' => 'nullable|image',
+            'secondary_event_mage' => 'nullable|image',
+            'event_short_description' => 'required',
+            'event_long_description'  => 'required',
+            'event_price'             => 'required',
+            'event_place'             => 'required',
+            'event_timing'            => 'required',
+            'aurthor_name'            => 'required',
+            'federation_name'         => 'required',
+            'author_image'            => 'nullable',
+            'further_detail'           => 'required',
+            'latitude'                => 'required',
+            'longtitude'              => 'required',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            if($request->file('event_image'))
+            {
+                $destinationPath = 'event-pics/';
+
+                $event_pic = $request->file('event_image');
+                $event_file_name = time().$event_pic->getClientOriginalName();
+                $check = $event_pic->move($destinationPath,$event_file_name);
+
+                $update = Event::where('id', $request->event_id)->update([
+                    'event_image'    => 'http://alviawan.tk/'. $destinationPath . $event_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+            if($request->file('secondary_event_mage'))
+            {
+                $destinationPath = 'event-pics/';
+
+                $event_pic = $request->file('secondary_event_mage');
+                $event_file_name = time().$event_pic->getClientOriginalName();
+                $check = $event_pic->move($destinationPath,$event_file_name);
+
+                $update = Event::where('id', $request->event_id)->update([
+                    'secondary_image'    => 'http://alviawan.tk/'. $destinationPath . $event_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+            if($request->file('author_image'))
+            {
+                $destinationPath = 'event-pics/';
+
+                $event_pic = $request->file('author_image');
+                $event_file_name = time().$event_pic->getClientOriginalName();
+                $check = $event_pic->move($destinationPath,$event_file_name);
+
+                $update = Event::where('id', $request->event_id)->update([
+                    'author_image'    => 'http://alviawan.tk/'. $destinationPath . $event_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+
+            Event::where('id', $request->event_id)->update([
+                'short_description' => $request->event_short_description,
+                'long_decription' => $request->event_long_description,
+                'even_price' => $request->event_price,
+                'event_place' => $request->event_place,
+                'event_timing' => $request->event_timing,
+                'author_name' => $request->aurthor_name,
+                'federation_name' => $request->federation_name,
+                'further_detail' => $request->further_detail,
+                'longtitude' => $request->longtitude,
+                'latitude' => $request->latitude,
+            ]);
+            
+            $request->session()->flash('message', 'Event data save successfully.');
+            return redirect()->back();
+
+
+        }
     }
 
     /**

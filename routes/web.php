@@ -58,6 +58,8 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/add-event', [App\Http\Controllers\EventController::class, 'create']);
     Route::post('/add-event', [App\Http\Controllers\EventController::class, 'store']);
     Route::get('/remove-event', [EventController::class, 'destroy']);
+    Route::get('/edit-event', [EventController::class, 'edit']);
+    Route::post('/edit-event', [EventController::class, 'update']);
 
     Route::get('/streams', [StreamController::class, 'index']);
     Route::get('/add-stream', [App\Http\Controllers\StreamController::class, 'create']);
