@@ -7,6 +7,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionDetailController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationController;
 use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\FederationMovementController;
@@ -144,6 +145,10 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/federation-event', [FederationEventController::class, 'index']);
     Route::get('/add-federation-event', [FederationEventController::class, 'create']);
     Route::post('/add-federation-event', [FederationEventController::class, 'store']);
+
+    Route::get('/federation-sponsor', [FederaationSponsorController::class, 'index']);
+    Route::get('/add-federation-sponsor', [FederaationSponsorController::class, 'create']);
+    Route::post('/add-federation-sponsor', [FederaationSponsorController::class, 'store']);
 
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);

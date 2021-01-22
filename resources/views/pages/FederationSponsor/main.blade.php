@@ -1,6 +1,7 @@
+
 @extends('layouts.app')
 @section('title')
-Sponsor
+Federation Sponsor
 @endsection
 @section('content')
 <div class="pcoded-content">
@@ -11,7 +12,7 @@ Sponsor
                 <div class="page-body">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-primary">Sponsor List</h2>
+                            <h2 class="text-primary">Federation Sponsor List</h2>
                         </div>
                         <div class="card-body">
                             @if(Session::has('message'))
@@ -24,20 +25,26 @@ Sponsor
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Federation</th>
                                             <th>Image</th>
                                             <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sponsors as $key => $sponsor)
+                                        @foreach($federaationSponsor as $key => $sponsor)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td><img src="{{ $sponsor->sponser_image}}" class="card-img"></td>
+                                            <td>{{ $sponsor->federations->name }}</td>
+                                            <td>
+                                                <div style="width:200px; height:200px">
+                                                    <img src="{{ $sponsor->sponser_image}}" class="card-img" width="100%" height="auto">
+                                                </div>
+                                                </td>
                                             <td>{{ $sponsor->sponsor_description }}</td>
                                             <td>
-                                                <a href="/edit-sponsor?id={{ $sponsor->id }}" class="btn btn-primary">Edit</a>
-                                                <a href="/remove-sponsor?id={{ $sponsor->id }}" class="btn btn-danger">
+                                                <a href="/edit-federation-sponsor?id={{ $sponsor->id }}" class="btn btn-primary">Edit</a>
+                                                <a href="/remove-federation-sponsor?id={{ $sponsor->id }}" class="btn btn-danger">
                                                     Remove</a>
                                             </td>
                                         </tr>
