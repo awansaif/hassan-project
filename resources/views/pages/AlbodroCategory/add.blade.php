@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Country
+Albodoro
 @endsection
 @section('content')
 <div class="pcoded-content">
@@ -51,7 +51,7 @@ Country
                                                   value="{{ old('name') }}">
                                           </div>
                                       </div>
-                                    
+
                                       <div class="form-group row">
                                           <label class="col-sm-2 col-form-label">Albodoro Category Image<span
                                                   style="color:#ff0000"> *</span></label>
@@ -59,15 +59,15 @@ Country
                                               <input type="file" class="form-control" name="image" >
                                           </div>
                                       </div>
-                                    
-                                    
+
+
                                       <button type="submit" class="btn btn-primary float-right"
                                           id="primary-popover-content" data-container="body" data-toggle="popover"
                                           title="Primary color states" data-placement="bottom">Add Albodoro Category</button>
-                                    
-                                    
+
+
                                     </form>
-                                    
+
 
                                 </div>
                             </div>

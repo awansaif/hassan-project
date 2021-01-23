@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\AlbodroCategoryController;
 use App\Http\Controllers\AlbodroItemController;
+use App\Http\Controllers\CassificheController;
+use App\Http\Controllers\CassificheDetailController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ClubDetailController;
 use App\Http\Controllers\CollectionController;
@@ -52,7 +54,7 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/remove-country', [CountryController::class, 'destroy']);
     Route::get('/edit-country', [CountryController::class, 'edit']);
     Route::post('/edit-country', [CountryController::class, 'update']);
-    
+
     Route::get('/news', [App\Http\Controllers\NewsController::class, 'index']);
     Route::get('/add-news', [App\Http\Controllers\NewsController::class, 'create']);
     Route::post('/add-news', [App\Http\Controllers\NewsController::class, 'store']);
@@ -180,6 +182,13 @@ Route::group(['middleware'=> ['auth']],function(){
     //Albodro Items resource
     Route::resource('/albodro-items', AlbodroItemController::class);
 
+    // Federation Cassifiche routes
+    Route::get('/federation-cassifiche', [CassificheController::class, 'index']);
+    Route::get('/add-federation-cassifiche', [CassificheController::class, 'create']);
+    Route::post('/add-federation-cassifiche', [CassificheController::class, 'store']);
+
+    // cassifiche detail rourtes
+    Route::get('/detail-cassifiche', [CassificheDetailController::class, 'index']);
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
 

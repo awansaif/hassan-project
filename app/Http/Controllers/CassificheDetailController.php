@@ -12,9 +12,11 @@ class CassificheDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $data = CassificheDetail::with('cassifiches')->where('cassifiche_id', $request->id)->get();
+        return view('pages.FederationCassifiche.detail', compact('data'));
     }
 
     /**

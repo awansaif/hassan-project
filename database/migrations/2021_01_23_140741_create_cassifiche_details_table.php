@@ -15,6 +15,7 @@ class CreateCassificheDetailsTable extends Migration
     {
         Schema::create('cassifiche_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cassifiche_id')->constrained('cassifiches')->onDelete('Cascade');
             $table->string('name');
             $table->string('player_rank');
             $table->string('ciita');

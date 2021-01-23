@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Cassifiche extends Model
 {
     use HasFactory;
+
+    public function federations()
+    {
+        return $this->belongsTo('App\Models\FederationMovement', 'federation_id');
+    }
 }

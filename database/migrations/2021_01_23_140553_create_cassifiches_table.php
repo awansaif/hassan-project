@@ -15,6 +15,7 @@ class CreateCassifichesTable extends Migration
     {
         Schema::create('cassifiches', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('federation_id')->constrained('federation_movements')->onDelete('Cascade');
             $table->string('leaderboard_name');
             $table->string('image');
             $table->timestamps();

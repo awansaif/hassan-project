@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cassifiche;
+use App\Models\FederationMovement;
 use Illuminate\Http\Request;
 
 class CassificheController extends Controller
@@ -15,6 +16,8 @@ class CassificheController extends Controller
     public function index()
     {
         //
+        $cassifiches = Cassifiche::with('federations')->get();
+        return view('pages.FederationCassifiche.main', compact('cassifiches'));
     }
 
     /**
@@ -25,6 +28,8 @@ class CassificheController extends Controller
     public function create()
     {
         //
+        $federations = FederationMovement::orderBy('id', 'DESC')->get();
+        return view('pages.FederationCassifiche.create', compact('federations'));
     }
 
     /**
@@ -36,6 +41,18 @@ class CassificheController extends Controller
     public function store(Request $request)
     {
         //
+        $file = $request->file('image');
+        $destinationPath = '/cassifiche-img';
+        $file_name = time().$file->getClientOriginalName();
+        $check = $file->move($destinationPath,$file_name);
+
+        $data = new Cassifiche();
+        $data->federation_id = $request->federation;
+        $data->leaderboard_name = $request->name;
+        $data->image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+        $data->save();
+        $request->session()->flash('message', 'Cassifiche add successfully.');
+        return redirect()->back();
     }
 
     /**
