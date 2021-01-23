@@ -52,3 +52,7 @@ Route::get('/federations/albrodoro-categories', [ApiController::class, 'albrodor
 Route::get('/federations/albrodoro-category/{id}', [ApiController::class, 'albrodoro_category']);
 // Getting items by category
 Route::get('/federations/albrodoro-category/{id}/items', [ApiController::class, 'albrodro_items']);
+
+//casifiche apis
+Route::get('/cassifiches/{id}', [ApiController::class, 'cassifiches']);
+Route::get('/cassifiche/{id}', [ApiController::class, 'detail_cassifiche']);

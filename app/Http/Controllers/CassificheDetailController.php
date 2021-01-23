@@ -27,6 +27,7 @@ class CassificheDetailController extends Controller
     public function create()
     {
         //
+        return view('pages.FederationCassifiche.add-detail');
     }
 
     /**
@@ -38,6 +39,17 @@ class CassificheDetailController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new CassificheDetail();
+        $data->cassifiche_id = $request->cassifiche;
+        $data->name = $request->name;
+        $data->player_rank = $request->rank;
+        $data->ciita = $request->ciita;
+        $data->region = $request->region;
+        $data->pr = $request->pr;
+        $data->pn = $request->pn;
+        $data->save();
+        $request->session()->flash('message', 'Cassifiche detail add successfully');
+        return redirect()->back();
     }
 
     /**
@@ -57,9 +69,11 @@ class CassificheDetailController extends Controller
      * @param  \App\Models\CassificheDetail  $cassificheDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit(CassificheDetail $cassificheDetail)
+    public function edit(Request $request, CassificheDetail $cassificheDetail)
     {
         //
+        $data = CassificheDetail::where('id', $request->id)->first();
+        return view('pages.FederationCassifiche.edit-detail', compact('data'));
     }
 
     /**
@@ -72,6 +86,16 @@ class CassificheDetailController extends Controller
     public function update(Request $request, CassificheDetail $cassificheDetail)
     {
         //
+        $update = CassificheDetail::where('id', $request->detail_id)->update([
+            'name' => $request->name,
+            'player_rank' => $request->rank,
+            'ciita' => $request->ciita,
+            'region' => $request->region,
+            'pr' => $request->pr,
+            'pn' => $request->pn,
+        ]);
+        $request->session()->flash('message', 'Cassifiche detail update successfully');
+        return redirect()->back();
     }
 
     /**
@@ -80,8 +104,11 @@ class CassificheDetailController extends Controller
      * @param  \App\Models\CassificheDetail  $cassificheDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CassificheDetail $cassificheDetail)
+    public function destroy(Request $request, CassificheDetail $cassificheDetail)
     {
         //
+        $data = CassificheDetail::where('id', $request->id)->delete();
+        $request->session()->flash('message', 'Cassifiche detail remove successfully');
+        return redirect()->back();
     }
 }

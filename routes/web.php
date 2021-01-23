@@ -190,6 +190,11 @@ Route::group(['middleware'=> ['auth']],function(){
 
     // cassifiche detail rourtes
     Route::get('/detail-cassifiche', [CassificheDetailController::class, 'index']);
+    Route::get('/add-cassifiche-detail', [CassificheDetailController::class, 'create']);
+    Route::post('/add-cassifiche-detail', [CassificheDetailController::class, 'store']);
+    Route::get('/remove-cassifiche-detail', [CassificheDetailController::class, 'destroy']);
+    Route::get('/edit-federation-cassifiche', [CassificheDetailController::class, 'edit']);
+    Route::post('/edit-federation-cassifiche', [CassificheDetailController::class, 'update']);
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
 

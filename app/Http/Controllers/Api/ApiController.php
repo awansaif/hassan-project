@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\AlbodroCategory;
 use App\Models\AlbodroItem;
+use App\Models\Cassifiche;
+use App\Models\CassificheDetail;
 use App\Models\Club;
 use App\Models\ClubDetail;
 use Illuminate\Support\Facades\Validator;
@@ -341,6 +343,19 @@ class ApiController extends Controller
     public function albrodro_items(Request $request)
     {
         $data = AlbodroItem::where('albodro_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+
+    public function cassifiches(Request $request)
+    {
+        $data = Cassifiche::with('federations')->where('federation_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+    public function detail_cassifiche(Request $request)
+    {
+        $data = CassificheDetail::with('cassifiches')->where('cassifiche_id', $request->id)->get();
         return response()->json($data);
     }
 
