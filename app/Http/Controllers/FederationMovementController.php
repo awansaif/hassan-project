@@ -124,8 +124,13 @@ class FederationMovementController extends Controller
      * @param  \App\Models\FederationMovement  $federationMovement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FederationMovement $federationMovement)
+    public function destroy(Request $request, FederationMovement $federationMovement)
     {
-        //
+        $check = FederationMovement::where('id', $request->id)->delete();
+        if($check)
+        {
+            $request->session()->flash('message', 'Federation Movement data save successfully.');
+            return redirect()->back();
+        }
     }
 }

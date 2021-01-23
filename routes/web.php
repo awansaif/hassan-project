@@ -115,7 +115,7 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::post('/add-player-federation', [FederationController::class, 'store']);
     Route::get('/edit-federation', [FederationController::class, 'edit']);
     Route::post('/edit-federation', [FederationController::class, 'update']);
-    Route::get('/remove-federation', [FederationController::class, 'destroy']);
+    Route::delete('/remove-federation', [FederationController::class, 'destroy']);
 
 
     Route::get('/sponsor', [SponsorController::class, 'index']);
@@ -145,6 +145,7 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::post('/add-federation-movement', [FederationMovementController::class, 'store']);
     Route::get('/edit-movement', [FederationMovementController::class, 'edit']);
     Route::post('/edit-movement', [FederationMovementController::class, 'update']);
+    Route::delete('/remove-movement', [FederationMovementController::class, 'destroy']);
 
     Route::get('/federation-news', [FederationNewsController::class, 'index']);
     Route::get('/add-federation-news', [FederationNewsController::class, 'create']);
