@@ -187,6 +187,9 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/federation-cassifiche', [CassificheController::class, 'index']);
     Route::get('/add-federation-cassifiche', [CassificheController::class, 'create']);
     Route::post('/add-federation-cassifiche', [CassificheController::class, 'store']);
+    Route::get('/edit-federation-cassifiche', [CassificheController::class, 'edit']);
+    Route::post('/edit-federation-cassifiche', [CassificheController::class, 'update']);
+    Route::get('/remove-federation-cassifiche', [CassificheController::class, 'destroy']);
 
     // cassifiche detail rourtes
     Route::get('/detail-cassifiche', [CassificheDetailController::class, 'index']);

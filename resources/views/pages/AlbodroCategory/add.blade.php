@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title')
+<<<<<<< HEAD
 Albodoro
+=======
+    Country
+>>>>>>> 946c3a2bea62ae02d6a8a043debda195e3bff7b2
 @endsection
 @section('content')
     <div class="pcoded-content">

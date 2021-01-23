@@ -42,7 +42,7 @@ class CassificheController extends Controller
     {
         //
         $file = $request->file('image');
-        $destinationPath = '/cassifiche-img';
+        $destinationPath = 'cassifiche-img/';
         $file_name = time().$file->getClientOriginalName();
         $check = $file->move($destinationPath,$file_name);
 
@@ -72,9 +72,12 @@ class CassificheController extends Controller
      * @param  \App\Models\Cassifiche  $cassifiche
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cassifiche $cassifiche)
+    public function edit(Request $request)
     {
-        //
+        $data = Cassifiche::where('id', $request->id)->first();
+        return view('pages.FederationCassifiche.edit', compact('data'))->with([
+            'federations' => FederationMovement::all()
+        ]);
     }
 
     /**
@@ -84,9 +87,27 @@ class CassificheController extends Controller
      * @param  \App\Models\Cassifiche  $cassifiche
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cassifiche $cassifiche)
+    public function update(Request $request)
     {
-        //
+        $data = $request->except(['_token']);
+
+        if($request->file('image')){
+            $destinationPath = 'cassifiche-img/';
+            $image = $request->file('image');
+            $file_name = time().$image->getClientOriginalName();
+            $check = $image->move($destinationPath,$file_name);
+
+            $update = Cassifiche::where('id', $request->id)->update([
+                'image' => 'http://alviawan.tk/'. $destinationPath . $file_name
+            ]);
+        }
+        
+        $update = Cassifiche::where('id', $request->id)->update([
+            'federation_id' => $request->federation,
+            'leaderboard_name' => $request->name
+        ]);
+        
+        return redirect()->back()->with(['message' => 'Cassifache Updated Successfully']); 
     }
 
     /**
@@ -95,8 +116,12 @@ class CassificheController extends Controller
      * @param  \App\Models\Cassifiche  $cassifiche
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cassifiche $cassifiche)
+    public function destroy(Request $request)
     {
-        //
+        $check = Cassifiche::where('id', $request->id)->delete();
+        if ($check) {
+            $request->session()->flash('message', 'Product remove successfully.');
+            return redirect()->back();
+        }
     }
 }
