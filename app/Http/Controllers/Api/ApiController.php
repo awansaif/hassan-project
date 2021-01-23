@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlbodroCategory;
+use App\Models\AlbodroItem;
 use App\Models\Club;
 use App\Models\ClubDetail;
 use Illuminate\Support\Facades\Validator;
@@ -320,7 +322,25 @@ class ApiController extends Controller
     }
     public function federation_sponsors(Request $request)
     {
-        $data = FederationNews::with('federations')->where('federation_id', $request->id)->get();
+        $data = FederaationSponsor::with('federations')->where('federation_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+    // All Abrodor Categories
+    public function albrodoro_categories()
+    {
+        $data = AlbodroCategory::with('federations')->get();
+        return response()->json($data);
+    }
+    // Abrodor category by id
+    public function albrodoro_category(Request $request)
+    {
+        $data = AlbodroCategory::with('federations')->where('federation_id', $request->id)->get();
+        return response()->json($data);
+    }
+    public function albrodro_items(Request $request)
+    {
+        $data = AlbodroItem::where('albodro_id', $request->id)->get();
         return response()->json($data);
     }
 

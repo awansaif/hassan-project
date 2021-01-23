@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Country
+    Edit Item
 @endsection
 @section('content')
     <div class="pcoded-content">
@@ -15,7 +15,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <!--- <h5>Basic Form Inputs</h5>
-                        <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
+                                    <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
                                         <div class="card-header-right"><i class="icofont icofont-spinner-alt-5"></i></div>
 
                                         <div class="card-header-right">
@@ -41,36 +41,24 @@
                                             </div>
                                         @endif
                                         <form method="post" enctype="multipart/form-data"
-                                            action="{{ route('albodro-category.store') }}">
+                                            action="{{ route('albodro-items.update', $data->id) }}"
+                                            >
                                             @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="albodro_id" value="{{ $cat->id }}" >
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Federation<span
+                                                <label class="col-sm-2 col-form-label">Item Title<span
                                                         style="color:#ff0000"> *</span></label>
                                                 <div class="col-sm-10">
-                                                    <select name="federation_id" id="" class="form-control custom-select" required>
-                                                        <option disabled selected class="selected disabled">Choose
-                                                            Federation ...</option>
-                                                        @foreach($federations as $federation)
-                                                        <option value="{{ $federation->id }}">{{ $federation->name }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input type="text" class="form-control" name="title"
+                                                        placeholder="Item Title" required
+                                                        value="{{ $data->title }}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Albodoro Category Title<span
-                                                        style="color:#ff0000"> *</span></label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Albodoro Category Title" required
-                                                        value="{{ old('name') }}">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Albodoro Category Image<span
+                                                <label class="col-sm-2 col-form-label">Item Image<span
                                                         style="color:#ff0000"> *</span></label>
                                                 <div class="col-sm-10">
                                                     <input type="file" class="form-control" name="image"
@@ -78,12 +66,20 @@
                                                 </div>
                                             </div>
 
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Year<span
+                                                        style="color:#ff0000"> *</span></label>
+                                                <div class="col-sm-10">
+                                                    <input type="datetime-local" class="form-control" 
+                                                    value="2016-02-01T03:35" name="year" required >
+                                                </div>
+                                            </div>
 
                                             <button type="submit" class="btn btn-primary float-right"
                                                 id="primary-popover-content" data-container="body" data-toggle="popover"
                                                 title="Primary color states" data-placement="bottom">
-                                                Add Albodoro
-                                                Category</button>
+                                                Update Item
+                                            </button>
 
 
                                         </form>

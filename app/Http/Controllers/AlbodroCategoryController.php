@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AlbodroCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAlbodroCategoryRequest;
+use App\Models\FederationMovement;
 use Illuminate\Http\Request;
 
 class AlbodroCategoryController extends Controller
@@ -16,7 +17,9 @@ class AlbodroCategoryController extends Controller
      */
     public function index()
     {
-        return view('pages.AlbodroCategory.main')->with(['all' => AlbodroCategory::all()]);
+        return view('pages.AlbodroCategory.main')->with([
+            'all' => AlbodroCategory::with('federations')->orderBy('id', 'DESC')->get(),
+            ]);
     }
 
     /**
@@ -26,7 +29,9 @@ class AlbodroCategoryController extends Controller
      */
     public function create()
     {
-        return view('pages.AlbodroCategory.add');
+        return view('pages.AlbodroCategory.add')->with([
+            'federations' => FederationMovement::all()
+        ]);
     }
 
     /**
@@ -35,11 +40,17 @@ class AlbodroCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateAlbodroCategoryRequest $request)
+    public function store(Request $request)
     {
-        if($request->fails()){
-            return redirect()->back()->withErrors($request)->withInput();
-        }
+        $data = $request->except(['_token', 'tags']);
+
+        $destinationPath = 'albodro-category-images/';
+        $image = $request->file('image');
+        $file_name = time().$image->getClientOriginalName();
+        $data['image'] = $image->move($destinationPath,$file_name);
+        
+        $created = AlbodroCategory::create($data);
+        return redirect()->back()->with(['message' => 'Albodoro Category Created Successfully']);
     }
 
     /**
@@ -61,7 +72,10 @@ class AlbodroCategoryController extends Controller
      */
     public function edit(AlbodroCategory $albodroCategory)
     {
-        //
+        return view('pages.AlbodroCategory.edit')->with([
+            'data' => $albodroCategory,
+            'federations' => FederationMovement::all()
+        ]);
     }
 
     /**
@@ -73,7 +87,17 @@ class AlbodroCategoryController extends Controller
      */
     public function update(Request $request, AlbodroCategory $albodroCategory)
     {
-        //
+        $data = $request->except(['_token','_method']);
+
+        if($request->file('image')){
+            $destinationPath = 'albodro-category-images/';
+            $image = $request->file('image');
+            $file_name = time().$image->getClientOriginalName();
+            $data['image'] = $image->move($destinationPath,$file_name);
+        }
+        
+        $albodroCategory->update($data);
+        return redirect()->back()->with(['message' => 'Albodoro Category Updated Successfully']); 
     }
 
     /**
@@ -82,8 +106,9 @@ class AlbodroCategoryController extends Controller
      * @param  \App\Models\AlbodroCategory  $albodroCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AlbodroCategory $albodroCategory)
+    public function destroy($id)
     {
-        //
+        AlbodroCategory::destroy($id);
+        return redirect()->back()->with(['message' => 'Albodoro Category deletd successfully']);
     }
 }

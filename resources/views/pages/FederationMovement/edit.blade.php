@@ -63,7 +63,7 @@ Federation Movement
                                             <label class="col-sm-2 col-form-label">Latest Event<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="datetime-local" class="form-control" name="latest_event" value="{{ $data->latest_event }}" >
+                                                <input type="datetime-local" class="form-control" name="latest_event" value="{{ date("Y-m-d\TH:i:s", strtotime($data->latest_event )) }}" >
                                             </div>
                                         </div>
 

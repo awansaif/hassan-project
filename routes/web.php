@@ -179,6 +179,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
     //Albodro Items resource
     Route::resource('/albodro-items', AlbodroItemController::class);
+    Route::get('/category/{id}/albodro-items', [AlbodroItemController::class, 'categoryItems']);
 
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);

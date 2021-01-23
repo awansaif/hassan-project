@@ -41,18 +41,24 @@
                                             </div>
                                         @endif
                                         <form method="post" enctype="multipart/form-data"
-                                            action="{{ route('albodro-category.store') }}">
+                                            action="{{ route('albodro-category.update', $data->id) }}">
                                             @csrf
-
+                                            @method('PUT')
+                                            
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Federation<span
                                                         style="color:#ff0000"> *</span></label>
                                                 <div class="col-sm-10">
                                                     <select name="federation_id" id="" class="form-control custom-select" required>
-                                                        <option disabled selected class="selected disabled">Choose
-                                                            Federation ...</option>
                                                         @foreach($federations as $federation)
-                                                        <option value="{{ $federation->id }}">{{ $federation->name }}
+                                                        <option value="{{ $federation->id }}"
+                                                          
+                                                          {{ 
+                                                            ($federation->id == $data->federation_id) ?
+                                                            'selected' : ''
+                                                          }}
+                                                          
+                                                          >{{ $federation->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -65,7 +71,7 @@
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" name="name"
                                                         placeholder="Albodoro Category Title" required
-                                                        value="{{ old('name') }}">
+                                                        value="{{ $data->name }}">
                                                 </div>
                                             </div>
 
@@ -82,7 +88,7 @@
                                             <button type="submit" class="btn btn-primary float-right"
                                                 id="primary-popover-content" data-container="body" data-toggle="popover"
                                                 title="Primary color states" data-placement="bottom">
-                                                Add Albodoro
+                                                Update Albodoro
                                                 Category</button>
 
 

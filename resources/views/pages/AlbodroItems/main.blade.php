@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Albodro Categories
+    Albodro Items
 @endsection
 @section('content')
     <div class="pcoded-content">
@@ -11,7 +11,7 @@
                     <div class="page-body">
                         <div class="card">
                             <div class="card-header">
-                                <h2 class="text-primary">Albodro Categories List</h2>
+                                <h2 class="text-primary">Albodoro Items List ({{ $cat->name }}) </h2>
                             </div>
                             <div class="card-body">
                                 @if (Session::has('message'))
@@ -24,9 +24,9 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Federation</th>
+                                                <th>Title</th>
                                                 <th>Image</th>
-                                                <th>Name</th>
+                                                <th>Year</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -34,27 +34,27 @@
                                             @foreach ($all as $key => $one)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $one->federations->name }}</td>
+                                                    <td>{{ $one->title }}</td>
                                                     <td>
                                                         <div style="width: 100px; height:100px;">
                                                             <img src="{{ $one->image }}" class="card-img">
                                                         </div>
 
                                                     </td>
-                                                    <td>{{ $one->name }}</td>
+                                                    <td>{{ date_format(date_create($one->year), 'Y') }}</td>
                                                     <td>
-                                                      <a href="/category/{{ $one->id }}/albodro-items"
-                                                            class="btn btn-info">See Items</a>
-                                                      <a href="{{ route('albodro-category.edit', $one->id) }}"
+                                                      
+                                                      <a href="{{ route('albodro-items.edit', $one->id) }}"
                                                           class="btn btn-primary">Edit</a>
                                                       <form style="display: inline-block"
-                                                          action="{{ route('albodro-category.destroy', $one->id) }}"
+                                                          action="{{ route('albodro-items.destroy', $one->id) }}"
                                                           method="POST">
                                                           @csrf
                                                           @method('DELETE')
                                                           <button class="btn-danger btn">Remove</button>
                                                       </form>
                                                   </td>
+                                                    
                                                    
                                                 </tr>
                                             @endforeach

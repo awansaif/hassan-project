@@ -111,7 +111,7 @@
             </nav>
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
-                    <nav class="pcoded-navbar">
+                    <nav class="pcoded-navbar" >
                         <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Layout</div>
@@ -336,13 +336,6 @@
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="/all-careers">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">All Careers </span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
                                             <a href="/add-player">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
@@ -554,10 +547,17 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class=" ">
+                                        <li class="">
                                             <a href="{{route('albodro-category.create')}}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Albodoro Category</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{{route('albodro-items.create')}}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Albodoro Items</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -588,6 +588,8 @@
                                         </li>
                                     </ul>
                                 </li>
+                                {{-- Just for the spacing in bottom --}}
+                                <br><br><br>
                             </ul>
                         </div>
                     </nav>

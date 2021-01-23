@@ -45,3 +45,10 @@ Route::get('/federation-movements', [ApiController::class, 'federation_movements
 Route::get('/federation-event/{id}', [ApiController::class, 'federation_events']);
 Route::get('/federation-news/{id}', [ApiController::class, 'federation_news']);
 Route::get('/federation-sponsor/{id}', [ApiController::class, 'federation_sponsors']);
+
+// All Albrodoro Categories
+Route::get('/federations/albrodoro-categories', [ApiController::class, 'albrodoro_categories']);
+// Albrodoro Category by id
+Route::get('/federations/albrodoro-category/{id}', [ApiController::class, 'albrodoro_category']);
+// Getting items by category
+Route::get('/federations/albrodoro-category/{id}/items', [ApiController::class, 'albrodro_items']);
