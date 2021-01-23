@@ -49,7 +49,7 @@
                                             <td>{{ $cassifiche->pr }}</td>
                                             <td>{{ $cassifiche->pn }}</td>
 											<td>
-												<a href="/edit-federation-cassifiche?id={{ $cassifiche->id }}" class="btn btn-primary">Edit</a>
+												<a href="/edit-detail-cassifiche?id={{ $cassifiche->id }}" class="btn btn-primary">Edit</a>
 												<a href="/remove-cassifiche-detail?id={{ $cassifiche->id }}" class="btn btn-danger"> Remove</a>
 											</td>
 										</tr>
