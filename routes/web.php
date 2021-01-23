@@ -181,6 +181,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
     //Albodro Items resource
     Route::resource('/albodro-items', AlbodroItemController::class);
+    Route::get('/category/{id}/albodro-items', [AlbodroItemController::class, 'categoryItems']);
 
     // Federation Cassifiche routes
     Route::get('/federation-cassifiche', [CassificheController::class, 'index']);

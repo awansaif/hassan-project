@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<<<<<<< HEAD
-Albodoro
-=======
     Country
->>>>>>> 2fc2762515adb5b9ffa53fc5cd7efaed6596b963
 @endsection
 @section('content')
     <div class="pcoded-content">
@@ -45,18 +41,24 @@ Albodoro
                                             </div>
                                         @endif
                                         <form method="post" enctype="multipart/form-data"
-                                            action="{{ route('albodro-category.store') }}">
+                                            action="{{ route('albodro-category.update', $data->id) }}">
                                             @csrf
-
+                                            @method('PUT')
+                                            
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Federation<span
                                                         style="color:#ff0000"> *</span></label>
                                                 <div class="col-sm-10">
                                                     <select name="federation_id" id="" class="form-control custom-select" required>
-                                                        <option disabled selected class="selected disabled">Choose
-                                                            Federation ...</option>
                                                         @foreach($federations as $federation)
-                                                        <option value="{{ $federation->id }}">{{ $federation->name }}
+                                                        <option value="{{ $federation->id }}"
+                                                          
+                                                          {{ 
+                                                            ($federation->id == $data->federation_id) ?
+                                                            'selected' : ''
+                                                          }}
+                                                          
+                                                          >{{ $federation->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -69,7 +71,7 @@ Albodoro
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" name="name"
                                                         placeholder="Albodoro Category Title" required
-                                                        value="{{ old('name') }}">
+                                                        value="{{ $data->name }}">
                                                 </div>
                                             </div>
 
@@ -82,56 +84,11 @@ Albodoro
                                                 </div>
                                             </div>
 
-<<<<<<< HEAD
-                                    @if(Session::has('message'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('message') }}
-                                    </div>
-                                    @endif
-                                    @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    @endif
-                                    <form method="post" enctype="multipart/form-data" action="{{ route('albodro-category.store') }}">
-                                      @csrf
-                                      <div class="form-group row">
-                                          <label class="col-sm-2 col-form-label">Albodoro Category Title<span
-                                                  style="color:#ff0000"> *</span></label>
-                                          <div class="col-sm-10">
-                                              <input type="text" class="form-control" name="name"
-                                                  placeholder="Albodoro Category Title" required
-                                                  value="{{ old('name') }}">
-                                          </div>
-                                      </div>
-
-                                      <div class="form-group row">
-                                          <label class="col-sm-2 col-form-label">Albodoro Category Image<span
-                                                  style="color:#ff0000"> *</span></label>
-                                          <div class="col-sm-10">
-                                              <input type="file" class="form-control" name="image" >
-                                          </div>
-                                      </div>
-
-
-                                      <button type="submit" class="btn btn-primary float-right"
-                                          id="primary-popover-content" data-container="body" data-toggle="popover"
-                                          title="Primary color states" data-placement="bottom">Add Albodoro Category</button>
-
-
-                                    </form>
-
-=======
->>>>>>> 2fc2762515adb5b9ffa53fc5cd7efaed6596b963
 
                                             <button type="submit" class="btn btn-primary float-right"
                                                 id="primary-popover-content" data-container="body" data-toggle="popover"
                                                 title="Primary color states" data-placement="bottom">
-                                                Add Albodoro
+                                                Update Albodoro
                                                 Category</button>
 
 
