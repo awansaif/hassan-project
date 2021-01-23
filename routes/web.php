@@ -98,6 +98,11 @@ Route::group(['middleware'=> ['auth']],function(){
 
     Route::get('/add-player-career', [App\Http\Controllers\CareerController::class, 'create']);
     Route::post('/add-player-career', [App\Http\Controllers\CareerController::class, 'store']);
+    Route::get('/player-career', [App\Http\Controllers\CareerController::class, 'index']);
+    Route::delete('/remove-career', [App\Http\Controllers\CareerController::class, 'destroy']);
+    Route::get('/edit-career', [App\Http\Controllers\CareerController::class, 'edit']);
+    Route::put('/edit-career', [App\Http\Controllers\CareerController::class, 'update']);
+    Route::delete('/remove-career', [App\Http\Controllers\CareerController::class, 'destroy']);
 
     Route::get('/collections', [App\Http\Controllers\CollectionController::class, 'index']);
     Route::get('/add-collection', [App\Http\Controllers\CollectionController::class, 'create']);

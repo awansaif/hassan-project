@@ -75,6 +75,8 @@
                                                       </div>
                                                   </td>
                                                     <td>
+                                                        <a href="/player-career?id={{ $player->id }}"
+                                                            class="btn btn-info">Player Career</a>
                                                         <a href="/edit-player?id={{ $player->id }}"
                                                             class="btn btn-primary">Edit</a>
                                                             <form style="display: inline-block"
