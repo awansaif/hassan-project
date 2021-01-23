@@ -89,7 +89,11 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/remove-shop', [App\Http\Controllers\ShopController::class, 'destroy']);
 
     Route::get('/add-player', [App\Http\Controllers\PlayerController::class, 'create']);
+    Route::get('/players', [App\Http\Controllers\PlayerController::class, 'index']);
     Route::post('/add-player', [App\Http\Controllers\PlayerController::class, 'store']);
+    Route::get('/edit-player', [App\Http\Controllers\PlayerController::class, 'edit']);
+    Route::post('/edit-player', [App\Http\Controllers\PlayerController::class, 'update']);
+    Route::delete('/remove-player', [App\Http\Controllers\PlayerController::class, 'destroy']);
 
 
     Route::get('/add-player-career', [App\Http\Controllers\CareerController::class, 'create']);

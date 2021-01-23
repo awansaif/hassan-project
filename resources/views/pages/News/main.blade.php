@@ -48,12 +48,13 @@
                                                     <td>
                                                         <a href="/edit-news?id={{ $val->id }}"
                                                             class="btn btn-primary">Edit</a>
-                                                       
-																													<form style="display: inline-block" action="/remove-news?id={{ $val->id }}" method="POST">
-																														@csrf
-																														@method('DELETE')
-																														<button class="btn-danger btn">Remove</button>
-																													</form>
+
+                                                        <form style="display: inline-block"
+                                                            action="/remove-news?id={{ $val->id }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn-danger btn">Remove</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @endforeach
