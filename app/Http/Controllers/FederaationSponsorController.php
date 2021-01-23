@@ -86,9 +86,14 @@ class FederaationSponsorController extends Controller
      * @param  \App\Models\FederaationSponsor  $federaationSponsor
      * @return \Illuminate\Http\Response
      */
-    public function edit(FederaationSponsor $federaationSponsor)
+    public function edit(Request $request)
     {
-        //
+        $data = FederaationSponsor::where('id', $request->id)->first();
+        
+        return view('pages.FederationSponsor.edit')
+            ->with('federations', FederationMovement::all())
+            ->with('data', $data)
+            ;
     }
 
     /**
@@ -100,7 +105,40 @@ class FederaationSponsorController extends Controller
      */
     public function update(Request $request, FederaationSponsor $federaationSponsor)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'federation' => 'required',
+            'description' => 'required',
+            'image'         => 'required|image',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        else
+        {
+            if($request->file('image'))
+            {
+                $destinationPath = 'federation-sponsor-pics/';
+
+                $sponsor_pic = $request->file('image');
+                $sponsor_file_name = time().$sponsor_pic->getClientOriginalName();
+                $check = $sponsor_pic->move($destinationPath,$sponsor_file_name);
+
+                $update = FederaationSponsor::where('id', $request->id)->update([
+                    'sponser_image'    => 'http://alviawan.tk/'. $destinationPath . $sponsor_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+
+            FederaationSponsor::where('id', $request->id)->update([
+                'federation_id' =>$request->federation,
+                'sponsor_description' =>$request->description,
+            ]);
+
+            $request->session()->flash('message', 'Federation Sponsor data save successfully.');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -109,8 +147,15 @@ class FederaationSponsorController extends Controller
      * @param  \App\Models\FederaationSponsor  $federaationSponsor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FederaationSponsor $federaationSponsor)
+    public function destroy(Request $request)
     {
         //
+        $check = FederaationSponsor::where('id', $request->id)->delete();
+        if($check)
+        {
+            $request->session()->flash('message', 'Federation Sponsor data save successfully.');
+            return redirect()->back();
+        }
+
     }
 }

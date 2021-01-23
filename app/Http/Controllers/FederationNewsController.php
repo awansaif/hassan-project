@@ -88,9 +88,14 @@ class FederationNewsController extends Controller
      * @param  \App\Models\FederationNews  $federationNews
      * @return \Illuminate\Http\Response
      */
-    public function edit(FederationNews $federationNews)
+    public function edit(Request $request)
     {
-        //
+        $data = FederationNews::where('id', $request->id)->first();
+        
+        return view('pages.FederationNews.edit')
+            ->with('federations', FederationMovement::all())
+            ->with('data', $data)
+            ;
     }
 
     /**
@@ -102,7 +107,45 @@ class FederationNewsController extends Controller
      */
     public function update(Request $request, FederationNews $federationNews)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'federation' => 'required',
+            'title' => 'required',
+            'datetime'  => 'required',
+            'details'             => 'required',
+            'file'            => 'required|image',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)
+                        ->withInput();
+        }
+        else{
+           
+
+            if($request->file('file'))
+            {
+                $file = $request->file('file');
+                $destinationPath = 'federation-news-pics/';
+                $file_name = time().$file->getClientOriginalName();
+                $check = $file->move($destinationPath,$file_name);
+
+                $update = FederationNews::where('id', $request->id)->update([
+                    'featured_image'    => 'http://alviawan.tk/'. $destinationPath . $file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+
+            FederationNews::where('id', $request->id)->update([
+                'federation_id' => $request->federation,
+                'title' => $request->title,
+                'date_and_time' => $request->datetime,
+                'detail' => $request->details,
+            ]);
+
+            $request->session()->flash('message', 'Federation News add successfully.');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -111,8 +154,15 @@ class FederationNewsController extends Controller
      * @param  \App\Models\FederationNews  $federationNews
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FederationNews $federationNews)
+    public function destroy(Request $request)
     {
         //
+        $check = FederationNews::where('id', $request->id)->delete();
+        if($check)
+        {
+            $request->session()->flash('message', 'Federation News data save successfully.');
+            return redirect()->back();
+        }
+
     }
 }

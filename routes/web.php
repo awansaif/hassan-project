@@ -156,6 +156,9 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/federation-news', [FederationNewsController::class, 'index']);
     Route::get('/add-federation-news', [FederationNewsController::class, 'create']);
     Route::post('/add-federation-news', [FederationNewsController::class, 'store']);
+    Route::get('/edit-federation-news', [FederationNewsController::class, 'edit']);
+    Route::post('/edit-federation-news', [FederationNewsController::class, 'update']);
+    Route::get('/remove-federation-news', [FederationNewsController::class, 'destroy']);
 
     Route::get('/federation-event', [FederationEventController::class, 'index']);
     Route::get('/add-federation-event', [FederationEventController::class, 'create']);
@@ -167,6 +170,9 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/federation-sponsor', [FederaationSponsorController::class, 'index']);
     Route::get('/add-federation-sponsor', [FederaationSponsorController::class, 'create']);
     Route::post('/add-federation-sponsor', [FederaationSponsorController::class, 'store']);
+    Route::get('/edit-federation-sponsor', [FederaationSponsorController::class, 'edit']);
+    Route::post('/edit-federation-sponsor', [FederaationSponsorController::class, 'update']);
+    Route::get('/remove-federation-sponsor', [FederaationSponsorController::class, 'destroy']);
 
     // Albodro Category resource route
     Route::resource('/albodro-category', AlbodroCategoryController::class);
