@@ -46,11 +46,12 @@
                                                     <td>
                                                         <a href="/edit-movement?id={{ $federation->id }}"
                                                             class="btn btn-primary">Edit</a>
-																														<form style="display: inline-block"
-																															action="/remove-movement?id={{ $federation->id }}" method="POST">
-																															@csrf
-																															@method('DELETE')
-																															<button class="btn-danger btn">Remove</button>
+                                                        <form style="display: inline-block"
+                                                            action="/remove-movement?id={{ $federation->id }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn-danger btn">Remove</button>
                                                         </form>
                                                     </td>
                                                 </tr>
