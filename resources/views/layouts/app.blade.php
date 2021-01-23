@@ -64,7 +64,7 @@
                             <i class="ti-search"></i>
                         </a>
                         <a href="/home">
-                            <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
+                            <img class="img-fluid" src="{{ asset('assets/images/logo.png')}}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>
@@ -87,7 +87,7 @@
                         <ul class="nav-right">
                             <li class="user-profile header-notification">
                                 <a href="#!">
-                                    <img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{{ asset('assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
                                     <span>{{ Auth::user()->name }}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -558,6 +558,31 @@
                                             <a href="{{route('albodro-category.create')}}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Albodoro Category</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation Cassifiche</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="{{route('albodro-category.index')}}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"
+                                                    data-i18n="nav.basic-components.alert">Federation Cassifiche</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="{{route('albodro-category.create')}}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Federation Cassifiche</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
