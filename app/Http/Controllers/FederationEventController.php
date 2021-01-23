@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Federation;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
 use Illuminate\Http\Request;
@@ -107,7 +108,7 @@ class FederationEventController extends Controller
      */
     public function show(FederationEvent $federationEvent)
     {
-        //
+       
     }
 
     /**
@@ -116,9 +117,14 @@ class FederationEventController extends Controller
      * @param  \App\Models\FederationEvent  $federationEvent
      * @return \Illuminate\Http\Response
      */
-    public function edit(FederationEvent $federationEvent)
+    public function edit(Request $request)
     {
-        //
+        $event = FederationEvent::where('id', $request->id)->first();
+        
+        return view('pages.FederationEvent.edit')
+            ->with('federations', FederationMovement::all())
+            ->with('event', $event)
+            ;
     }
 
     /**
@@ -130,7 +136,89 @@ class FederationEventController extends Controller
      */
     public function update(Request $request, FederationEvent $federationEvent)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'federation' => 'required',
+            'event_short_description' => 'required',
+            'event_long_description'  => 'required',
+            'event_price'             => 'required',
+            'event_place'             => 'required',
+            'event_timing'            => 'required',
+            'aurthor_name'            => 'required',
+            'federation_name'         => 'required',
+            'further_detail'           => 'required',
+            'latitude'                => 'required',
+            'longtitude'              => 'required',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)
+                        ->withInput();
+        }
+        else
+        {
+            if($request->file('event_image'))
+            {
+                $destinationPath = 'federation-event-pics/';
+
+                $event_pic = $request->file('event_image');
+                $event_file_name = time().$event_pic->getClientOriginalName();
+                $check = $event_pic->move($destinationPath,$event_file_name);
+
+                $update = FederationEvent::where('id', $request->id)->update([
+                    'event_image'    => 'http://alviawan.tk/'. $destinationPath . $event_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+            if($request->file('secondary_event_mage'))
+            {
+                $destinationPath = 'federation-event-pics/';
+
+                $secondary_file = $request->file('secondary_event_mage');
+                $secondary_file_name = time().$secondary_file->getClientOriginalName();
+                $check = $secondary_file->move($destinationPath,$secondary_file_name);
+
+                $update = FederationEvent::where('id', $request->id)->update([
+                    'secondary_image'    => 'http://alviawan.tk/'. $destinationPath . $secondary_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+            if($request->file('author_image'))
+            {
+                $destinationPath = 'federation-event-pics/';
+
+                $author_file = $request->file('author_image');
+                $author_file_name = time().$author_file->getClientOriginalName();
+                $check = $author_file->move($destinationPath,$author_file_name);
+
+                $update = FederationEvent::where('id', $request->id)->update([
+                    'author_image'    => 'http://alviawan.tk/'. $destinationPath . $author_file_name
+                ]);
+                // $request->session()->flash('message', 'Event data save successfully.');
+                // return redirect()->back();
+            }
+
+            FederationEvent::where('id', $request->id)->update([
+                'federation_id' => $request->federation,
+                'short_description' => $request->event_short_description,
+                'long_decription' => $request->event_long_description,
+                'even_price' => $request->event_price,
+                'event_place' => $request->event_place,
+                'event_timing' => $request->event_timing,
+                'author_name' => $request->aurthor_name,
+                'federation_name' => $request->federation_name,
+                'further_detail' => $request->further_detail,
+                'longtitude' => $request->longtitude,
+                'latitude' => $request->latitude,
+            ]);
+
+            $request->session()->flash('message', 'Federation Event data save successfully.');
+            return redirect()->back();
+            
+
+
+        }
     }
 
     /**
@@ -139,8 +227,15 @@ class FederationEventController extends Controller
      * @param  \App\Models\FederationEvent  $federationEvent
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FederationEvent $federationEvent)
+    public function destroy(Request $request)
     {
         //
+        $check = FederationEvent::where('id', $request->id)->delete();
+        if($check)
+        {
+            $request->session()->flash('message', 'Federation Event data save successfully.');
+            return redirect()->back();
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\AlbodroCategoryController;
+use App\Http\Controllers\AlbodroItemController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ClubDetailController;
 use App\Http\Controllers\CollectionController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StreamController;
+
 use App\Models\CollectionDetail;
 use Illuminate\Support\Facades\Route;
 
@@ -39,8 +42,6 @@ Route::group(['middleware', 'guest'],function(){
 Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware'=> ['auth']],function(){
-
-
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -159,10 +160,19 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/federation-event', [FederationEventController::class, 'index']);
     Route::get('/add-federation-event', [FederationEventController::class, 'create']);
     Route::post('/add-federation-event', [FederationEventController::class, 'store']);
+    Route::get('/edit-federation-event', [FederationEventController::class, 'edit']);
+    Route::post('/edit-federation-event', [FederationEventController::class, 'update']);
+    Route::get('/remove-federation-event', [FederationEventController::class, 'destroy']);
 
     Route::get('/federation-sponsor', [FederaationSponsorController::class, 'index']);
     Route::get('/add-federation-sponsor', [FederaationSponsorController::class, 'create']);
     Route::post('/add-federation-sponsor', [FederaationSponsorController::class, 'store']);
+
+    // Albodro Category resource route
+    Route::resource('/albodro-category', AlbodroCategoryController::class);
+
+    //Albodro Items resource
+    Route::resource('/albodro-items', AlbodroItemController::class);
 
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
