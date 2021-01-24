@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\MainClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +29,8 @@ class ClubController extends Controller
     public function create()
     {
         //
-        return view('pages.Club.create');
+        $clubs = MainClub::orderBy('id', 'DESC')->get();
+        return view('pages.Club.create',compact('clubs'));
     }
 
     /**
@@ -55,9 +57,10 @@ class ClubController extends Controller
                 $images = $request->file('image');
                 $new_name = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('club-images'), $new_name);
-                $image =  'http://alviawan.tk/'.'club-images/'.$new_name;
+                $image =  env('APP_URL').'club-images/'.$new_name;
 
                 $data = new Club;
+                $data->club_id = $request->club;
                 $data->name = $request->name;
                 $data->image = $image;
                 $data->country = $request->country;
@@ -117,7 +120,7 @@ class ClubController extends Controller
                 $images = $request->file('image');
                 $new_name = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('club-images'), $new_name);
-                $image =  'http://alviawan.tk/'.'club-images/'.$new_name;
+                $image =  env('APP_URL').'club-images/'.$new_name;
                 $update = Club::where('id', $request->club_id)->update([
                     'name' => $request->name,
                     'image' => $image,

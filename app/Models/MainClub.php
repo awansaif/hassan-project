@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Club extends Model
+class MainClub extends Model
 {
     use HasFactory;
-
     public function clubs()
     {
-        return $this->belongsTo('App\Models\MainClub', 'club_id');
+        return $this->hasMany('App\Models\Club', 'club_id');
     }
 }

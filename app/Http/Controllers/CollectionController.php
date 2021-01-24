@@ -54,7 +54,7 @@ class CollectionController extends Controller
             $images = $request->file('collection_image');
             $new_name = rand() . '.' . $images->getClientOriginalExtension();
             $images->move(public_path('collection-imgs'), $new_name);
-            $img =  'http://alviawan.tk/'.'collection-imgs/'.$new_name;
+            $img =  env('APP_URL').'collection-imgs/'.$new_name;
             $data = new Collection;
             $data->collection_name = $request->collection_name;
             $data->collection_image = $img;
@@ -114,7 +114,7 @@ class CollectionController extends Controller
                 $images = $request->file('collection_image');
                 $new_name = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('collection-imgs'), $new_name);
-                $img =  'http://alviawan.tk/'.'collection-imgs/'.$new_name;
+                $img =  env('APP_URL').'collection-imgs/'.$new_name;
                 $update  = Collection::where('id', $request->collection_id)->update([
                     'collection_name' => $request->collection_name,
                     'collection_image' =>  $img,

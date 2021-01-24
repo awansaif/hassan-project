@@ -63,7 +63,7 @@ class FederationNewsController extends Controller
             $data->federation_id = $request->federation;
             $data->title = $request->title;
             $data->date_and_time = $request->datetime;
-            $data->featured_image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+            $data->featured_image = env('APP_URL'). $destinationPath.$file_name;
             $data->detail = $request->details;
             $data->save();
             $request->session()->flash('message', 'Federation News add successfully.');
@@ -91,7 +91,7 @@ class FederationNewsController extends Controller
     public function edit(Request $request)
     {
         $data = FederationNews::where('id', $request->id)->first();
-        
+
         return view('pages.FederationNews.edit')
             ->with('federations', FederationMovement::all())
             ->with('data', $data)
@@ -120,7 +120,7 @@ class FederationNewsController extends Controller
                         ->withInput();
         }
         else{
-           
+
 
             if($request->file('file'))
             {
@@ -130,7 +130,7 @@ class FederationNewsController extends Controller
                 $check = $file->move($destinationPath,$file_name);
 
                 $update = FederationNews::where('id', $request->id)->update([
-                    'featured_image'    => 'http://alviawan.tk/'. $destinationPath . $file_name
+                    'featured_image'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
@@ -143,7 +143,7 @@ class FederationNewsController extends Controller
                 'detail' => $request->details,
             ]);
 
-            $request->session()->flash('message', 'Federation News add successfully.');
+            $request->session()->flash('message', 'Federation News updated successfully.');
             return redirect()->back();
         }
     }
@@ -160,7 +160,7 @@ class FederationNewsController extends Controller
         $check = FederationNews::where('id', $request->id)->delete();
         if($check)
         {
-            $request->session()->flash('message', 'Federation News data save successfully.');
+            $request->session()->flash('message', 'Federation data remove successfully.');
             return redirect()->back();
         }
 

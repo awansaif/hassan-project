@@ -62,7 +62,7 @@ class ProductController extends Controller
             for ($i = 0; $i < count($images); $i++) {
                 $new_name = rand() . '.' . $images[$i]->getClientOriginalExtension();
                 $images[$i]->move(public_path('product-imgs'), $new_name);
-                $img[] =  'http://alviawan.tk/' . 'product-imgs/' . $new_name;
+                $img[] =  env('APP_URL') . 'product-imgs/' . $new_name;
             }
             if($request->product_color[0] == '#00000' && $request->product_color[1] == '#00000' && $request->product_color[2] == '#00000')
             {
@@ -161,7 +161,7 @@ class ProductController extends Controller
                 for ($i = 0; $i < count($images); $i++) {
                     $new_name = rand() . '.' . $images[$i]->getClientOriginalExtension();
                     $images[$i]->move(public_path('product-imgs'), $new_name);
-                    $img[] =  'http://alviawan.tk/' . 'product-imgs/' . $new_name;
+                    $img[] =  env('APP_URL') . 'product-imgs/' . $new_name;
                 }
                 foreach ($request->product_color as $color) {
                     $colors[] = $color;

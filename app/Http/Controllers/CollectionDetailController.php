@@ -56,7 +56,7 @@ class CollectionDetailController extends Controller
             $images = $request->file('collection_image_list');
             $new_name = rand() . '.' . $images->getClientOriginalExtension();
             $images->move(public_path('collection-imgs-list'), $new_name);
-            $img =  'http://alviawan.tk/'.'collection-imgs-list/'.$new_name;
+            $img =  env('APP_URL').'collection-imgs-list/'.$new_name;
             $data = new CollectionDetail;
             $data->collection_id = $request->collection;
             $data->collection_images_list = $img;

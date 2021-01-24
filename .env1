@@ -1,8 +1,8 @@
-APP_NAME=Laravel
+APP_NAME=MyApp
 APP_ENV=local
 APP_KEY=base64:0h8+pHudKlghUFar7V7GU4i4LjR0UlcYPOpAmtiCsr0=
 APP_DEBUG=true
-APP_URL=http://laravel-project.test
+APP_URL=https://alviawan.tk/
 
 LOG_CHANNEL=stack
 LOG_LEVEL=debug

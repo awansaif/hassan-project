@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\News;
@@ -25,8 +26,8 @@ Route::group(['middleware' => 'auth:api'],function(){
     Route::get('logout', [ApiController::class, 'logout']);
 });
 
-Route::post('login', [App\Http\Controllers\Api\ApiController::class, 'login']);
-Route::post('signup', [App\Http\Controllers\Api\ApiController::class, 'register']);
+Route::post('login', [ApiController::class, 'login']);
+Route::post('signup', [ApiController::class, 'register']);
 Route::get('news', [App\Http\Controllers\Api\ApiController::class, 'all_news']);
 Route::get('events', [App\Http\Controllers\Api\ApiController::class, 'all_events']);
 Route::get('shops', [App\Http\Controllers\Api\ApiController::class, 'all_shops']);
@@ -39,7 +40,8 @@ Route::get('collection', [App\Http\Controllers\Api\ApiController::class, 'collec
 Route::get('collection/{id}', [App\Http\Controllers\Api\ApiController::class, 'collectionDetail']);
 Route::get('sponsors', [ApiController::class, 'sponsors']);
 Route::get('/federations', [ApiController::class, 'federations']);
-Route::get('/clubs', [ApiController::class, 'clubs']);
+Route::get('/main-clubs', [ApiController::class, 'main_clubs']);
+Route::get('/clubs/{id}', [ApiController::class, 'clubs']);
 Route::get('/club-detail/{id}', [ApiController::class, 'club_detail']);
 Route::get('/federation-movements', [ApiController::class, 'federation_movements']);
 Route::get('/federation-event/{id}', [ApiController::class, 'federation_events']);
@@ -56,3 +58,6 @@ Route::get('/federations/albrodoro-category/{id}/items', [ApiController::class, 
 //casifiche apis
 Route::get('/cassifiches/{id}', [ApiController::class, 'cassifiches']);
 Route::get('/cassifiche/{id}', [ApiController::class, 'detail_cassifiche']);
+
+//video
+Route::get('/all-videos', [ApiController::class, 'all_videos']);

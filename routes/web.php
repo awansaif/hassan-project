@@ -16,11 +16,12 @@ use App\Http\Controllers\FederationController;
 use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\FederationMovementController;
 use App\Http\Controllers\FederationNewsController;
+use App\Http\Controllers\MainClubController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StreamController;
-
+use App\Http\Controllers\VideoController;
 use App\Models\CollectionDetail;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,7 @@ Route::group(['middleware', 'guest'],function(){
 });
 
 
-Auth::routes();
+//Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware'=> ['auth']],function(){
 
@@ -69,6 +70,8 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/edit-event', [EventController::class, 'edit']);
     Route::post('/edit-event', [EventController::class, 'update']);
 
+    // stream Routes
+    Route::get('/start-stream', [StreamController::class, 'start_stream']);
     Route::get('/streams', [StreamController::class, 'index']);
     Route::get('/add-stream', [App\Http\Controllers\StreamController::class, 'create']);
     Route::post('/add-stream', [App\Http\Controllers\StreamController::class, 'store']);
@@ -133,6 +136,13 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::post('/edit-sponsor', [SponsorController::class, 'update']);
     Route::get('/remove-sponsor', [SponsorController::class, 'destroy']);
 
+    // main club routers
+    Route::get('/main-club', [MainClubController::class, 'index']);
+    Route::get('/add-main-club', [MainClubController::class, 'create']);
+    Route::post('/add-main-club', [MainClubController::class, 'store']);
+    Route::get('/edit-main-club', [MainClubController::class, 'edit']);
+    Route::post('/edit-main-club', [MainClubController::class, 'update']);
+    Route::get('/remove-main-club', [MainClubController::class, 'destroy']);
 
     Route::get('/club', [ClubController::class, 'index']);
     Route::get('/club-create', [ClubController::class, 'create']);
@@ -199,6 +209,15 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/edit-detail-cassifiche', [CassificheDetailController::class, 'edit']);
     Route::post('/edit-detail-cassifiche', [CassificheDetailController::class, 'update']);
 
+
+    //Router for videos
+    Route::get('/video-list', [VideoController::class, 'index']);
+    Route::get('/add-video', [VideoController::class, 'create']);
+    Route::post('/add-video', [VideoController::class, 'store']);
+    Route::get('/edit-video', [VideoController::class, 'edit']);
+    Route::post('/edit-video', [VideoController::class, 'update']);
+    Route::get('/remove-video', [VideoController::class, 'destroy']);
+
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
 
   });
@@ -208,3 +227,6 @@ Route::group(['middleware'=> ['auth']],function(){
       Route::post('/login', [AuthController::class, 'login']);
       Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
   });
+
+
+  Route::get('/show-stream', [StreamController::class,'show_stream']);

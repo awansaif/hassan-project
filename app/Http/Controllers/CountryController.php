@@ -58,7 +58,7 @@ class CountryController extends Controller
 
             $data = new Country;
             $data->country = $request->country_name;
-            $data->flag  = 'http://alviawan.tk/'. $destinationPath . $flag_file_name;
+            $data->flag  = env('APP_URL'). $destinationPath . $flag_file_name;
             $data->save();
             $request->session()->flash('message', 'Country data save successfully.');
             return redirect()->back();
@@ -118,7 +118,7 @@ class CountryController extends Controller
                 $check = $flag_pic->move($destinationPath,$flag_file_name);
 
                 $update = Country::where('id', $request->country_id)->update([
-                    'flag'    => 'http://alviawan.tk/'. $destinationPath . $flag_file_name,
+                    'flag'    => env('APP_URL'). $destinationPath . $flag_file_name,
                     'country' => $request->country_name,
                 ]);
                 $request->session()->flash('message', 'Country data save successfully.');

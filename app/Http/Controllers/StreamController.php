@@ -61,9 +61,9 @@ class StreamController extends Controller
             $check = $file->move($destinationPath,$file_name);
 
             $data = new Stream;
-            $data->stream_featured_image = 'http://alviawan.tk/'. $destinationPath.$file_name1;
+            $data->stream_featured_image = env('APP_URL'). $destinationPath.$file_name1;
             $data->match_details = $request->match_detail;
-            $data->sports_club_image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+            $data->sports_club_image = env('APP_URL'). $destinationPath.$file_name;
             $data->save();
             $request->session()->flash('message', 'stream add successfully.');
             return redirect()->back();
@@ -126,9 +126,9 @@ class StreamController extends Controller
                 $file_name = time().$file->getClientOriginalName();
                 $check = $file->move($destinationPath,$file_name);
                 $update = Stream::where('id', $request->stream_id)->update([
-                    'stream_featured_image' => 'http://alviawan.tk/'. $destinationPath.$file_name1,
+                    'stream_featured_image' => env('APP_URL'). $destinationPath.$file_name1,
                     'match_details' => $request->match_detail,
-                    'sports_club_image' => 'http://alviawan.tk/'. $destinationPath.$file_name
+                    'sports_club_image' => env('APP_URL'). $destinationPath.$file_name
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
@@ -140,7 +140,7 @@ class StreamController extends Controller
                 $file_name1 = time().$file1->getClientOriginalName();
                 $check = $file1->move($destinationPath,$file_name1);
                 $update = Stream::where('id', $request->stream_id)->update([
-                    'stream_featured_image' => 'http://alviawan.tk/'. $destinationPath.$file_name1,
+                    'stream_featured_image' => env('APP_URL'). $destinationPath.$file_name1,
                     'match_details' => $request->match_detail,
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
@@ -154,7 +154,7 @@ class StreamController extends Controller
                 $check = $file->move($destinationPath,$file_name);
                 $update = Stream::where('id', $request->stream_id)->update([
                     'match_details' => $request->match_detail,
-                    'sports_club_image' => 'http://alviawan.tk/'. $destinationPath.$file_name
+                    'sports_club_image' => env('APP_URL'). $destinationPath.$file_name
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
@@ -185,5 +185,15 @@ class StreamController extends Controller
             $request->session()->flash('message', 'Stream remove successfully.');
             return redirect()->back();
         }
+    }
+
+    public function start_stream()
+    {
+        return view('pages.Stream.start-stream');
+    }
+
+    public function show_stream()
+    {
+        return view('pages.Stream.show-stream');
     }
 }

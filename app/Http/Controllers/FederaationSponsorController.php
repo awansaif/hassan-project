@@ -62,7 +62,7 @@ class FederaationSponsorController extends Controller
             $data = new FederaationSponsor();
             $data->federation_id = $request->federation;
             $data->sponsor_description = $request->description;
-            $data->sponser_image  = 'http://alviawan.tk/'. $destinationPath . $sponsor_file_name;
+            $data->sponser_image  = env('APP_URL'). $destinationPath . $sponsor_file_name;
             $data->save();
             $request->session()->flash('message', 'Federation Sponsor data save successfully.');
             return redirect()->back();
@@ -89,7 +89,7 @@ class FederaationSponsorController extends Controller
     public function edit(Request $request)
     {
         $data = FederaationSponsor::where('id', $request->id)->first();
-        
+
         return view('pages.FederationSponsor.edit')
             ->with('federations', FederationMovement::all())
             ->with('data', $data)
@@ -125,7 +125,7 @@ class FederaationSponsorController extends Controller
                 $check = $sponsor_pic->move($destinationPath,$sponsor_file_name);
 
                 $update = FederaationSponsor::where('id', $request->id)->update([
-                    'sponser_image'    => 'http://alviawan.tk/'. $destinationPath . $sponsor_file_name
+                    'sponser_image'    => env('APP_URL'). $destinationPath . $sponsor_file_name
                 ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
@@ -153,7 +153,7 @@ class FederaationSponsorController extends Controller
         $check = FederaationSponsor::where('id', $request->id)->delete();
         if($check)
         {
-            $request->session()->flash('message', 'Federation Sponsor data save successfully.');
+            $request->session()->flash('message', 'Federation Sponsor data remove successfully.');
             return redirect()->back();
         }
 

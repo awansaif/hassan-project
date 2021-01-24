@@ -58,12 +58,12 @@ class ClubDetailController extends Controller
             {
                 $new_name = rand() . '.' . $images[$i]->getClientOriginalExtension();
                 $images[$i]->move(public_path('club-sponsor-imgs'), $new_name);
-                $img[] =  'http://alviawan.tk/'.'club-sponsor-imgs/'.$new_name;
+                $img[] =  env('APP_URL').'club-sponsor-imgs/'.$new_name;
             }
             $image = $request->file('image');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('club-sponsor-imgs'), $new_name);
-            $image =  'http://alviawan.tk/'.'club-sponsor-imgs/'.$new_name;
+            $image =  env('APP_URL').'club-sponsor-imgs/'.$new_name;
 
             $data = new ClubDetail();
             $data->club_id = $request->club;

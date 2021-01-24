@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FederationMovement;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +29,8 @@ class HomeController extends Controller
     {
         $users = User::count();
         $products = Product::count();
-        return view('home', compact('users', 'products'));
+        $videos = Video::count();
+        $federations = FederationMovement::count();
+        return view('home', compact('users', 'products','videos', 'federations'));
     }
 }

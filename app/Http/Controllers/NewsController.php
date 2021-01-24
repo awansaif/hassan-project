@@ -58,7 +58,7 @@ class NewsController extends Controller
             $data = new News;
             $data->title = $request->title;
             $data->date_and_time = $request->datetime;
-            $data->featured_image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+            $data->featured_image = env('APP_URL'). $destinationPath.$file_name;
             $data->detail = $request->details;
             $data->save();
             $request->session()->flash('message', 'News add successfully.');
@@ -102,7 +102,7 @@ class NewsController extends Controller
             'title' => 'required',
             'datetime'  => 'required',
             'details' => 'required',
-            'file' => 'nullable|image'  
+            'file' => 'nullable|image'
         ]);
         if($validator->fails())
         {
@@ -116,7 +116,7 @@ class NewsController extends Controller
                 $check = $file->move($destinationPath,$file_name);
 
                 $update = News::where('id', $request->news_id)->update([
-                    'featured_image'    => 'http://alviawan.tk/'. $destinationPath . $file_name
+                    'featured_image'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
             }
 
@@ -125,7 +125,7 @@ class NewsController extends Controller
                 'date_and_time' => $request->datetime,
                 'detail' => $request->details,
             ]);
-            
+
             $request->session()->flash('message', 'News updated successfully.');
             return redirect()->back();
 
@@ -143,7 +143,7 @@ class NewsController extends Controller
         $check = News::where('id', $request->id)->delete();
         if($check)
         {
-            $request->session()->flash('message', 'News data save successfully.');
+            $request->session()->flash('message', 'News data remove successfully.');
             return redirect()->back();
         }
     }

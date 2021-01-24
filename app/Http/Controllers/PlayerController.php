@@ -81,14 +81,14 @@ class PlayerController extends Controller
             $data = new Player;
             $data->country_id = $request->country_name;
             $data->player_name = $request->player_name;
-            $data->player_picture = 'http://alviawan.tk/'. $destinationPath.$player_image_name;
+            $data->player_picture = env('APP_URL'). $destinationPath.$player_image_name;
             $data->player_role = $request->player_role;
             $data->club_name   = $request->club_name;
-            $data->club_image   = 'http://alviawan.tk/'. $destinationPath.$club_image_name;
+            $data->club_image   = env('APP_URL'). $destinationPath.$club_image_name;
             $data->player_favorite_shot = $request->player_favorite_shot;
             $data->player_favourite_table = $request->player_favorite_table;
-            $data->sponser_image_one = 'http://alviawan.tk/'. $destinationPath.$sponser_image_one_name;
-            $data->sponser_image_two = 'http://alviawan.tk/'. $destinationPath.$sponser_image_two_name;
+            $data->sponser_image_one = env('APP_URL'). $destinationPath.$sponser_image_one_name;
+            $data->sponser_image_two = env('APP_URL'). $destinationPath.$sponser_image_two_name;
             $data->save();
             $request->session()->flash('message', 'Player add successfully.');
             return redirect()->back();
@@ -152,7 +152,7 @@ class PlayerController extends Controller
                 $check = $player_image->move($destinationPath,$player_image_name);
 
                 $update = player::where('id', $request->player_id)->update([
-                    'player_picture'    => 'http://alviawan.tk/'. $destinationPath . $player_image_name
+                    'player_picture'    => env('APP_URL'). $destinationPath . $player_image_name
                 ]);
             }
             if($request->file('club_image'))
@@ -164,7 +164,7 @@ class PlayerController extends Controller
                 $check = $club_image->move($destinationPath,$club_image_name);
 
                 $update = player::where('id', $request->player_id)->update([
-                    'club_image'    => 'http://alviawan.tk/'. $destinationPath . $club_image_name
+                    'club_image'    => env('APP_URL'). $destinationPath . $club_image_name
                 ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
@@ -178,7 +178,7 @@ class PlayerController extends Controller
                 $check = $sponser_image_one->move($destinationPath,$sponser_image_one_name);
 
                 $update = player::where('id', $request->player_id)->update([
-                    'sponser_image_one'    => 'http://alviawan.tk/'. $destinationPath . $sponser_image_one_name
+                    'sponser_image_one'    => env('APP_URL'). $destinationPath . $sponser_image_one_name
                 ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
@@ -192,7 +192,7 @@ class PlayerController extends Controller
                 $check = $sponser_image_two->move($destinationPath,$sponser_image_two_name);
 
                 $update = player::where('id', $request->player_id)->update([
-                    'sponser_image_two'    => 'http://alviawan.tk/'. $destinationPath . $sponser_image_two_name
+                    'sponser_image_two'    => env('APP_URL'). $destinationPath . $sponser_image_two_name
                 ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
@@ -225,7 +225,7 @@ class PlayerController extends Controller
         $check = player::where('id', $request->id)->delete();
         if($check)
         {
-            $request->session()->flash('message', 'Player data save successfully.');
+            $request->session()->flash('message', 'Player data remove successfully.');
             return redirect()->back();
         }
     }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Club
+Main Clubs
 @endsection
 @section('content')
 <div class="pcoded-content">
@@ -14,15 +14,7 @@ Club
                             <!-- Basic Form Inputs card start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <!--- <h5>Basic Form Inputs</h5>
-                    <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
-                                    <div class="card-header-right"><i class="icofont icofont-spinner-alt-5"></i></div>
-
-                                    <div class="card-header-right">
-                                        <i class="icofont icofont-spinner-alt-5"></i>
-
-                                    </div>
-
+                                   <a href="/main-club" class="btn btn-primary">Back</a>
                                 </div>
                                 <div class="card-block">
                                     <!--- <h4 class="sub-title">Basic Inputs</h4> -->
@@ -45,18 +37,6 @@ Club
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Main Club<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <select name="club" id="" class="form-control custom-select">
-                                                    <option selected disabled class="selected disabled">Choose club...</option>
-                                                    @foreach($clubs as $club)
-                                                        <option value="{{ $club->id }}">{{ $club->club_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Name<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
@@ -65,26 +45,9 @@ Club
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Image<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="image"  required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Country<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="country"
-                                                    placeholder="Country"  value="{{ old('country') }}" required>
-                                            </div>
-                                        </div>
-
                                         <button type="submit" class="btn btn-primary float-right"
                                             id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Add Club</button>
+                                            title="Primary color states" data-placement="bottom">Add Main Club</button>
                                     </form>
                                 </div>
                             </div>

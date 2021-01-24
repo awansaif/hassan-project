@@ -57,7 +57,7 @@ class SponsorController extends Controller
 
             $data = new Sponsor;
             $data->sponsor_description = $request->description;
-            $data->sponser_image  = 'http://alviawan.tk/'. $destinationPath . $sponsor_file_name;
+            $data->sponser_image  = env('APP_URL'). $destinationPath . $sponsor_file_name;
             $data->save();
             $request->session()->flash('message', 'Sponsor data save successfully.');
             return redirect()->back();
@@ -118,7 +118,7 @@ class SponsorController extends Controller
 
                 $update = Sponsor::where('id', $request->sponsor_id)->update([
                     'sponsor_description' => $request->description,
-                    'sponser_image'       => 'http://alviawan.tk/'. $destinationPath . $sponsor_file_name,
+                    'sponser_image'       => env('APP_URL'). $destinationPath . $sponsor_file_name,
                 ]);
                 $request->session()->flash('message', 'Sponsor data update successfully.');
                 return redirect()->back();

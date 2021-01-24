@@ -57,7 +57,7 @@ class FederationMovementController extends Controller
             $check = $image->move($destinationPath,$image_name);
             $data = new FederationMovement();
             $data->name = $request->name;
-            $data->image = 'http://alviawan.tk/'. $destinationPath . $image_name;
+            $data->image = env('APP_URL'). $destinationPath . $image_name;
             $data->latest_event = $request->latest_event;
             $data->save();
             $request->session()->flash('message', 'Federation movement add successfully');

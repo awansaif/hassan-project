@@ -27,7 +27,9 @@ use App\Models\Federation;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
 use App\Models\FederationNews;
+use App\Models\MainClub;
 use App\Models\Sponsor;
+use App\Models\Video;
 use Auth;
 
 class ApiController extends Controller
@@ -77,6 +79,7 @@ class ApiController extends Controller
                     'success' => true,
                     'token'  => $token,
                     'message' => 'Account is registered succcessfully',
+                    'data' => $user,
 
                 ];
                 return response()->json($data);
@@ -102,13 +105,14 @@ class ApiController extends Controller
         }
         else
         {
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1]))
+            if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1]))
             {
 
-                $token =  $request->user()->createToken('laravel')->accessToken;
+                $token =  Auth::guard('web')->user()->createToken('laravel')->accessToken;
                 $response = [
                     'success' => true,
-                    'token' => $token
+                    'token' => $token,
+                    'data' => User::where('id', Auth::guard('web')->user()->id)->first(),
                 ];
                 return response($response, 200);
             }
@@ -140,7 +144,7 @@ class ApiController extends Controller
             'zip_code'  => 'nullable'
         ]);
         $validator->after(function($validator){
-            if(User::where('id', '!=', Auth::user()->id)->where('email', request('email'))->first())
+            if(User::where('id', '!=', Auth::guard('web')->user()->id)->where('email', request('email'))->first())
             {
                 $validator->errors()->add('email', 'Email already exists in record!');
             }
@@ -164,7 +168,7 @@ class ApiController extends Controller
                 $update = User::where('id', $request->user())->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'avatar' => 'http://alviawan.tk/'. $destination . $file_name,
+                    'avatar' => env('APP_URL'). $destination . $file_name,
                     'address' => $request->address,
                     'phone_number' => $request->phone_number,
                     'city'     => $request->city,
@@ -180,7 +184,7 @@ class ApiController extends Controller
                 }
             }
             else{
-                $update = User::where('id', Auth::user()->id)->update([
+                $update = User::where('id', Auth::guard('web')->user()->id)->update([
                     'name' => $request->name,
                     'email' => $request->email,
                     'address' => $request->address,
@@ -293,9 +297,14 @@ class ApiController extends Controller
         return response()->json($federations);
     }
 
-    public function clubs()
+    public function main_clubs()
     {
-        $clubs = Club::orderBy('id', 'DESC')->get();
+        $data= MainClub::with('clubs')->orderBy('id', 'DESC')->get();
+        return response()->json($data);
+    }
+    public function clubs(Request $request)
+    {
+        $clubs = Club::with('clubs')->where('club_id', $request->id)->orderBy('id', 'DESC')->get();
         return response()->json($clubs);
     }
 
@@ -356,6 +365,12 @@ class ApiController extends Controller
     public function detail_cassifiche(Request $request)
     {
         $data = CassificheDetail::with('cassifiches')->where('cassifiche_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+    public function all_videos()
+    {
+        $data= Video::orderBy('id', 'DESC')->get();
         return response()->json($data);
     }
 

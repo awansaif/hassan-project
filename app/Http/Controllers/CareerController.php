@@ -65,7 +65,7 @@ class CareerController extends Controller
 
             $data = new Career;
             $data->player_id = $request->player;
-            $data->nation_icon = 'http://alviawan.tk/'. $destinationPath.$file_name;
+            $data->nation_icon = env('APP_URL'). $destinationPath.$file_name;
             $data->tounament_year = $request->tounament_year;
             $data->tournament_name = $request->tournament_name;
             $data->sport_movement = $request->sport_movement;
@@ -128,7 +128,7 @@ class CareerController extends Controller
                 $check = $file->move($destinationPath,$file_name);
 
                 $update = Career::where('id', $request->playerCareerId)->update([
-                    'nation_icon'    => 'http://alviawan.tk/'. $destinationPath . $file_name
+                    'nation_icon'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
             }
             $update = Career::where('id', $request->playerCareerId)->update([
@@ -140,7 +140,7 @@ class CareerController extends Controller
 
             $request->session()->flash('message', 'Career updated successfully.');
             return redirect()->back();
-            
+
         }
     }
 
@@ -155,7 +155,7 @@ class CareerController extends Controller
         $check = Career::where('id', $request->id)->delete();
         if($check)
         {
-            $request->session()->flash('message', 'Player Career data save successfully.');
+            $request->session()->flash('message', 'Player Career data remove successfully.');
             return redirect()->back();
         }
     }

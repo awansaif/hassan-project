@@ -56,7 +56,7 @@ class ShopController extends Controller
             $check = $file->move($destinationPath,$file_name);
 
             $data = new Shop;
-            $data->shop_image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+            $data->shop_image = env('APP_URL'). $destinationPath.$file_name;
             $data->shop_name = $request->shop_name;
             $data->save();
             $request->session()->flash('message', 'shop add successfully.');
@@ -116,7 +116,7 @@ class ShopController extends Controller
                 $check = $file->move($destinationPath,$file_name);
                 $update = Shop::where('id', $request->shop_id)->update([
                     'shop_name' => $request->shop_name,
-                    'shope_image' => 'http://alviawan.tk/'. $destinationPath.$file_name
+                    'shope_image' => env('APP_URL'). $destinationPath.$file_name
                 ]);
                 $request->session()->flash('message', 'shop update successfully.');
                 return redirect()->back();
@@ -129,17 +129,6 @@ class ShopController extends Controller
                 $request->session()->flash('message', 'shop update successfully.');
                 return redirect()->back();
             }
-            $file = $request->file('shop_img');
-            $destinationPath = 'shop-pics/';
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destinationPath,$file_name);
-
-            $data = new Shop;
-            $data->shop_image = 'http://alviawan.tk/'. $destinationPath.$file_name;
-            $data->shop_name = $request->shop_name;
-            $data->save();
-            $request->session()->flash('message', 'shop add successfully.');
-            return redirect()->back();
         }
     }
 

@@ -49,7 +49,7 @@ class CassificheController extends Controller
         $data = new Cassifiche();
         $data->federation_id = $request->federation;
         $data->leaderboard_name = $request->name;
-        $data->image = 'http://alviawan.tk/'. $destinationPath.$file_name;
+        $data->image = env('APP_URL'). $destinationPath.$file_name;
         $data->save();
         $request->session()->flash('message', 'Cassifiche add successfully.');
         return redirect()->back();
@@ -98,16 +98,16 @@ class CassificheController extends Controller
             $check = $image->move($destinationPath,$file_name);
 
             $update = Cassifiche::where('id', $request->id)->update([
-                'image' => 'http://alviawan.tk/'. $destinationPath . $file_name
+                'image' => env('APP_URL'). $destinationPath . $file_name
             ]);
         }
-        
+
         $update = Cassifiche::where('id', $request->id)->update([
             'federation_id' => $request->federation,
             'leaderboard_name' => $request->name
         ]);
-        
-        return redirect()->back()->with(['message' => 'Cassifache Updated Successfully']); 
+
+        return redirect()->back()->with(['message' => 'Cassifache Updated Successfully']);
     }
 
     /**
