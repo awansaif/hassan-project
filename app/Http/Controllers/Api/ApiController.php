@@ -39,6 +39,10 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function registered_users()
+    {
+        return User::all();
+    }
 
     public function register(Request $request)
     {
