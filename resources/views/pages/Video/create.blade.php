@@ -39,7 +39,15 @@ Video
                                             <label class="col-sm-2 col-form-label">Video Title<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" name="title" value="{{ old('title') }}" id="title" class="form-control">
+                                                <input type="text" name="title" value="{{ old('title') }}" id="title" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Video Thumbnail<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" class="form-control" name="thumbnail" required>
                                             </div>
                                         </div>
 
@@ -47,7 +55,7 @@ Video
                                             <label class="col-sm-2 col-form-label">Video<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="video">
+                                                <input type="file" class="form-control" name="video" required>
                                             </div>
                                         </div>
 

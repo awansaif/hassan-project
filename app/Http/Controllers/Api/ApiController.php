@@ -143,8 +143,9 @@ class ApiController extends Controller
             'city'      => 'required',
             'zip_code'  => 'nullable'
         ]);
+
         $validator->after(function($validator){
-            if(User::where('id', '!=', Auth::guard('web')->user()->id)->where('email', request('email'))->first())
+            if(User::where('id', '!=',Auth::user()->id)->where('email', request('email'))->first())
             {
                 $validator->errors()->add('email', 'Email already exists in record!');
             }
@@ -157,15 +158,16 @@ class ApiController extends Controller
             ];
             return response()->json($data);
         }
+        
         else{
             if($request->file('avatar'))
             {
-                $destination = 'User-avatars';
+                $destination = 'User-avatars/';
                 $file = $request->file('avatar');
                 $file_name = time().$file->getClientOriginalName();
                 $check = $file->move($destination,$file_name);
 
-                $update = User::where('id', $request->user())->update([
+                $update = User::where('id', Auth::user()->id)->update([
                     'name' => $request->name,
                     'email' => $request->email,
                     'avatar' => env('APP_URL'). $destination . $file_name,
@@ -184,7 +186,7 @@ class ApiController extends Controller
                 }
             }
             else{
-                $update = User::where('id', Auth::guard('web')->user()->id)->update([
+                $update = User::where('id', Auth::user()->id)->update([
                     'name' => $request->name,
                     'email' => $request->email,
                     'address' => $request->address,

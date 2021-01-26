@@ -17,13 +17,9 @@ Dashboard
                             <div class="card widget-card-1">
                                 <div class="card-block-small">
                                     <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
-                                    <span class="text-c-blue f-w-600">Use space</span>
-                                    <h4>49/50GB</h4>
+                                    <span class="text-c-blue f-w-600">Total Videos</span>
+                                    <h4>{{ $videos}}  </h4>
                                     <div>
-                                        <span class="f-left m-t-10 text-muted">
-                                            <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Get more
-                                            space
-                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -34,8 +30,8 @@ Dashboard
                             <div class="card widget-card-1">
                                 <div class="card-block-small">
                                     <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
-                                    <span class="text-c-pink f-w-600">Revenue</span>
-                                    <h4>$23,589</h4>
+                                    <span class="text-c-pink f-w-600">Federations</span>
+                                    <h4>{{ $federations }}</h4>
                                     <div>
                                         <span class="f-left m-t-10 text-muted">
                                             <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Last 24

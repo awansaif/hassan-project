@@ -25,6 +25,7 @@ Video
                                         <tr>
                                             <th>#</th>
                                             <th>Title</th>
+                                            <th>Thumbnail</th>
                                             <th>Video</th>
                                             <th>Action</th>
                                         </tr>
@@ -34,7 +35,16 @@ Video
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $video->video_title }}</td>
-                                            <td><video src="{{ $video->video_path }}"></video></td>
+                                            <td>
+                                                <div style="width:200px; height: 200px;">
+                                                    <img src="{{ $video->thumbnail }}" width="100%" height="auto">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="width:200px; height: 200px;">
+                                                     <video src="{{ $video->video_path }}" controls width="100%" height="auto"></video>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <a href="/edit-video?id={{ $video->id }}" class="btn btn-primary">Edit</a>
                                                 <a href="/remove-video?id={{ $video->id }}" class="btn btn-danger">

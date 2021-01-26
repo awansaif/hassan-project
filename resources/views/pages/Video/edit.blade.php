@@ -40,16 +40,31 @@ Video
                                             <label class="col-sm-2 col-form-label">Video Title<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" name="title" value="{{ $data->video_title }}" id="title" class="form-control">
+                                                <input type="text" name="title" value="{{ $data->video_title }}" id="title" class="form-control" required>
                                             </div>
                                         </div>
-
+    
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Thumbnail<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <div style="width:200px; height: 200px;">
+                                                    <img src="{{ $data->thumbnail }}" width="100%" height="auto">
+                                                </div>
+                                                
+                                                <input type="file" class="form-control" name="thumbnail" required>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Video<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <video src="{{ $data->video_path }}"></video>
-                                                <input type="file" class="form-control" name="video" >
+                                                <div style="width:200px; height: 200px;">
+                                                    <video src="{{ $data->video_path }}" width="100%" height="auto" controls></video>
+                                                </div>
+                                                
+                                                <input type="file" class="form-control" name="video" required>
                                             </div>
                                         </div>
 

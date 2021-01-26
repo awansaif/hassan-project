@@ -43,9 +43,14 @@ class VideoController extends Controller
         $file = $request->file('video');
         $file_name = time().$file->getClientOriginalName();
         $check = $file->move($destination,$file_name);
+        
+        $thumb = $request->file('thumbnail');
+        $thumb_name = time().$thumb->getClientOriginalName();
+        $check = $thumb->move($destination,$thumb_name);
 
         $data = new Video();
         $data->video_title = $request->title;
+        $data->thumbnail = env('APP_URL').$destination.$thumb_name;
         $data->video_path = env('APP_URL').$destination.$file_name;
         $data->save();
         $request->session()->flash('message', 'Video Uploaded successfully.');
@@ -87,7 +92,38 @@ class VideoController extends Controller
     {
         //
         $destination = 'videos/';
-        if($request->file('video'))
+        if($request->file('video') && $request->file('thumbnail'))
+        {
+            $file = $request->file('video');
+            $file_name = time().$file->getClientOriginalName();
+            $check = $file->move($destination,$file_name);
+            
+            $thumb = $request->file('thumbnail');
+            $thumb_name = time().$thumb->getClientOriginalName();
+            $check = $thumb->move($destination,$thumb_name);
+
+            $update = Video::where('id', $request->id)->update([
+                'video_title' => $request->title,
+                'thumbnail'   => env('APP_URL').$destination.$thumb_name,
+                'video_path'  => env('APP_URL').$destination.$file_name
+            ]);
+            $request->session()->flash('message', 'Video Updated successfully.');
+            return redirect()->back();
+        }
+        elseif($request->file('thumbnail'))
+        {
+            $thumb = $request->file('thumbnail');
+            $thumb_name = time().$thumb->getClientOriginalName();
+            $check = $thumb->move($destination,$thumb_name);
+
+            $update = Video::where('id', $request->id)->update([
+                'video_title' => $request->title,
+                'thumbnail'   => env('APP_URL').$destination.$thumb_name,
+            ]);
+            $request->session()->flash('message', 'Video Updated successfully.');
+            return redirect()->back();
+        }
+        elseif($request->file('video'))
         {
             $file = $request->file('video');
             $file_name = time().$file->getClientOriginalName();
