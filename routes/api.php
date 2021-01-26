@@ -5,6 +5,8 @@ use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\News;
+use App\Models\RecentNews;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,5 +70,10 @@ Route::get('/flash-news', [ApiController::class, 'flash_news']);
 
 //video
 Route::get('/all-videos', [ApiController::class, 'all_videos']);
+
+//latst 5 news
+Route::get('/latest_news', function(){
+    return RecentNews::orderBy('id', 'DESC')->take(5)->get();
+});
 
 

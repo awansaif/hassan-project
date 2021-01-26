@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class RecentNews extends Model
 {
     use HasFactory;
-    public function recent_news()
+    protected $guarded = [];
+    
+    public function federation()
     {
-        return $this->hasOne(RecentNews::class);
+        return $this->belongsTo(FederationNews::class);
     }
 }

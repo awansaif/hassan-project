@@ -12,4 +12,8 @@ class FederationNews extends Model
     {
         return $this->belongsTo('App\Models\FederationMovement', 'federation_id');
     }
+    public function recent_news()
+    {
+        return $this->hasOne(RecentNews::class);
+    }
 }
