@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
 use App\Models\AlbodroCategory;
 use App\Models\AlbodroItem;
 use App\Models\Cassifiche;
@@ -31,6 +32,7 @@ use App\Models\MainClub;
 use App\Models\Sponsor;
 use App\Models\Video;
 use Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
@@ -39,10 +41,6 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function registered_users()
-    {
-        return User::all();
-    }
 
     public function register(Request $request)
     {
@@ -79,6 +77,7 @@ class ApiController extends Controller
             if($user->save())
             {
                 $token = $user->createToken('laravel')->accessToken;
+                Mail::to($user->email)->send(new WelcomeMail);
                 $data = [
                     'success' => true,
                     'token'  => $token,

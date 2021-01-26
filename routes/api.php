@@ -62,5 +62,4 @@ Route::get('/cassifiche/{id}', [ApiController::class, 'detail_cassifiche']);
 //video
 Route::get('/all-videos', [ApiController::class, 'all_videos']);
 
-// Getting registered users
-Route::get('/registered_users', [ApiController::class, 'registered_users']);
+

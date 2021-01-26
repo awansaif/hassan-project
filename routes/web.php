@@ -1,29 +1,32 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\AlbodroCategoryController;
-use App\Http\Controllers\AlbodroItemController;
-use App\Http\Controllers\CassificheController;
-use App\Http\Controllers\CassificheDetailController;
+use App\Models\User;
+use App\Mail\WelcomeMail;
+use App\Models\CollectionDetail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClubController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\StreamController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\MainClubController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\CassificheController;
 use App\Http\Controllers\ClubDetailController;
 use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\CollectionDetailController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationController;
-use App\Http\Controllers\FederationEventController;
-use App\Http\Controllers\FederationMovementController;
+use App\Http\Controllers\AlbodroItemController;
 use App\Http\Controllers\FederationNewsController;
-use App\Http\Controllers\MainClubController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\SponsorController;
-use App\Http\Controllers\StreamController;
-use App\Http\Controllers\VideoController;
-use App\Models\CollectionDetail;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlbodroCategoryController;
+use App\Http\Controllers\FederationEventController;
+use App\Http\Controllers\CassificheDetailController;
+use App\Http\Controllers\CollectionDetailController;
+use App\Http\Controllers\FederaationSponsorController;
+use App\Http\Controllers\FederationMovementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -219,7 +222,7 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/remove-video', [VideoController::class, 'destroy']);
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
-
+    Route::view('/registered', 'registered', ['users' => User::all()]);
   });
 
   Route::group(['prefix' => 'admin'], function () {
