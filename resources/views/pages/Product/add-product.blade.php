@@ -121,10 +121,10 @@ Product
                                             <div class="col-sm-10">
                                                 <span>Fill all these images file.</span>
                                                 <input type="file" class="form-control" name="images[]" required>
-                                                <input type="file" class="form-control" name="images[]" required>
-                                                <input type="file" class="form-control" name="images[]" required>
-                                                <input type="file" class="form-control" name="images[]" required>
-                                                <input type="file" class="form-control" name="images[]" required>
+                                                <input type="file" class="form-control" name="images[]" >
+                                                <input type="file" class="form-control" name="images[]" >
+                                                <input type="file" class="form-control" name="images[]" >
+                                                <input type="file" class="form-control" name="images[]" >
                                             </div>
                                         </div>
                                         <div class="form-group row">

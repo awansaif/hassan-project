@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\player;
+use App\Models\Player;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +16,7 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        $players = player::orderBy('id', 'DESC')->get();
+        $players = Player::orderBy('id', 'DESC')->get();
         return view('pages.Player.main', compact('players'));
     }
 

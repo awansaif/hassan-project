@@ -35,9 +35,11 @@ Collection
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $collection->collection->collection_name }}</td>
                                             <td>
-                                                <div style="width:200px; height:200px;">
-                                                <img src="{{ $collection->collection_images_list }}" width="100%" height="auto">
-                                                </div>
+                                                @foreach(json_decode($collection->collection_images_list) as $images)
+                                                    <div style="width:120px; height:120px; float:left">
+                                                    <img src="{{ $images }}" width="100%" height="auto">
+                                                    </div>
+                                                @endforeach
                                             </td>
                                             <td>
                                                 <a href="/remove-collection-image?id={{$collection->id}}" class="btn btn-danger">

@@ -44,7 +44,7 @@ class CollectionDetailController extends Controller
         //
         $validator = Validator::make($request->all(),[
             'collection' => 'required',
-            'collection_image_list' => 'required|image',
+            'collection_image_list.*' => 'required|image',
         ]);
         if($validator->fails())
         {
@@ -53,13 +53,18 @@ class CollectionDetailController extends Controller
         }
         else
         {
+
             $images = $request->file('collection_image_list');
-            $new_name = rand() . '.' . $images->getClientOriginalExtension();
-            $images->move(public_path('collection-imgs-list'), $new_name);
-            $img =  env('APP_URL').'collection-imgs-list/'.$new_name;
+            for($i = 0; $i < count($images); $i++)
+            {
+                $new_name = rand() . '.' . $images[$i]->getClientOriginalExtension();
+                $images[$i]->move(public_path('collection-imgs-list'), $new_name);
+                $img[] =  env('APP_URL').'collection-imgs-list/'.$new_name;
+            }
+
             $data = new CollectionDetail;
             $data->collection_id = $request->collection;
-            $data->collection_images_list = $img;
+            $data->collection_images_list = json_encode($img);
             $data->save();
             $request->session()->flash('message', 'Collection image add successfully.');
             return redirect()->back();

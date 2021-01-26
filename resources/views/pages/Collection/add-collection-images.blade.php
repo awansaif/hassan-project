@@ -24,7 +24,7 @@ Collection Images
                                 @if(Session::has('message'))
                                     <div class="alert alert-success">
                                         {{ Session::get('message') }}
-                                    </div>  
+                                    </div>
                                 @endif
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
@@ -51,7 +51,7 @@ Collection Images
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Collection Image<span style="color:#ff0000"> *</span></label>
                                         <div class="col-sm-10">
-                                            <input type="file" name="collection_image_list" class="form-control-file form-control">
+                                            <input type="file" name="collection_image_list[]" class="form-control-file form-control" multiple>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary float-right" id="primary-popover-content" data-container="body" data-toggle="popover" title="Primary color states" data-placement="bottom">Add Collection</button>

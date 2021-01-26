@@ -57,12 +57,12 @@ Product
                                             <td>{{ $product->product_old_price }}</td>
                                             <td>{{ $product->product_new_price }}</td>
                                             <td>
-                                                @if($product->product_colour)
-                                                @foreach(json_decode($product->product_colour) as $color)
-                                                <div style="width: 100px; height:100px; background-color:{{$color}}; color:white;">
-                                                    <span>Color</span>
-                                                </div>
-                                                @endforeach
+                                                @if($product->product_colour != null)
+                                                    @foreach(json_decode($product->product_colour) as $color)
+                                                    <div style="width: 100px; height:100px; background-color:{{$color}}; color:white;">
+                                                        <span>Color</span>
+                                                    </div>
+                                                    @endforeach
                                                 @endif
                                             </td>
 											<td>

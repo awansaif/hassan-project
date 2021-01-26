@@ -48,7 +48,7 @@ class ProductController extends Controller
             'product_name'  => 'required',
             'product_size'  => 'required',
             'product_description' => 'required',
-            'product_old_price' => 'required',
+            'product_old_price' => 'nullable',
             'product_new_price' => 'required',
             'category'          => 'required',
             'product_color'    => 'nullable',
@@ -64,7 +64,7 @@ class ProductController extends Controller
                 $images[$i]->move(public_path('product-imgs'), $new_name);
                 $img[] =  env('APP_URL') . 'product-imgs/' . $new_name;
             }
-            if($request->product_color[0] == '#00000' && $request->product_color[1] == '#00000' && $request->product_color[2] == '#00000')
+            if($request->product_color[0] === '#000000' && $request->product_color[1] === '#000000' && $request->product_color[2] === '#000000')
             {
                 $data = new Product;
                 $data->shop_id = $request->shop;
@@ -75,7 +75,6 @@ class ProductController extends Controller
                 $data->product_old_price = $request->product_old_price;
                 $data->product_new_price = $request->product_new_price;
                 $data->category = $request->category;
-                $data->product_colour = "''";
                 $data->product_code = $request->product_code;
                 $data->save();
                 $request->session()->flash('message', 'Product add successfully.');
@@ -146,10 +145,10 @@ class ProductController extends Controller
             'product_name'  => 'required',
             'product_size'  => 'required',
             'product_description' => 'required',
-            'product_old_price' => 'required',
+            'product_old_price' => 'nullable',
             'product_new_price' => 'required',
             'category'          => 'required',
-            'product_color.*'    => 'required',
+            'product_color'    => 'nullable',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)

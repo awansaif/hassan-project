@@ -158,7 +158,7 @@ class ApiController extends Controller
             ];
             return response()->json($data);
         }
-        
+
         else{
             if($request->file('avatar'))
             {
@@ -330,7 +330,7 @@ class ApiController extends Controller
     }
     public function federation_news(Request $request)
     {
-        $data = FederationNews::with('federations')->where('federation_id', $request->id)->get();
+        $data = FederationNews::with('federations')->orderBY('id', 'DESC')->where('federation_id', $request->id)->get();
         return response()->json($data);
     }
     public function federation_sponsors(Request $request)
