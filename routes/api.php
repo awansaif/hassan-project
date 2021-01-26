@@ -26,8 +26,12 @@ Route::group(['middleware' => 'auth:api'],function(){
     Route::get('logout', [ApiController::class, 'logout']);
 });
 
+//users api
 Route::post('login', [ApiController::class, 'login']);
 Route::post('signup', [ApiController::class, 'register']);
+Route::post('password-reset', [ApiController::class, 'password_reset']);
+
+
 Route::get('news', [App\Http\Controllers\Api\ApiController::class, 'all_news']);
 Route::get('events', [App\Http\Controllers\Api\ApiController::class, 'all_events']);
 Route::get('shops', [App\Http\Controllers\Api\ApiController::class, 'all_shops']);
@@ -58,6 +62,9 @@ Route::get('/federations/albrodoro-category/{id}/items', [ApiController::class, 
 //casifiche apis
 Route::get('/cassifiches/{id}', [ApiController::class, 'cassifiches']);
 Route::get('/cassifiche/{id}', [ApiController::class, 'detail_cassifiche']);
+
+//flash news api
+Route::get('/flash-news', [ApiController::class, 'flash_news']);
 
 //video
 Route::get('/all-videos', [ApiController::class, 'all_videos']);

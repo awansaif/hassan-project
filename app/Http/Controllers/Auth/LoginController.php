@@ -37,4 +37,19 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function change_password(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8|same:password_confirmation'
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        else{
+            $update = User::where('email', $request->acctual_email)->update([
+                'password' => Hash::make($request->password),
+            ]);
+            return view('auth.passwords.reset')->with('message', 'Password change successfully.');
+        }
+    }
+    
 }

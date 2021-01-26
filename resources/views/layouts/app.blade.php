@@ -130,6 +130,13 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="/flash-news">
+                                        <span class="pcoded-micon"><i class="ti-user"></i><b>D</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Flash News</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
                                 <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Function</div>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">

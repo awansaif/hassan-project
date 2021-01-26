@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -33,4 +35,5 @@ class HomeController extends Controller
         $federations = FederationMovement::count();
         return view('home', compact('users', 'products','videos', 'federations'));
     }
+
 }

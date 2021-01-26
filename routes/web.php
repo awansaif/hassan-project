@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Mail\WelcomeMail;
 use App\Models\CollectionDetail;
@@ -22,11 +23,14 @@ use App\Http\Controllers\FederationController;
 use App\Http\Controllers\AlbodroItemController;
 use App\Http\Controllers\FederationNewsController;
 use App\Http\Controllers\AlbodroCategoryController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\CassificheDetailController;
 use App\Http\Controllers\CollectionDetailController;
 use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationMovementController;
+use App\Http\Controllers\FlashNewsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +49,16 @@ Route::group(['middleware', 'guest'],function(){
 });
 
 
-//Auth::routes();
+Route::get('reset-password',function(Request $request){
+    if(! $request->hasValidSignature()){
+        abort(401);
+    }
+    else{
+        return view('auth.passwords.reset');
+    }
+})->name('reset-password');
+Route::post('/reset-password', [LoginController::class, 'change_password']);
+// Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware'=> ['auth']],function(){
 
@@ -220,6 +233,15 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/edit-video', [VideoController::class, 'edit']);
     Route::post('/edit-video', [VideoController::class, 'update']);
     Route::get('/remove-video', [VideoController::class, 'destroy']);
+
+    //Flash news routers
+    Route::get('/flash-news', [FlashNewsController::class, 'index']);
+    Route::get('/add-flash-news', [FlashNewsController::class, 'create']);
+    Route::post('/add-flash-news', [FlashNewsController::class, 'store']);
+    Route::get('/edit-flash-news', [FlashNewsController::class, 'edit']);
+    Route::post('/edit-flash-news', [FlashNewsController::class, 'update']);
+    Route::get('/remove-flash-news', [FlashNewsController::class, 'destroy']);
+
 
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
     Route::view('/registered', 'registered', ['users' => User::all()]);

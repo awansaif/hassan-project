@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
 use App\Mail\WelcomeMail;
 use App\Models\AlbodroCategory;
 use App\Models\AlbodroItem;
@@ -28,10 +31,13 @@ use App\Models\Federation;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
 use App\Models\FederationNews;
+use App\Models\FlashNews;
 use App\Models\MainClub;
 use App\Models\Sponsor;
 use App\Models\Video;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
@@ -54,16 +60,13 @@ class ApiController extends Controller
             'phone_number' => 'required',
             'city'         => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $data = [
                 'success' => false,
                 'errors'  => $validator->errors()->all(),
             ];
             return response()->json($data);
-        }
-        else
-        {
+        } else {
             $user = new User([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -74,8 +77,7 @@ class ApiController extends Controller
                 'city' => $request->city,
                 'avatar' => "''",
             ]);
-            if($user->save())
-            {
+            if ($user->save()) {
                 $token = $user->createToken('laravel')->accessToken;
                 Mail::to($user->email)->send(new WelcomeMail);
                 $data = [
@@ -88,7 +90,6 @@ class ApiController extends Controller
                 return response()->json($data);
             }
         }
-
     }
 
     public function login(Request $request)
@@ -98,18 +99,14 @@ class ApiController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $data = [
                 'success' => false,
                 'errors'  => $validator->errors()->all(),
             ];
             return response()->json($data);
-        }
-        else
-        {
-            if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1]))
-            {
+        } else {
+            if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1])) {
 
                 $token =  Auth::guard('web')->user()->createToken('laravel')->accessToken;
                 $response = [
@@ -118,17 +115,14 @@ class ApiController extends Controller
                     'data' => User::where('id', Auth::guard('web')->user()->id)->first(),
                 ];
                 return response($response, 200);
-            }
-            else
-            {
+            } else {
                 $data = [
-                'success' => false,
-                'errors'  => ['Please try again'],
-            ];
-            return response()->json($data);
+                    'success' => false,
+                    'errors'  => ['Please try again'],
+                ];
+                return response()->json($data);
             }
         }
-
     }
 
     public function user(Request $request)
@@ -147,40 +141,50 @@ class ApiController extends Controller
             'zip_code'  => 'nullable'
         ]);
 
-        $validator->after(function($validator){
-            if(User::where('id', '!=',Auth::user()->id)->where('email', request('email'))->first())
-            {
+        $validator->after(function ($validator) {
+            if (User::where('id', '!=', Auth::user()->id)->where('email', request('email'))->first()) {
                 $validator->errors()->add('email', 'Email already exists in record!');
             }
         });
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $data = [
                 'success' => false,
                 'errors'  => $validator->errors()->all(),
             ];
             return response()->json($data);
-        }
-
-        else{
-            if($request->file('avatar'))
-            {
+        } else {
+            if ($request->file('avatar')) {
                 $destination = 'User-avatars/';
                 $file = $request->file('avatar');
-                $file_name = time().$file->getClientOriginalName();
-                $check = $file->move($destination,$file_name);
+                $file_name = time() . $file->getClientOriginalName();
+                $check = $file->move($destination, $file_name);
 
                 $update = User::where('id', Auth::user()->id)->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'avatar' => env('APP_URL'). $destination . $file_name,
+                    'avatar' => env('APP_URL') . $destination . $file_name,
                     'address' => $request->address,
                     'phone_number' => $request->phone_number,
                     'city'     => $request->city,
                     'zip_code' => $request->zip_code,
                 ]);
-                if($update)
-                {
+                if ($update) {
+                    $data = [
+                        'success' => true,
+                        'message' => 'User updated successfully.'
+                    ];
+                    return response()->json($data);
+                }
+            } else {
+                $update = User::where('id', Auth::user()->id)->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                    'city'     => $request->city,
+                    'zip_code' => $request->zip_code,
+                ]);
+                if ($update) {
                     $data = [
                         'success' => true,
                         'message' => 'User updated successfully.'
@@ -188,25 +192,6 @@ class ApiController extends Controller
                     return response()->json($data);
                 }
             }
-            else{
-                $update = User::where('id', Auth::user()->id)->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address' => $request->address,
-                    'phone_number' => $request->phone_number,
-                    'city'     => $request->city,
-                    'zip_code' => $request->zip_code,
-                ]);
-                if($update)
-                {
-                    $data = [
-                        'success' => true,
-                        'message' => 'User updated successfully.'
-                    ];
-                    return response()->json($data);
-                }
-            }
-
         }
     }
     public function logout(Request $request)
@@ -216,6 +201,47 @@ class ApiController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    public function password_reset(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|exists:users,email',
+        ]);
+        if ($validator->fails()) {
+            $data = [
+                'success' => false,
+                'response' => $validator->errors()->all()
+            ];
+            return response()->json($data);
+        }
+        else {
+            $user = User::where('email', $request->email)->first();
+            Mail::to($request->email)->send(new ResetPassword($user));
+
+            $data = [
+                'success' => true,
+                'response' => 'Please check your email',
+            ];
+            return response()->json($data);
+        }
+    }
+    public function broker()
+    {
+        return Password::broker();
+    }
+    protected function credentials(Request $request)
+    {
+        return $request->only('email');
+    }
+
+
+
+
+
+
+
+
+
 
     public function all_news()
     {
@@ -234,7 +260,6 @@ class ApiController extends Controller
         //
         $events = Event::orderBY('id', 'DESC')->get();
         return response()->json($events);
-
     }
 
     public function all_streams()
@@ -255,7 +280,8 @@ class ApiController extends Controller
         return response()->json($products);
     }
 
-    public function product(Request $request){
+    public function product(Request $request)
+    {
         $products = Product::with('shops')->where('shop_id', $request->id)->get();
         return response()->json($products);
     }
@@ -268,7 +294,7 @@ class ApiController extends Controller
 
     public function players(Request $request)
     {
-        $players = Player::with('countries')->where('country_id', $request->id)->select('id','country_id','player_name', 'player_picture', 'player_role')->orderBy('id', 'DESC')->get();
+        $players = Player::with('countries')->where('country_id', $request->id)->select('id', 'country_id', 'player_name', 'player_picture', 'player_role')->orderBy('id', 'DESC')->get();
         return response()->json($players);
     }
 
@@ -286,7 +312,7 @@ class ApiController extends Controller
 
     public function collectionDetail(Request $request)
     {
-        $collection = CollectionDetail::where('collection_id',$request->id)->orderBy('id', 'DESC')->get();
+        $collection = CollectionDetail::where('collection_id', $request->id)->orderBy('id', 'DESC')->get();
         return response()->json($collection);
     }
 
@@ -304,7 +330,7 @@ class ApiController extends Controller
 
     public function main_clubs()
     {
-        $data= MainClub::with('clubs')->orderBy('id', 'DESC')->get();
+        $data = MainClub::with('clubs')->orderBy('id', 'DESC')->get();
         return response()->json($data);
     }
     public function clubs(Request $request)
@@ -375,8 +401,13 @@ class ApiController extends Controller
 
     public function all_videos()
     {
-        $data= Video::orderBy('id', 'DESC')->get();
+        $data = Video::orderBy('id', 'DESC')->get();
         return response()->json($data);
     }
 
+    public function flash_news()
+    {
+        $data = FlashNews::orderBy('id', 'DESC')->get();
+        return response()->json($data);
+    }
 }
