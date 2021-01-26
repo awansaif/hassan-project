@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FederationMovement;
 use App\Models\FederationNews;
+use App\Models\RecentNews;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -59,6 +60,7 @@ class FederationNewsController extends Controller
             $destinationPath = 'federation-news-pics/';
             $file_name = time().$file->getClientOriginalName();
             $check = $file->move($destinationPath,$file_name);
+
             $data = new FederationNews();
             $data->federation_id = $request->federation;
             $data->title = $request->title;
@@ -66,6 +68,15 @@ class FederationNewsController extends Controller
             $data->featured_image = env('APP_URL'). $destinationPath.$file_name;
             $data->detail = $request->details;
             $data->save();
+
+            $data_recent = new RecentNews();
+            $data_recent->federation_news_id = $data->id;
+            $data_recent->title = $request->title;
+            $data_recent->date_and_time = $request->datetime;
+            $data_recent->featured_image = env('APP_URL'). $destinationPath.$file_name;
+            $data_recent->detail = $request->details;
+            $data_recent->save();
+
             $request->session()->flash('message', 'Federation News add successfully.');
             return redirect()->back();
         }
@@ -132,12 +143,20 @@ class FederationNewsController extends Controller
                 $update = FederationNews::where('id', $request->id)->update([
                     'featured_image'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
+                $update = FederationNews::find($request->id)->recent_news->update([
+                    'featured_image'    => env('APP_URL'). $destinationPath . $file_name
+                ]);
                 // $request->session()->flash('message', 'Event data save successfully.');
                 // return redirect()->back();
             }
 
             FederationNews::where('id', $request->id)->update([
                 'federation_id' => $request->federation,
+                'title' => $request->title,
+                'date_and_time' => $request->datetime,
+                'detail' => $request->details,
+            ]);
+            FederationNews::find($request->id)->recent_news->update([
                 'title' => $request->title,
                 'date_and_time' => $request->datetime,
                 'detail' => $request->details,

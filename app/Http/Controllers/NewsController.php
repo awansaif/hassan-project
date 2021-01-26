@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use App\Models\RecentNews;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,12 +56,22 @@ class NewsController extends Controller
             $destinationPath = 'news-pics/';
             $file_name = time().$file->getClientOriginalName();
             $check = $file->move($destinationPath,$file_name);
+
             $data = new News;
             $data->title = $request->title;
             $data->date_and_time = $request->datetime;
             $data->featured_image = env('APP_URL'). $destinationPath.$file_name;
             $data->detail = $request->details;
             $data->save();
+
+            $data_recent = new RecentNews();
+            $data_recent->news_id = $data->id;
+            $data_recent->title = $request->title;
+            $data_recent->date_and_time = $request->datetime;
+            $data_recent->featured_image = env('APP_URL'). $destinationPath.$file_name;
+            $data_recent->detail = $request->details;
+            $data_recent->save();
+
             $request->session()->flash('message', 'News add successfully.');
             return redirect()->back();
         }
@@ -118,9 +129,18 @@ class NewsController extends Controller
                 $update = News::where('id', $request->news_id)->update([
                     'featured_image'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
+                $update = News::find($request->id)->recent_news->update([
+                    'featured_image'    => env('APP_URL'). $destinationPath . $file_name
+                ]);
+                
             }
 
             $update = News::where('id', $request->news_id)->update([
+                'title' => $request->title,
+                'date_and_time' => $request->datetime,
+                'detail' => $request->details,
+            ]);
+            $update = News::find($request->news_id)->recent_news->update([
                 'title' => $request->title,
                 'date_and_time' => $request->datetime,
                 'detail' => $request->details,

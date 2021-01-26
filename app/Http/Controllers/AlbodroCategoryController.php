@@ -44,7 +44,7 @@ class AlbodroCategoryController extends Controller
     {
         $data = $request->except(['_token', 'tags']);
 
-        $destinationPath = 'albodro-category-images/';
+        $destinationPath = env('APP_URL').'albodro-category-images/';
         $image = $request->file('image');
         $file_name = time().$image->getClientOriginalName();
         $data['image'] = $image->move($destinationPath,$file_name);
@@ -90,7 +90,7 @@ class AlbodroCategoryController extends Controller
         $data = $request->except(['_token','_method']);
 
         if($request->file('image')){
-            $destinationPath = 'albodro-category-images/';
+            $destinationPath = env('APP_URL').'albodro-category-images/';
             $image = $request->file('image');
             $file_name = time().$image->getClientOriginalName();
             $data['image'] = $image->move($destinationPath,$file_name);

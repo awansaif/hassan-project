@@ -49,7 +49,7 @@ class AlbodroItemController extends Controller
     {
         $data = $request->except(['_token', 'tags']);
 
-        $destinationPath = 'albodro-item-images/';
+        $destinationPath = env('APP_URL').'albodro-item-images/';
         $image = $request->file('image');
         $file_name = time().$image->getClientOriginalName();
         $data['image'] = $image->move($destinationPath,$file_name);
@@ -95,7 +95,7 @@ class AlbodroItemController extends Controller
         $data = $request->except(['_token','_method']);
 
         if($request->file('image')){
-            $destinationPath = 'albodro-item-images/';
+            $destinationPath = env('APP_URL').'albodro-item-images/';
             $image = $request->file('image');
             $file_name = time().$image->getClientOriginalName();
             $data['image'] = $image->move($destinationPath,$file_name);
