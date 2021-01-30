@@ -116,7 +116,7 @@ class EventController extends Controller
     public function edit(Request $request, Event $event)
     {
         $data = Event::where('id', $request->id)->first();
-        return view('pages.events.edit-event',compact('data'));
+        return view('pages.Events.edit-event',compact('data'));
     }
 
     /**
