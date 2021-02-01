@@ -166,6 +166,7 @@ Product
                                                     placeholder="300 $" value="{{ $data->product_new_price }}" required>
                                             </div>
                                         </div>
+                                        @if($data->product_colour != null)
                                         @foreach(json_decode($data->product_colour) as $color)
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Product Colour<span
@@ -176,7 +177,31 @@ Product
                                             </div>
                                         </div>
                                         @endforeach
+                                        @else
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Product Colour<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Product Colour<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Product Colour<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                            </div>
+                                        </div>
+                                        @endif
                                         <button type="submit" class="btn btn-primary float-right"
                                             id="primary-popover-content" data-container="body" data-toggle="popover"
                                             title="Primary color states" data-placement="bottom">Update Product</button>

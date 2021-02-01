@@ -193,6 +193,4 @@ Event
         </div>
     </div>
 </div>
-
-
 @endsection

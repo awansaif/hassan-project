@@ -17,7 +17,7 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::orderBy('id', 'DESC')->get();
-        return view('pages.news.main', compact('news'));
+        return view('pages.News.main', compact('news'));
     }
 
     /**
@@ -28,7 +28,7 @@ class NewsController extends Controller
     public function create()
     {
         //
-        return view('pages.news.add-news');
+        return view('pages.News.add-news');
     }
 
     /**
@@ -97,7 +97,7 @@ class NewsController extends Controller
     public function edit(Request $request, News $news)
     {
         $data = News::where('id', $request->id)->first();
-        return view('pages.news.edit-news',compact('data'));
+        return view('pages.News.edit-news',compact('data'));
     }
 
     /**
@@ -132,7 +132,7 @@ class NewsController extends Controller
                 $update = News::find($request->id)->recent_news->update([
                     'featured_image'    => env('APP_URL'). $destinationPath . $file_name
                 ]);
-                
+
             }
 
             $update = News::where('id', $request->news_id)->update([
