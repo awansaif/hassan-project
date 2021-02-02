@@ -32,6 +32,7 @@ use App\Models\FederationEvent;
 use App\Models\FederationMovement;
 use App\Models\FederationNews;
 use App\Models\FlashNews;
+use App\Models\LatestEvent;
 use App\Models\MainClub;
 use App\Models\Sponsor;
 use App\Models\Video;
@@ -408,6 +409,12 @@ class ApiController extends Controller
     public function flash_news()
     {
         $data = FlashNews::orderBy('id', 'DESC')->get();
+        return response()->json($data);
+    }
+
+    public function latest_events()
+    {
+        $data = LatestEvent::orderBY('id', 'DESC')->take(5)->get();
         return response()->json($data);
     }
 }

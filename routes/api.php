@@ -76,4 +76,6 @@ Route::get('/latest_news', function(){
     return RecentNews::orderBy('id', 'DESC')->take(5)->get();
 });
 
+// latest events
+Route::get('/latest_events', [ApiController::class, 'latest_events']);
 

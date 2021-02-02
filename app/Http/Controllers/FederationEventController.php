@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Federation;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
+use App\Models\LatestEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -95,6 +96,23 @@ class FederationEventController extends Controller
             $data->longtitude = $request->longtitude;
             $data->latitude = $request->latitude;
             $data->save();
+
+            $data = new LatestEvent();
+            $data->event_image = env('APP_URL'). $destinationPath . $event_file_name;
+            $data->secondary_image = env('APP_URL').$destinationPath . $secondary_file_name;
+            $data->short_description = $request->event_short_description;
+            $data->long_decription = $request->event_long_description;
+            $data->even_price = $request->event_price;
+            $data->event_place = $request->event_place;
+            $data->event_timing = $request->event_timing;
+            $data->author_name = $request->aurthor_name;
+            $data->federation_name = $request->federation_name;
+            $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
+            $data->further_detail = $request->further_detail;
+            $data->longtitude = $request->longtitude;
+            $data->latitude = $request->latitude;
+            $data->save();
+
             $request->session()->flash('message', 'Federation Event data save successfully.');
             return redirect()->back();
         }
