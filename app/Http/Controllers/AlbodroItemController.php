@@ -49,10 +49,11 @@ class AlbodroItemController extends Controller
     {
         $data = $request->except(['_token', 'tags']);
 
-        $destinationPath = env('APP_URL').'albodro-item-images/';
+        $destinationPath = 'albodro-item-images/';
         $image = $request->file('image');
         $file_name = time().$image->getClientOriginalName();
         $data['image'] = $image->move($destinationPath,$file_name);
+        $data['image'] = env('APP_URL').$destinationPath.$file_name;
 
         $created = AlbodroItem::create($data);
         return redirect()->back()->with(['message' => 'Item Created Successfully']);
@@ -100,9 +101,9 @@ class AlbodroItemController extends Controller
             $file_name = time().$image->getClientOriginalName();
             $data['image'] = $image->move($destinationPath,$file_name);
         }
-        
+
         $albodroItem->update($data);
-        return redirect()->back()->with(['message' => 'Item Updated Successfully']); 
+        return redirect()->back()->with(['message' => 'Item Updated Successfully']);
     }
 
     /**
