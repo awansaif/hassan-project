@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Country
+    Albo D'oro
 @endsection
 @section('content')
     <div class="pcoded-content">
