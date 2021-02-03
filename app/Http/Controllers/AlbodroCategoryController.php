@@ -44,11 +44,12 @@ class AlbodroCategoryController extends Controller
     {
         $data = $request->except(['_token', 'tags']);
 
-        $destinationPath = env('APP_URL').'albodro-category-images/';
+        $destinationPath = 'albodro-category-images/';
         $image = $request->file('image');
         $file_name = time().$image->getClientOriginalName();
         $data['image'] = $image->move($destinationPath,$file_name);
-        
+        $data['image'] = env('APP_URL').$destinationPath.$file_name;
+
         $created = AlbodroCategory::create($data);
         return redirect()->back()->with(['message' => 'Albodoro Category Created Successfully']);
     }
@@ -95,9 +96,9 @@ class AlbodroCategoryController extends Controller
             $file_name = time().$image->getClientOriginalName();
             $data['image'] = $image->move($destinationPath,$file_name);
         }
-        
+
         $albodroCategory->update($data);
-        return redirect()->back()->with(['message' => 'Albodoro Category Updated Successfully']); 
+        return redirect()->back()->with(['message' => 'Albodoro Category Updated Successfully']);
     }
 
     /**
