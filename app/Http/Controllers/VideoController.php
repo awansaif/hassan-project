@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class VideoController extends Controller
 {
@@ -39,21 +40,19 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         //
+
         $destination = 'videos/';
-        $file = $request->file('video');
-        $file_name = time().$file->getClientOriginalName();
-        $check = $file->move($destination,$file_name);
-        
+
         $thumb = $request->file('thumbnail');
         $thumb_name = time().$thumb->getClientOriginalName();
-        $check = $thumb->move($destination,$thumb_name);
+        $thumb->move($destination,$thumb_name);
 
         $data = new Video();
         $data->video_title = $request->title;
-        $data->thumbnail = env('APP_URL').$destination.$thumb_name;
-        $data->video_path = env('APP_URL').$destination.$file_name;
+        $data->thumbnail   = env('APP_URL').$destination.$thumb_name;
+        $data->video_path  = $request->video;
         $data->save();
-        $request->session()->flash('message', 'Video Uploaded successfully.');
+        $request->session()->flash('message', $request->title . 'Video saved successfully.');
         return redirect()->back();
     }
 
@@ -91,47 +90,20 @@ class VideoController extends Controller
     public function update(Request $request, Video $video)
     {
         //
+        $path = $request->video;
+        parse_str( parse_url( $path, PHP_URL_QUERY ), $video_path);
         $destination = 'videos/';
-        if($request->file('video') && $request->file('thumbnail'))
+        if($request->file('thumbnail'))
         {
-            $file = $request->file('video');
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destination,$file_name);
-            
+
             $thumb = $request->file('thumbnail');
             $thumb_name = time().$thumb->getClientOriginalName();
-            $check = $thumb->move($destination,$thumb_name);
+            $thumb->move($destination,$thumb_name);
 
             $update = Video::where('id', $request->id)->update([
                 'video_title' => $request->title,
                 'thumbnail'   => env('APP_URL').$destination.$thumb_name,
-                'video_path'  => env('APP_URL').$destination.$file_name
-            ]);
-            $request->session()->flash('message', 'Video Updated successfully.');
-            return redirect()->back();
-        }
-        elseif($request->file('thumbnail'))
-        {
-            $thumb = $request->file('thumbnail');
-            $thumb_name = time().$thumb->getClientOriginalName();
-            $check = $thumb->move($destination,$thumb_name);
-
-            $update = Video::where('id', $request->id)->update([
-                'video_title' => $request->title,
-                'thumbnail'   => env('APP_URL').$destination.$thumb_name,
-            ]);
-            $request->session()->flash('message', 'Video Updated successfully.');
-            return redirect()->back();
-        }
-        elseif($request->file('video'))
-        {
-            $file = $request->file('video');
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destination,$file_name);
-
-            $update = Video::where('id', $request->id)->update([
-                'video_title' => $request->title,
-                'video_path'  => env('APP_URL').$destination.$file_name
+                'video_path'  => $video_path['v']
             ]);
             $request->session()->flash('message', 'Video Updated successfully.');
             return redirect()->back();
@@ -139,8 +111,9 @@ class VideoController extends Controller
         else{
             $update = Video::where('id', $request->id)->update([
                 'video_title' => $request->title,
+                'video_path'  => $video_path['v'],
             ]);
-            $request->session()->flash('message', 'Video Updated successfully.');
+            $request->session()->flash('message', $request->title . 'video Updated successfully.');
             return redirect()->back();
         }
     }
