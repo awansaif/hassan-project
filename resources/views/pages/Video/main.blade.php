@@ -43,8 +43,9 @@ Video
                                     </td>
                                     <td>
                                         <div style="width:100px; height: 100px;">
-                                            <video src="{{ $video->video_path }}" controls width="100%"
-                                                height="auto"></video>
+                                            <iframe width="100%" height="auto"
+                                                src="https://www.youtube.com/embed/{{ $video->video_path }}">
+                                            </iframe>
                                         </div>
                                     </td>
                                     <td>
