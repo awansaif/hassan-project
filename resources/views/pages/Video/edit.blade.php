@@ -68,7 +68,7 @@ Video
                                 </div>
 
 
-                                <button type="submit" class="btn btn-primary float-right" id="primary-popover-content"
+                                <button type="submit" class="btn btn-success float-right m-2" id="primary-popover-content"
                                     data-container="body" data-toggle="popover" title="Primary color states"
                                     data-placement="bottom">Update Video</button>
                                 <a href="{{ url('/video-list') }}" class="btn btn-primary float-right m-2">Back</a>
