@@ -40,8 +40,9 @@ class SponsorController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'description' => 'required',
-            'image'         => 'required|image',
+            'name'  => 'required',
+            'image' => 'required|image',
+            'url'   => 'required|url'
         ]);
         if($validator->fails())
         {
@@ -53,13 +54,14 @@ class SponsorController extends Controller
 
             $sponsor_pic = $request->file('image');
             $sponsor_file_name = time().$sponsor_pic->getClientOriginalName();
-            $check = $sponsor_pic->move($destinationPath,$sponsor_file_name);
+            $sponsor_pic->move($destinationPath,$sponsor_file_name);
 
             $data = new Sponsor;
-            $data->sponsor_description = $request->description;
-            $data->sponser_image  = env('APP_URL'). $destinationPath . $sponsor_file_name;
+            $data->name           = $request->name;
+            $data->sponsor_image  = env('APP_URL'). $destinationPath . $sponsor_file_name;
+            $data->sponsor_url    = $request->url;
             $data->save();
-            $request->session()->flash('message', 'Sponsor data save successfully.');
+            $request->session()->flash('message', $request->name.' Sponsor data save successfully.');
             return redirect()->back();
         }
     }
@@ -99,8 +101,9 @@ class SponsorController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'description' => 'required',
-            'image'         => 'nullable|image',
+            'name'  => 'required',
+            'image' => 'nullable|image',
+            'url'   => 'required|url'
         ]);
         if($validator->fails())
         {
@@ -114,18 +117,19 @@ class SponsorController extends Controller
 
                 $sponsor_pic = $request->file('image');
                 $sponsor_file_name = time().$sponsor_pic->getClientOriginalName();
-                $check = $sponsor_pic->move($destinationPath,$sponsor_file_name);
+                $sponsor_pic->move($destinationPath,$sponsor_file_name);
 
                 $update = Sponsor::where('id', $request->sponsor_id)->update([
-                    'sponsor_description' => $request->description,
-                    'sponser_image'       => env('APP_URL'). $destinationPath . $sponsor_file_name,
+                    'name' => $request->name,
+                    'sponsor_image'       => env('APP_URL'). $destinationPath . $sponsor_file_name,
                 ]);
                 $request->session()->flash('message', 'Sponsor data update successfully.');
                 return redirect()->back();
             }
             else{
                 $update = Sponsor::where('id', $request->sponsor_id)->update([
-                    'sponsor_description' => $request->description
+                    'name' => $request->name,
+                    'sponsor_url' => $request->url,
                 ]);
                 $request->session()->flash('message', 'Sponsor data update successfully.');
                 return redirect()->back();

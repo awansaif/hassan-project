@@ -25,8 +25,8 @@ Sponsor
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>Image</th>
-                                    <th>Description</th>
                                     <th>Sponsor Link</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,15 +36,15 @@ Sponsor
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
+                                        <p class="text">{{ $sponsor->name }}</p>
+                                    </td>
+                                    <td>
                                         <div style="width: 100px; height:100px;">
-                                            <img src="{{ $sponsor->sponser_image}}" class="card-img" width="100%" height="auto">
+                                            <img src="{{ $sponsor->sponsor_image}}" class="card-img" width="100%" height="auto">
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text">{{ $sponsor->sponsor_description }}</p>
-                                    </td>
-                                    <td>
-                                        <a href="{{ $sponsor->sponsor_link }}" targer="_blank" class="btn btn-success">Link</a>
+                                        <a href="{{ $sponsor->sponsor_url }}" target="_blank" class="btn btn-success">Link</a>
                                     </td>
                                     <td>
                                         <a href="/edit-sponsor?id={{ $sponsor->id }}" class="btn btn-primary">Edit</a>
