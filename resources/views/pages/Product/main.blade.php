@@ -34,6 +34,7 @@ Product
                                             <th>Old Price</th>
                                             <th>New Price</th>
                                             <th>Colours</th>
+                                            <th>Stock</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -63,6 +64,13 @@ Product
                                                         <span>Color</span>
                                                     </div>
                                                     @endforeach
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($product->stock == 0)
+                                                    <a href="/update-stock?id={{ $product->id }}" class="btn btn-danger">Out's Stock</a>
+                                                @else
+                                                    <a href="/update-stock?id={{ $product->id }}" class="btn btn-success">In Stock</a>
                                                 @endif
                                             </td>
 											<td>

@@ -213,4 +213,22 @@ class ProductController extends Controller
             return redirect()->back();
         }
     }
+
+    public function update_stock(Request $request)
+    {
+        $data = Product::find($request->id);
+        if($data->stock == 1)
+        {
+            $data->stock = 0;
+            $data->save();
+            $request->session()->flash('message', 'Product stock updated successfully.');
+            return redirect()->back();
+        }
+        else{
+            $data->stock = 1;
+            $data->save();
+            $request->session()->flash('message', 'Product stock updated successfully.');
+            return redirect()->back();
+        }
+    }
 }

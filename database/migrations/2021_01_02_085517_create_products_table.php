@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('product_description');
             $table->string('product_old_price');
             $table->string('product_new_price');
+            $table->string('stock')->default(1);
             $table->timestamps();
         });
     }

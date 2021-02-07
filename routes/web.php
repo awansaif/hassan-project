@@ -101,6 +101,7 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/edit-product', [ProductController::class, 'edit']);
     Route::post('/edit-product', [ProductController::class, 'update']);
     Route::get('/remove-product', [ProductController::class, 'destroy']);
+    Route::get('/update-stock', [ProductController::class, 'update_stock']);
 
 
     Route::get('/shops', [App\Http\Controllers\ShopController::class, 'index']);

@@ -41,9 +41,9 @@ class StreamController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'stream_featured_image' => 'required|image',
-            'match_detail' => 'required',
-            'sports_club_image' => 'required|image',
+            'featured_image' => 'required|image',
+            'title' => 'required',
+            'stream' => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -51,21 +51,21 @@ class StreamController extends Controller
                         ->withInput();
         }
         else{
-            $file1 = $request->file('stream_featured_image');
+            $file1 = $request->file('featured_image');
             $destinationPath = 'stream-pics/';
-            $file_name1 = time().$file1->getClientOriginalName();
-            $check = $file1->move($destinationPath,$file_name1);
+            $featured_image = time().$file1->getClientOriginalName();
+            $file1->move($destinationPath,$featured_image);
 
-            $file = $request->file('sports_club_image');
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destinationPath,$file_name);
+
+            $path = $request->stream;
+            parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
 
             $data = new Stream;
-            $data->stream_featured_image = env('APP_URL'). $destinationPath.$file_name1;
-            $data->match_details = $request->match_detail;
-            $data->sports_club_image = env('APP_URL'). $destinationPath.$file_name;
+            $data->featured_image = env('APP_URL'). $destinationPath.$featured_image;
+            $data->title = $request->title;
+            $data->stream_path = $stream_path['v'];
             $data->save();
-            $request->session()->flash('message', 'stream add successfully.');
+            $request->session()->flash('message', $request->title.' stream add successfully.');
             return redirect()->back();
         }
     }
@@ -105,9 +105,9 @@ class StreamController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'stream_featured_image' => 'nullable|image',
-            'match_detail' => 'required',
-            'sports_club_image' => 'nullable|image',
+            'featured_image' => 'nullable|image',
+            'title' => 'required',
+            'stream' => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -115,46 +115,19 @@ class StreamController extends Controller
                         ->withInput();
         }
         else{
-            if($request->file('stream_featured_image') && $request->file('sports_club_image'))
+            $path = $request->stream;
+            parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
+            if($request->file('featured_image'))
             {
-                $file1 = $request->file('stream_featured_image');
+                $file1 = $request->file('featured_image');
                 $destinationPath = 'stream-pics/';
-                $file_name1 = time().$file1->getClientOriginalName();
-                $check = $file1->move($destinationPath,$file_name1);
+                $featured_image = time().$file1->getClientOriginalName();
+                $file1->move($destinationPath,$featured_image);
 
-                $file = $request->file('sports_club_image');
-                $file_name = time().$file->getClientOriginalName();
-                $check = $file->move($destinationPath,$file_name);
                 $update = Stream::where('id', $request->stream_id)->update([
-                    'stream_featured_image' => env('APP_URL'). $destinationPath.$file_name1,
-                    'match_details' => $request->match_detail,
-                    'sports_club_image' => env('APP_URL'). $destinationPath.$file_name
-                ]);
-                $request->session()->flash('message', 'Stream update successfully.');
-                return redirect()->back();
-            }
-            elseif($request->file('stream_featured_image'))
-            {
-                $file1 = $request->file('stream_featured_image');
-                $destinationPath = 'stream-pics/';
-                $file_name1 = time().$file1->getClientOriginalName();
-                $check = $file1->move($destinationPath,$file_name1);
-                $update = Stream::where('id', $request->stream_id)->update([
-                    'stream_featured_image' => env('APP_URL'). $destinationPath.$file_name1,
-                    'match_details' => $request->match_detail,
-                ]);
-                $request->session()->flash('message', 'Stream update successfully.');
-                return redirect()->back();
-            }
-            elseif($request->file('sports_club_image'))
-            {
-                $file = $request->file('sports_club_image');
-                $destinationPath = 'stream-pics/';
-                $file_name = time().$file->getClientOriginalName();
-                $check = $file->move($destinationPath,$file_name);
-                $update = Stream::where('id', $request->stream_id)->update([
-                    'match_details' => $request->match_detail,
-                    'sports_club_image' => env('APP_URL'). $destinationPath.$file_name
+                    'featured_image'  => env('APP_URL'). $destinationPath.$featured_image,
+                    'title'           => $request->title,
+                    'stream_path'     => $stream_path['v'],
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
@@ -162,7 +135,8 @@ class StreamController extends Controller
             else
             {
                 $update = Stream::where('id', $request->stream_id)->update([
-                    'match_details' => $request->match_detail
+                    'title'       => $request->title,
+                    'stream_path' =>  $stream_path['v']
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
