@@ -40,6 +40,8 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         //
+        $path = $request->video;
+        parse_str( parse_url( $path, PHP_URL_QUERY ), $video_path);
 
         $destination = 'videos/';
 
@@ -50,9 +52,9 @@ class VideoController extends Controller
         $data = new Video();
         $data->video_title = $request->title;
         $data->thumbnail   = env('APP_URL').$destination.$thumb_name;
-        $data->video_path  = $request->video;
+        $data->video_path  = $video_path['v'];
         $data->save();
-        $request->session()->flash('message', $request->title . 'Video saved successfully.');
+        $request->session()->flash('message', $request->title . ' Video saved successfully.');
         return redirect()->back();
     }
 
@@ -113,7 +115,7 @@ class VideoController extends Controller
                 'video_title' => $request->title,
                 'video_path'  => $video_path['v'],
             ]);
-            $request->session()->flash('message', $request->title . 'video Updated successfully.');
+            $request->session()->flash('message', $request->title . ' video Updated successfully.');
             return redirect()->back();
         }
     }
