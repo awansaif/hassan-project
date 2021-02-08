@@ -53,10 +53,18 @@ Cassifiche
                                         </div>
 
                                         <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Image<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" class="form-control" name="image" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Rank<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="rank"
+                                                <input type="number" class="form-control" name="rank"
                                                     placeholder="Rank" required value="{{ old('rank') }}">
                                             </div>
                                         </div>

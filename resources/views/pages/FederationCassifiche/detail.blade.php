@@ -25,6 +25,7 @@
                                             <th>#</th>
                                             <th>Cassifiche</th>
                                             <th>Name</th>
+                                            <th>Image</th>
                                             <th>Rank</th>
                                             <th>CIITA</th>
                                             <th>Region</th>
@@ -39,6 +40,11 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $cassifiche->cassifiches->leaderboard_name }}</td>
                                             <td>{{ $cassifiche->name }}</td>
+                                            <td>
+                                                <div style="width: 200px; height:150px;">
+                                                    <img src="{{ $cassifiche->image }}" alt="" width="100%" height="auto">
+                                                </div>
+                                            </td>
 											<td>
                                                 {{ $cassifiche->player_rank }}
                                             </td>

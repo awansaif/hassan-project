@@ -53,10 +53,27 @@ Cassifiche
                                         </div>
 
                                         <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Image<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <input type="file" class="form-control" name="image" required>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div style="width: 300px; height:200px">
+                                                            <img src="{{ $data->image }}" alt="" width="100%" height="auto">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Rank<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="rank"
+                                                <input type="number" class="form-control" name="rank"
                                                     placeholder="Rank" required value="{{ $data->player_rank }}">
                                             </div>
                                         </div>

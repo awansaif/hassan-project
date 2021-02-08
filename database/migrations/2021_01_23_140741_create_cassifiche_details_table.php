@@ -17,6 +17,7 @@ class CreateCassificheDetailsTable extends Migration
             $table->id();
             $table->foreignId('cassifiche_id')->constrained('cassifiches')->onDelete('Cascade');
             $table->string('name');
+            $table->string('image');
             $table->string('player_rank');
             $table->string('ciita');
             $table->String('region');

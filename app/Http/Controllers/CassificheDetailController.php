@@ -15,7 +15,10 @@ class CassificheDetailController extends Controller
     public function index(Request $request)
     {
         //
-        $data = CassificheDetail::with('cassifiches')->where('cassifiche_id', $request->id)->get();
+        $data = CassificheDetail::with('cassifiches')
+                                    ->where('cassifiche_id', $request->id)
+                                    ->orderBy('player_rank','ASC')
+                                    ->get();
         return view('pages.FederationCassifiche.detail', compact('data'));
     }
 
@@ -39,9 +42,17 @@ class CassificheDetailController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->file('image'))
+        {
+            $destinationPath = 'cassifiche-img/';
+            $file = $request->file('image');
+            $file_name = time().$file->getClientOriginalName();
+            $file->move($destinationPath,$file_name);
+        }
         $data = new CassificheDetail();
         $data->cassifiche_id = $request->cassifiche;
         $data->name = $request->name;
+        $data->image = env('APP_URL').$destinationPath.$file_name;
         $data->player_rank = $request->rank;
         $data->ciita = $request->ciita;
         $data->region = $request->region;
@@ -86,16 +97,35 @@ class CassificheDetailController extends Controller
     public function update(Request $request, CassificheDetail $cassificheDetail)
     {
         //
-        $update = CassificheDetail::where('id', $request->detail_id)->update([
-            'name' => $request->name,
-            'player_rank' => $request->rank,
-            'ciita' => $request->ciita,
-            'region' => $request->region,
-            'pr' => $request->pr,
-            'pn' => $request->pn,
-        ]);
-        $request->session()->flash('message', 'Cassifiche detail update successfully');
-        return redirect()->back();
+        if($request->file('image'))
+        {
+            $destinationPath = 'cassifiche-img/';
+            $file = $request->file('image');
+            $file_name = time().$file->getClientOriginalName();
+            $file->move($destinationPath,$file_name);
+            $update = CassificheDetail::where('id', $request->detail_id)->update([
+                'name' => $request->name,
+                'image' => env('APP_URL').$destinationPath.$file_name,
+                'player_rank' => $request->rank,
+                'ciita' => $request->ciita,
+                'region' => $request->region,
+                'pr' => $request->pr,
+                'pn' => $request->pn,
+            ]);
+            $request->session()->flash('message', 'Cassifiche detail update successfully');
+            return redirect()->back();
+        }
+        else
+        {
+            $update = CassificheDetail::where('id', $request->detail_id)->update([
+                'name' => $request->name,
+                'player_rank' => $request->rank,
+                'ciita' => $request->ciita,
+                'region' => $request->region,
+                'pr' => $request->pr,
+                'pn' => $request->pn,
+            ]);
+        }
     }
 
     /**
