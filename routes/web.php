@@ -31,6 +31,7 @@ use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationMovementController;
 use App\Http\Controllers\FlashNewsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -243,7 +244,11 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::post('/edit-flash-news', [FlashNewsController::class, 'update']);
     Route::get('/remove-flash-news', [FlashNewsController::class, 'destroy']);
 
+    // product orders
+    Route::get('product-orders', [ProductOrderController::class, 'index']);
+    Route::get('product-order-detail', [ProductOrderController::class, 'show']);
 
+    // user routers
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
     Route::view('/registered', 'registered', ['users' => User::all()]);
   });

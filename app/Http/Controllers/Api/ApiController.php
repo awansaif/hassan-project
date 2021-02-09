@@ -277,13 +277,18 @@ class ApiController extends Controller
 
     public function all_products()
     {
-        $products = Product::with('shops')->orderby('id', 'DESC')->get();
+        $products = Product::with('shops')
+                                ->where('stock', 1)
+                                ->orderby('id', 'DESC')
+                                ->get();
         return response()->json($products);
     }
 
     public function product(Request $request)
     {
-        $products = Product::with('shops')->where('shop_id', $request->id)->get();
+        $products = Product::with('shops')
+                                ->where('shop_id', $request->id)
+                                ->get();
         return response()->json($products);
     }
 
@@ -396,7 +401,10 @@ class ApiController extends Controller
 
     public function detail_cassifiche(Request $request)
     {
-        $data = CassificheDetail::with('cassifiches')->where('cassifiche_id', $request->id)->get();
+        $data = CassificheDetail::with('cassifiches')
+                                    ->where('cassifiche_id', $request->id)
+                                    ->orderBy('player_rank','ASC')
+                                    ->get();
         return response()->json($data);
     }
 

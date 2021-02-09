@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -78,4 +79,8 @@ Route::get('/latest_news', function(){
 
 // latest events
 Route::get('/latest_events', [ApiController::class, 'latest_events']);
+
+// Product order api
+Route::post('/place-product-order', [ProductOrderController::class, 'save_order']);
+Route::get('/product-orders', [ProductOrderController::class, 'orders']);
 
