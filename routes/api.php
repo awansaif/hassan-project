@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProductOrderController;
+use App\Http\Controllers\Api\EventOrderController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -82,9 +83,9 @@ Route::get('/latest_events', [ApiController::class, 'latest_events']);
 
 // Product order api
 Route::post('/place-product-order', [ProductOrderController::class, 'save_order']);
-Route::get('/product-orders', [ProductOrderController::class, 'orders']);
+Route::get('/orders', [ProductOrderController::class, 'orders']);
 
 // Event order api
-Route::post('/place-event-order', [ProductOrderController::class, 'save_order']);
-Route::get('/event-orders', [ProductOrderController::class, 'orders']);
+Route::post('/place-event-order', [EventOrderController::class, 'save_order']);
+// Route::get('/event-orders', [EventOrderController::class, 'orders']);
 

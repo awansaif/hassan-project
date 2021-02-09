@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\EventOrder;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class EventOrderController extends Controller
 {
@@ -31,7 +32,7 @@ class EventOrderController extends Controller
     {
         $orders = EventOrder::with('products', 'users')
                                 ->orderBy('id', 'DESC')
-                                ->where('user_id', $request->user)
+                                ->where('user_id', $request->user()->id)
                                 ->get();
         return response()->json($orders);
     }

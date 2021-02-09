@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AlbodroCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAlbodroCategoryRequest;
+use App\Models\AlbodroItem;
 use App\Models\FederationMovement;
 use Illuminate\Http\Request;
 
@@ -110,6 +111,7 @@ class AlbodroCategoryController extends Controller
     public function destroy($id)
     {
         AlbodroCategory::destroy($id);
+        AlbodroItem::where('albodro_id', $id)->delete();
         return redirect()->back()->with(['message' => 'Albodoro Category deletd successfully']);
     }
 }

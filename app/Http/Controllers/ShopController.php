@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shop;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -142,8 +143,10 @@ class ShopController extends Controller
     {
         //
         $check = Shop::where('id', $request->id)->delete();
+
         if($check)
         {
+            $data = Product::where('shop_id', $request->id)->delete();
             $request->session()->flash('message', 'shop data remove successfully.');
             return redirect()->back();
         }

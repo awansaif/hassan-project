@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
+use App\Models\EventOrder;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ProductOrderController extends Controller
 {
@@ -30,10 +32,18 @@ class ProductOrderController extends Controller
 
     public function orders(Request $request)
     {
-        $orders = ProductOrder::with('products', 'users')
+        $products = ProductOrder::with('products', 'users')
                                 ->orderBy('id', 'DESC')
                                 ->where('user_id', $request->user)
                                 ->get();
-        return response()->json($orders);
+        $events = EventOrder::with('events', 'users')
+                                ->orderBy('id', 'DESC')
+                                ->where('user_id', $request->user)
+                                ->get();
+        $data = [
+            'products' => $products,
+            'events'   => $events,
+        ];
+        return response()->json($data);
     }
 }

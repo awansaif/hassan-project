@@ -131,7 +131,7 @@
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                                         <span class="pcoded-mtext"
-                                            data-i18n="nav.basic-components.main">Product Order</span>
+                                            data-i18n="nav.basic-components.main">Orders</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -139,7 +139,16 @@
                                             <a href="{{ url('product-orders') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Orders</span>
+                                                    data-i18n="nav.basic-components.alert">Product Orders</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+                                        <li class=" ">
+                                            <a href="{{ url('event-orders') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"
+                                                    data-i18n="nav.basic-components.alert">Event Orders</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>

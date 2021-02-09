@@ -14,7 +14,10 @@ class EventOrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = EventOrder::with('events', 'users')
+                                ->orderBy('id', 'DESC')
+                                ->get();
+        return view('pages.EventOrder.main', compact('orders'));
     }
 
     /**
@@ -44,9 +47,13 @@ class EventOrderController extends Controller
      * @param  \App\Models\EventOrder  $eventOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(EventOrder $eventOrder)
+    public function show(EventOrder $eventOrder,Request $request)
     {
         //
+        $order = EventOrder::with('events', 'users')
+                                ->where('id', $request->order)
+                                ->first();
+        return view('pages.EventOrder.show',compact('order'));
     }
 
     /**
