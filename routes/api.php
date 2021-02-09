@@ -84,3 +84,7 @@ Route::get('/latest_events', [ApiController::class, 'latest_events']);
 Route::post('/place-product-order', [ProductOrderController::class, 'save_order']);
 Route::get('/product-orders', [ProductOrderController::class, 'orders']);
 
+// Event order api
+Route::post('/place-event-order', [ProductOrderController::class, 'save_order']);
+Route::get('/event-orders', [ProductOrderController::class, 'orders']);
+
