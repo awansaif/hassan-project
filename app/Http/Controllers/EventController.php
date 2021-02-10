@@ -107,6 +107,33 @@ class EventController extends Controller
             $data->longtitude = $request->longtitude;
             $data->latitude = $request->latitude;
             $data->save();
+
+            $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
+            $data = [
+                'to'=> '/topics/all',
+                'notification' => [
+                    'image' => env('APP_URL'). $destinationPath.$event_file_name,
+                    'body' => $request->event_short_description,
+                    'place' => $request->event_place,
+                    ]
+
+                ];
+            $dataString = json_encode($data);
+
+            $headers = [
+                'Authorization: key='.$server_key,
+                'Content-Type: application/json',
+            ];
+            $url = 'https://fcm.googleapis.com/fcm/send';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+            curl_exec($ch);
+
             $request->session()->flash('message', 'Event data save successfully.');
             return redirect()->back();
 

@@ -72,32 +72,31 @@ class NewsController extends Controller
             $data_recent->detail = $request->details;
             $data_recent->save();
 
-            // $key = 'AIzaSyCsqD-_Ib5EiaM6w5aA34TJcFV9XblveVs';
-            // $to = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
-            // $data = [
-            //     'to'=>'',
-            //     'notification' => [
-            //         'title' => $request->title,
-            //         'body'  => $request->details,
-            //         'image' => env('APP_URL'). $destinationPath.$file_name
-            //         ]
+            $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
+            $data = [
+                'to'=> '/topics/all',
+                'notification' => [
+                    'title' => $request->title,
+                    'body'  => $request->details,
+                    'image' => env('APP_URL'). $destinationPath.$file_name
+                    ]
 
-            //     ];
-            // $dataString = json_encode($data);
+                ];
+            $dataString = json_encode($data);
 
-            // $headers = [
-            //     'Authorization: key='.$to,
-            //     'Content-Type: application/json',
-            // ];
-            // $url = 'https://fcm.googleapis.com/fcm/send';
-            // $ch = curl_init();
-            // curl_setopt($ch, CURLOPT_URL, $url);
-            // curl_setopt($ch, CURLOPT_POST, true);
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+            $headers = [
+                'Authorization: key='.$server_key,
+                'Content-Type: application/json',
+            ];
+            $url = 'https://fcm.googleapis.com/fcm/send';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
-            // dd(curl_exec($ch));
+            curl_exec($ch);
 
             $request->session()->flash('message', 'News add successfully.');
             return redirect()->back();
