@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\EventOrderController;
+use App\Http\Controllers\Api\FedEventOrderController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -87,5 +88,6 @@ Route::get('/orders', [ProductOrderController::class, 'orders']);
 
 // Event order api
 Route::post('/place-event-order', [EventOrderController::class, 'save_order']);
+Route::post('/place-fed-event-order', [FedEventOrderController::class, 'save_order']);
 // Route::get('/event-orders', [EventOrderController::class, 'orders']);
 

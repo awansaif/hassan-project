@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
 use App\Models\EventOrder;
+use App\Models\FedEventOrder;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -18,6 +19,7 @@ class ProductOrderController extends Controller
         $data->product_id = $request->product;
         $data->user_id = $request->user;
         $data->price = $request->price;
+        $data->payment_id = $request->payment;
         $data->date = date('Y-m-d');
         if($data->save())
         {
@@ -36,13 +38,18 @@ class ProductOrderController extends Controller
                                 ->orderBy('id', 'DESC')
                                 ->where('user_id', $request->user)
                                 ->get();
-        $events = EventOrder::with('events', 'users')
+        $events =   EventOrder::with('events', 'users')
                                 ->orderBy('id', 'DESC')
                                 ->where('user_id', $request->user)
                                 ->get();
+        $fedEvents =   FedEventOrder::with('events', 'users')
+                            ->orderBy('id', 'DESC')
+                            ->where('user_id', $request->user)
+                            ->get();
         $data = [
             'products' => $products,
             'events'   => $events,
+            'fedEvents' => $fedEvents
         ];
         return response()->json($data);
     }

@@ -13,6 +13,7 @@ class ProductOrder extends Model
         'product_id',
         'user_id',
         'price',
+        'payment_id',
         'date'
     ];
 

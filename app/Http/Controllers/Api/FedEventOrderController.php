@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\EventOrder;
+use App\Models\FedEventOrder;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class EventOrderController extends Controller
+class FedEventOrderController extends Controller
 {
     //
     public function save_order(Request $request)
     {
-        $data = new EventOrder();
+        $data = new FedEventOrder();
         $data->event_id = $request->event;
         $data->user_id = $request->user;
         $data->price = $request->price;
@@ -27,14 +26,5 @@ class EventOrderController extends Controller
             return response()->json($data);
         }
 
-    }
-
-    public function orders(Request $request)
-    {
-        $orders = EventOrder::with('products', 'users')
-                                ->orderBy('id', 'DESC')
-                                ->where('user_id', $request->user()->id)
-                                ->get();
-        return response()->json($orders);
     }
 }

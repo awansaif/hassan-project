@@ -30,7 +30,7 @@ Event Order
                                     <td>{{ $order->users->name }}</td>
                                     <td>
                                         <div style="width: 50px; height: 50px; border-radius:50%;">
-                                            <img src="{{ $order->users->avatar }}" alt="">
+                                            <img src="{{ $order->users->avatar }}" alt="" width="100%" height="auto">
                                         </div>
                                     </td>
                                     <td>{{ $order->users->phone_number }}</td>
@@ -59,17 +59,17 @@ Event Order
                             <tbody>
                                 <td>
                                     <div style="width: 80px; height: 80px;">
-                                        <img src="{{ $order->events->event_image }}" alt="">
+                                        <img src="{{ $order->events->event_image }}" alt="" width="100%" height="auto">
                                     </div>
                                 </td>
                                 <td>
                                     <div style="width: 80px; height: 80px;">
-                                        <img src="{{ $order->events->secondary_image }}" alt="">
+                                        <img src="{{ $order->events->secondary_image }}" alt="" width="100%" height="auto">
                                     </div>
                                 </td>
                                 <td>
                                     <div style="width: 80px; height: 80px;">
-                                        <img src="{{ $order->events->author_image }}" alt="">
+                                        <img src="{{ $order->events->author_image }}" alt="" width="100%" height="auto">
                                     </div>
                                 </td>
                                 <td>{{  $order->events->author_name}}</td>

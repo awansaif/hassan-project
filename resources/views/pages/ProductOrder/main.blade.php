@@ -16,6 +16,7 @@ Product Order
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Payment Id</th>
                                     <th>Buyer Name</th>
                                     <th>Phone #</th>
                                     <th>Product</th>
@@ -27,6 +28,7 @@ Product Order
                             <tbody>
                                 @foreach($orders as $key => $order)
                                 <tr>
+                                    <td>{{ $order->payment_id }}</td>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $order->users->name }}</td>
                                     <td>{{ $order->users->phone_number }}</td>

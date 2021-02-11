@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductOrdersTable extends Migration
+class CreateFedEventOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProductOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_orders', function (Blueprint $table) {
+        Schema::create('fed_event_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('Cascade');
+            $table->foreignId('event_id')->constrained('federation_events')->onDelete('Cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('Cascade');
             $table->double('price');
             $table->string('payment_id');
@@ -31,6 +31,6 @@ class CreateProductOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_orders');
+        Schema::dropIfExists('fed_event_orders');
     }
 }

@@ -33,6 +33,7 @@ use App\Http\Controllers\FlashNewsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
+use App\Http\Controllers\FedEventOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -252,6 +253,10 @@ Route::group(['middleware'=> ['auth']],function(){
     // event orders
     Route::get('event-orders', [EventOrderController::class, 'index']);
     Route::get('event-order-detail', [EventOrderController::class, 'show']);
+
+    // federation event orders
+    Route::get('federation-event-orders', [FedEventOrderController::class, 'index']);
+    Route::get('federation-event-order-detail', [FedEventOrderController::class, 'show']);
 
     // user routers
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);

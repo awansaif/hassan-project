@@ -152,6 +152,15 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+                                         <li class=" ">
+                                            <a href="{{ url('federation-event-orders') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"
+                                                    data-i18n="nav.basic-components.alert">Federation Event Orders</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Function</div>

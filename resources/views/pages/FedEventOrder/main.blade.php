@@ -19,6 +19,7 @@ Event Order
                                     <th>Payment Id</th>
                                     <th>Buyer Name</th>
                                     <th>Phone #</th>
+                                    <th>Federtion</th>
                                     <th>Event</th>
                                     <th>Price</th>
                                     <th>Payment Time</th>
@@ -32,6 +33,7 @@ Event Order
                                     <td>{{ $order->payment_id }}</td>
                                     <td>{{ $order->users->name }}</td>
                                     <td>{{ $order->users->phone_number }}</td>
+                                    <td>{{ $order->events->federations->name }}</td>
                                     <td>
                                         <div style="width:80px; height: 80px; ">
                                             <img src="{{ $order->events->event_image }}" alt="" width="100%" height="auto">
@@ -40,7 +42,7 @@ Event Order
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->date }}</td>
                                     <td>
-                                        <a href="event-order-detail?order={{ $order->id }}" class="btn btn-success font-weight-bold">Show Detail</a>
+                                        <a href="federation-event-order-detail?order={{ $order->id }}" class="btn btn-success font-weight-bold">Show Detail</a>
                                     </td>
                                 </tr>
                                 @endforeach

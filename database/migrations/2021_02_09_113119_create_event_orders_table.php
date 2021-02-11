@@ -18,6 +18,7 @@ class CreateEventOrdersTable extends Migration
             $table->foreignId('event_id')->constrained('events')->onDelete('Cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('Cascade');
             $table->double('price');
+            $table->string('payment_id');
             $table->string('date');
             $table->timestamps();
         });

@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventOrder extends Model
+class FedEventOrder extends Model
 {
+    use HasFactory;
     use HasFactory;
     protected $fillable = [
         'event_id',
@@ -18,7 +19,7 @@ class EventOrder extends Model
 
     public function events()
     {
-       return $this->belongsTo('App\Models\Event', 'event_id');
+       return $this->belongsTo('App\Models\FederationEvent', 'event_id');
     }
 
     public function users()
