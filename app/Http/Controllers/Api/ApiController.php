@@ -422,7 +422,12 @@ class ApiController extends Controller
 
     public function latest_events()
     {
-        $data = LatestEvent::orderBY('id', 'DESC')->take(5)->get();
+        $fed = FederationEvent::with('federations')->orderBY('id', 'DESC')->take(2)->get();
+        $event = Event::orderBY('id', 'DESC')->take(3)->get();
+        $data = [
+            'fedEvent' => $fed,
+            'event'    => $event,
+            ];
         return response()->json($data);
     }
 }
