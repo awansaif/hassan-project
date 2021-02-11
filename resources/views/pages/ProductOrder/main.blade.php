@@ -28,8 +28,8 @@ Product Order
                             <tbody>
                                 @foreach($orders as $key => $order)
                                 <tr>
-                                    <td>{{ $order->payment_id }}</td>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $order->payment_id }}</td>
                                     <td>{{ $order->users->name }}</td>
                                     <td>{{ $order->users->phone_number }}</td>
                                     <td>{{ $order->products->product_name }}</td>
