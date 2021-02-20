@@ -9,6 +9,12 @@ class Club extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'club_id',
+        'name',
+        'image',
+        'country'
+    ];
     public function clubs()
     {
         return $this->belongsTo('App\Models\MainClub', 'club_id');

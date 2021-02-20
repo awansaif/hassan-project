@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
+use App\Models\MainClub;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -11,7 +12,9 @@ class HomeController extends Controller
     //
     public function dashboard()
     {
-        return view('team.dashboard');
+        return view('team.dashboard', [
+            'clubs' => MainClub::where('created_by', Auth::user()->id)->count(),
+        ]);
     }
 
     public function logout()

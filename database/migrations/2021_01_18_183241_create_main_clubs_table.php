@@ -15,6 +15,7 @@ class CreateMainClubsTable extends Migration
     {
         Schema::create('main_clubs', function (Blueprint $table) {
             $table->id();
+            $table->string('created_by')->default(1);
             $table->string('club_name');
             $table->timestamps();
         });

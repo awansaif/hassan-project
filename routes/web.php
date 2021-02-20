@@ -35,6 +35,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
+use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 
 /*
@@ -65,7 +66,7 @@ Route::get('reset-password',function(Request $request){
 Route::post('/reset-password', [LoginController::class, 'change_password']);
 // Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['middleware'=> ['auth']],function(){
+Route::group(['middleware'=> ['auth', 'admin']],function(){
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -283,6 +284,29 @@ Route::group(['middleware'=> ['auth']],function(){
 Route::group(['prefix' => 'team'], function () {
     Route::get('/dashboard', [TeamHome::class, 'dashboard'])->name('team.dashboard');
     Route::get('/logout', [TeamHome::class, 'logout'])->name('team.logout');
+
+    //club router
+    Route::get('/main-club', [TeamClubController::class, 'index'])->name('team.club');
+    Route::get('/add-main-club', [TeamClubController::class, 'create']);
+    Route::post('/add-main-club', [TeamClubController::class, 'store']);
+    Route::get('/edit-main-club/{id}', [TeamClubController::class, 'edit']);
+    Route::post('/edit-main-club/{id}', [TeamClubController::class, 'update']);
+    Route::get('/remove-main-club/{id}', [TeamClubController::class, 'destroy']);
+
+    // more club router
+    Route::get('/show-club/{id}', [TeamClubController::class, 'show'])->name('team.show.club');
+    Route::get('/add-club/{id}', [TeamClubController::class, 'create_club']);
+    Route::post('/add-club/{id}', [TeamClubController::class, 'save_club']);
+    Route::get('/edit-club/{id}', [TeamClubController::class, 'edit_club']);
+    Route::post('/edit-club/{id}', [TeamClubController::class, 'update_club']);
+    Route::get('/remove-club/{id}', [TeamClubController::class, 'destroy_club']);
+
+    // detail club router
+    Route::get('/detail-club/{id}',[TeamClubController::class, 'detail_club'])->name('team.detail.club');
+    Route::get('add-club-detail/{id}', [TeamClubController::class, 'detail_Create']);
+    Route::post('add-club-detail/{id}', [TeamClubController::class, 'detail_store']);
+    Route::get('/remove-club-detail/{id}', [TeamClubController::class, 'detail_destroy']);
+
 });
 
 

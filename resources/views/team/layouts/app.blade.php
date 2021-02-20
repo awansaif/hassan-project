@@ -51,7 +51,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('team/main-club') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p class="text-center">
                                     Club
@@ -76,35 +76,8 @@
             <!-- /.sidebar -->
         </aside>
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0"> Dashboard <small>Team Members</small></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active"><a href="#">Home</a></li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
 
-            <!-- Main content -->
-            <div class="content">
-                <div class="container">
-                   @yield('content')
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-
+        @yield('content')
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
@@ -115,6 +88,7 @@
             <strong>Copyright &copy; 2014-2020 <a href="https://uifaadmin.com">Uifa</a>.</strong> All rights
             reserved.
         </footer>
+
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
