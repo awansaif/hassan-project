@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\MainClubController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\CassificheController;
 use App\Http\Controllers\ClubDetailController;
 use App\Http\Controllers\CollectionController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
+use App\Http\Controllers\Team\HomeController as TeamHome;
 
 /*
 |--------------------------------------------------------------------------
@@ -261,6 +263,14 @@ Route::group(['middleware'=> ['auth']],function(){
     // user routers
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
     Route::view('/registered', 'registered', ['users' => User::all()]);
+
+    // Team members routes
+    Route::get('/team-members', [TeamController::class,'index'])->name('team-members');
+    Route::get('/add-team-member', [TeamController::class, 'create']);
+    Route::post('/add-team-member', [TeamController::class, 'store']);
+    Route::get('/edit-team-member/{id}', [TeamController::class,'edit']);
+    Route::post('/edit-team-member/{id}', [TeamController::class,'update']);
+    Route::get('/remove-team-member/{id}',[TeamController::class, 'destroy']);
   });
 
   Route::group(['prefix' => 'admin'], function () {
@@ -268,6 +278,12 @@ Route::group(['middleware'=> ['auth']],function(){
       Route::post('/login', [AuthController::class, 'login']);
       Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
   });
+
+
+Route::group(['prefix' => 'team'], function () {
+    Route::get('/dashboard', [TeamHome::class, 'dashboard'])->name('team.dashboard');
+    Route::get('/logout', [TeamHome::class, 'logout'])->name('team.logout');
+});
 
 
   Route::get('/show-stream', [StreamController::class,'show_stream']);

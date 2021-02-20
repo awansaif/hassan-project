@@ -30,13 +30,21 @@ class AuthController extends Controller
         {
             if(Auth::guard('admin')->attempt($request->only('email', 'password'), $request->filled('remember')))
             {
-                return redirect('/home');
+                if(Auth::user()->role == 1)
+                {
+                    return redirect('/home');
+                }
+                else
+                {
+                    return redirect()->route('team.dashboard');
+                }
+
             }
             else{
                 return redirect()
-             ->back()
-             ->withInput()
-             ->with('error','Incorrect email/password, please try again!');
+                ->back()
+                ->withInput()
+                ->with('error','Incorrect email/password, please try again!');
             }
         }
     }
