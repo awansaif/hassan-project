@@ -27,7 +27,7 @@
                     <div class="card ">
                         <div class="card-body text-center">
                             <span class="text-primary font-weight-bold">Total Player</span>
-                            <h4></h4>
+                            <h4>{{ $players }}</h4>
                             <div>
                             </div>
                         </div>

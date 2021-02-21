@@ -37,6 +37,7 @@ use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
+use App\Http\Controllers\Team\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -306,6 +307,22 @@ Route::group(['prefix' => 'team'], function () {
     Route::get('add-club-detail/{id}', [TeamClubController::class, 'detail_Create']);
     Route::post('add-club-detail/{id}', [TeamClubController::class, 'detail_store']);
     Route::get('/remove-club-detail/{id}', [TeamClubController::class, 'detail_destroy']);
+
+    // player router
+    Route::get('/players', [PlayerController::class, 'index'])->name('team.player');
+    Route::get('/add-player', [PlayerController::class, 'create']);
+    Route::post('/add-player', [PlayerController::class, 'store']);
+    Route::get('/edit-player/{id}', [PlayerController::class, 'edit']);
+    Route::post('/edit-player/{id}', [PlayerController::class, 'update']);
+    Route::get('/remove-player/{id}', [PlayerController::class, 'destroy']);
+
+    // player career router
+    Route::get('/player-career/{id}', [PlayerController::class, 'career'])->name('team.player.career');
+    Route::get('/add-player-career/{id}', [PlayerController::class, 'create_career']);
+    Route::post('/add-player-career/{id}', [PlayerController::class, 'store_career']);
+    Route::get('/edit-career/{id}', [PlayerController::class, 'edit_career']);
+    Route::post('/edit-career/{id}', [PlayerController::class, 'update_career']);
+    Route::get('/remove-career/{id}', [PlayerController::class, 'destroy_career']);
 
 });
 
