@@ -10,24 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <!-- Favicon icon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-
     <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css') }}">
     <!-- themify-icons line icon -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css') }}">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/icofont/css/icofont.css') }}">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.cs') }}s">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css') }}">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 
     @guest
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -177,10 +171,29 @@
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                                         <span class="pcoded-mtext"
+                                            data-i18n="nav.basic-components.main">Score</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <ul class="pcoded-submenu">
+                                        <li class=" ">
+                                            <a href="{{ url('scores') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"
+                                                    data-i18n="nav.basic-components.alert">Scores</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                        <span class="pcoded-mtext"
                                             data-i18n="nav.basic-components.main">Countries</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
+
                                         <li class=" ">
                                             <a href="{{ url('countries') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -701,6 +714,7 @@
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js') }}"></script>

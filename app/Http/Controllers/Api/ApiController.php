@@ -35,6 +35,7 @@ use App\Models\FlashNews;
 use App\Models\LatestEvent;
 use App\Models\MainClub;
 use App\Models\Sponsor;
+use App\Models\Team;
 use App\Models\Video;
 use Auth;
 use Carbon\Carbon;
@@ -423,6 +424,12 @@ class ApiController extends Controller
     public function latest_events()
     {
         $data = LatestEvent::orderBY('id', 'DESC')->take(5)->get();
+        return response()->json($data);
+    }
+
+    public function teams()
+    {
+        $data = Team::orderBY('id', 'DESC')->get();
         return response()->json($data);
     }
 }

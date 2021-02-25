@@ -38,6 +38,7 @@ use App\Http\Controllers\FedEventOrderController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
+use App\Http\Controllers\TeamController as ControllersTeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -273,6 +274,14 @@ Route::group(['middleware'=> ['auth', 'admin']],function(){
     Route::get('/edit-team-member/{id}', [TeamController::class,'edit']);
     Route::post('/edit-team-member/{id}', [TeamController::class,'update']);
     Route::get('/remove-team-member/{id}',[TeamController::class, 'destroy']);
+
+    // team router
+    Route::get('/scores', [ControllersTeamController::class, 'index'])->name('teams');
+    Route::get('/add-team', [ControllersTeamController::class, 'create']);
+    Route::post('/add-team', [ControllersTeamController::class, 'store']);
+    Route::get('/edit-team/{id}', [ControllersTeamController::class, 'edit']);
+    Route::post('/edit-team/{id}', [ControllersTeamController::class, 'update']);
+    Route::get('/remove-team/{id}', [ControllersTeamController::class, 'destroy']);
   });
 
   Route::group(['prefix' => 'admin'], function () {
@@ -323,6 +332,8 @@ Route::group(['prefix' => 'team'], function () {
     Route::get('/edit-career/{id}', [PlayerController::class, 'edit_career']);
     Route::post('/edit-career/{id}', [PlayerController::class, 'update_career']);
     Route::get('/remove-career/{id}', [PlayerController::class, 'destroy_career']);
+
+
 
 });
 
