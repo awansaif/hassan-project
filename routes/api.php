@@ -93,4 +93,5 @@ Route::post('/place-fed-event-order', [FedEventOrderController::class, 'save_ord
 
 // Team score api
 Route::get('/teams', [ApiController::class, 'teams']);
+Route::get('/team-score/{id}', [ApiController::class, 'team_score']);
 

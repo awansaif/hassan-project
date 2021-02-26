@@ -20,6 +20,10 @@ class CreateTeamsTable extends Migration
             $table->string('team_two_image');
             $table->string('team_two_name');
             $table->string('current_set_score',40)->default('0-0');
+            $table->string('match_start_time')->nullable();
+            $table->string('match_end_time')->nullable();
+            $table->string('set_won_by_team_one',20)->default(0);
+            $table->string('set_won_by_team_two',20)->default(0);
             $table->timestamps();
         });
     }

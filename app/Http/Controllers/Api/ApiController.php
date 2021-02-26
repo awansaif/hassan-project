@@ -33,6 +33,7 @@ use App\Models\FederationMovement;
 use App\Models\FederationNews;
 use App\Models\FlashNews;
 use App\Models\LatestEvent;
+use App\Models\LiveScore;
 use App\Models\MainClub;
 use App\Models\Sponsor;
 use App\Models\Team;
@@ -429,7 +430,13 @@ class ApiController extends Controller
 
     public function teams()
     {
-        $data = Team::orderBY('id', 'DESC')->get();
+        $data = Team::orderBY('id', 'DESC')->select('id', 'team_one_image', 'team_one_name', 'team_two_image', 'team_two_name', 'current_set_score')->get();
+        return response()->json($data);
+    }
+
+    public function team_Score($id)
+    {
+        $data = Team::with('scores')->where('id',$id)->get();
         return response()->json($data);
     }
 }

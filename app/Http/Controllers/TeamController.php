@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LiveScore;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -85,9 +86,10 @@ class TeamController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show($id)
     {
-        //
+        $scores = LiveScore::with('teams')->where('team_id', $id)->get();
+        return view('pages.team.score.main', compact('scores'));
     }
 
     /**
@@ -211,4 +213,45 @@ class TeamController extends Controller
         $req->session()->flash('message', 'Teams remove successfully.');
         return redirect()->route('teams');
     }
-}
+
+    public function match_start(Request $req,$id)
+    {
+        $team = Team::where('id', $id)->update([
+            'match_start_time' => date('Y-m-d H:i:s')
+        ]);
+        $req->session()->flash('message', 'Teams match started.');
+        return redirect()->route('teams');
+    }
+
+    public function match_stop(Request $req,$id)
+    {
+        $data = LiveScore::where('team_id', $id)->latest('id')->first();
+
+        if($data->score_by_team_one > $data->score_by_team_two)
+        {
+            $team = Team::find($id);
+            Team::where('id', $id)->update([
+                'set_won_by_team_one' => $team->set_won_by_team_one + 1
+            ]);
+        }
+        else
+        {
+            $team = Team::find($id);
+            Team::where('id', $id)->update([
+                'set_won_by_team_two' => $team->set_won_by_team_two + 1
+            ]);
+        }
+        $team = Team::where('id', $id)->update([
+            'match_end_time' => date('Y-m-d H:i:s')
+        ]);
+        $req->session()->flash('message', 'Teams match end at '.date('H:i:s'). '.');
+        return redirect()->route('teams');
+    }
+
+    public function team_set_score($id)
+    {
+        return view('pages.team.score.set-score', [
+            'team' => Team::find($id)
+        ]);
+    }
+ }

@@ -26,7 +26,9 @@ Team Scores
                                     <th>Team One Name</th>
                                     <th>Team Two Image</th>
                                     <th>Team Two Name</th>
+                                    <th>Match Timing</th>
                                     <th>Current Set Score</th>
+                                    <th>Set Won</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -42,8 +44,20 @@ Team Scores
                                         <img src="{{ $team->team_two_image }}" alt="" width="100px" height="100px">
                                     </td>
                                     <td>{{ $team->team_two_name }}</td>
+                                    <td>{{ $team->match_start_time }} <b>to</b> {{ $team->match_end_time }} </td>
                                     <td>{{ $team->current_set_score }}</td>
+                                    <td>{{ $team->set_won_by_team_one }} - {{ $team->set_won_by_team_two }} </td>
                                     <td>
+                                        @if($team->match_end_time == null)
+                                            @if($team->match_start_time != null)
+                                                <a href="{{ url('team-match_stop', $team->id) }}" class="btn btn-danger">Match Stop</a>
+                                            @else
+                                                <a href="{{ url('team-match_start', $team->id) }}" class="btn btn-primary">Match Start</a>
+                                            @endif
+                                        @else
+                                            <button class="btn btn-success">Match Already End</button>
+                                        @endif
+                                        <a href="{{ url('team-scores', $team->id) }}" class="btn btn-primary">Show</a>
                                         <a href="{{ url('edit-team', $team->id) }}" class="btn btn-success">Edit</a>
                                         <a href="{{ url('remove-team', $team->id) }}" class="btn btn-danger">Remove</a>
                                     </td>

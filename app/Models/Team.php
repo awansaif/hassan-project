@@ -20,5 +20,11 @@ class Team extends Model
     public $hidden = [
         'created_at',
         'updated_at',
+
     ];
+
+    public function scores()
+    {
+        return $this->hasMany(LiveScore::class);
+    }
 }

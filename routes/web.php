@@ -35,6 +35,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
+use App\Http\Controllers\LiveScoreController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
@@ -277,11 +278,24 @@ Route::group(['middleware'=> ['auth', 'admin']],function(){
 
     // team router
     Route::get('/scores', [ControllersTeamController::class, 'index'])->name('teams');
+    Route::get('/team-scores/{id}', [ControllersTeamController::class, 'show'])->name('liveScore');
     Route::get('/add-team', [ControllersTeamController::class, 'create']);
     Route::post('/add-team', [ControllersTeamController::class, 'store']);
     Route::get('/edit-team/{id}', [ControllersTeamController::class, 'edit']);
     Route::post('/edit-team/{id}', [ControllersTeamController::class, 'update']);
     Route::get('/remove-team/{id}', [ControllersTeamController::class, 'destroy']);
+
+    Route::get('/team-match_start/{id}', [ControllersTeamController::class, 'match_start']);
+    Route::get('/team-match_stop/{id}', [ControllersTeamController::class, 'match_stop']);
+    Route::get('/team-set-score/{id}', [ControllersTeamController::class, 'team_set_score']);
+    Route::post('/team-set-score/{id}', [ControllersTeamController::class, 'team_set_score_save']);
+
+    // team score router
+    Route::get('/add-team-score/{id}', [LiveScoreController::class, 'create']);
+    Route::post('/add-team-score/{id}', [LiveScoreController::class, 'store']);
+    Route::get('/edit-team-score/{id}', [LiveScoreController::class, 'edit']);
+    Route::post('/edit-team-score/{id}', [LiveScoreController::class, 'update']);
+    Route::get('/remove-team-score/{id}', [LiveScoreController::class, 'destroy']);
   });
 
   Route::group(['prefix' => 'admin'], function () {
