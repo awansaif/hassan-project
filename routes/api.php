@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\EventOrderController;
 use App\Http\Controllers\Api\FedEventOrderController;
+use App\Http\Controllers\Api\MembershipApiController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -94,4 +95,7 @@ Route::post('/place-fed-event-order', [FedEventOrderController::class, 'save_ord
 // Team score api
 Route::get('/teams', [ApiController::class, 'teams']);
 Route::get('/team-score/{id}', [ApiController::class, 'team_score']);
+
+// membership api
+Route::post('membership', [MembershipApiController::class, 'member']);
 

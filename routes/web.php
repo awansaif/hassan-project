@@ -36,6 +36,7 @@ use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
 use App\Http\Controllers\LiveScoreController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
@@ -268,6 +269,10 @@ Route::group(['middleware'=> ['auth', 'admin']],function(){
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
     Route::view('/registered', 'registered', ['users' => User::all()]);
 
+
+    // memberships routes
+    Route::resource('membership', MembershipController::class);
+    Route::get('membership/delete/{id}', [MembershipController::class,'destroy']);
     // Team members routes
     Route::get('/team-members', [TeamController::class,'index'])->name('team-members');
     Route::get('/add-team-member', [TeamController::class, 'create']);

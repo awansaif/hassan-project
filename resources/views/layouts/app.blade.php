@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css') }}">
 
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('datatable/css/jquery.dataTables.css') }}">
 
     @guest
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -165,6 +165,14 @@
                                             </a>
                                         </li>
                                     </ul>
+                                </li>
+                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Tesseramento
+                                </div>
+                                <li>
+                                    <a href="{{ url('membership') }}" class="nav nav-item">
+                                        <span><i class="ti-angle-right"></i></span>
+                                        Tesseramento
+                                    </a>
                                 </li>
                                 <div class="pcoded-navigatio-lavel">Live</div>
                                 <li>
@@ -690,9 +698,16 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
 
+    <script type="text/javascript" charset="utf8" src="{{ asset('datatable/js/jquery.dataTables.js') }}">
+    </script>
     <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo-12.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script>
+        $(document).ready( function () {
+            $('#dataTable').DataTable();
+        } );
+    </script>
 </body>
 
 </html>
