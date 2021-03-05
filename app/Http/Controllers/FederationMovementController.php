@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlbodroCategory;
+use App\Models\AlbodroItem;
+use App\Models\Cassifiche;
+use App\Models\CassificheDetail;
+use App\Models\FederaationSponsor;
+use App\Models\FederationEvent;
 use App\Models\FederationMovement;
+use App\Models\FederationNews;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -127,6 +134,12 @@ class FederationMovementController extends Controller
     public function destroy(Request $request, FederationMovement $federationMovement)
     {
         $check = FederationMovement::where('id', $request->id)->delete();
+        FederaationSponsor::where('federation_id', $request->id)->delete();
+        FederationEvent::where('federation_id', $request->id)->delete();
+        FederationNews::where('federation_id', $request->id)->delete();
+        // CassificheDetail::where('cassifiche_id', $cassifiche->id)->delete();
+        Cassifiche::where('federation_id', $request->id)->delete();
+        AlbodroCategory::where('federation_id', $request->id)->delete();
         if($check)
         {
             $request->session()->flash('message', 'Federation Movement data save successfully.');

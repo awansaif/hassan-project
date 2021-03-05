@@ -45,6 +45,14 @@ Federation
                                         @csrf
                                         <input type="hidden" name="federation_id" value="{{ $data->id }}">
                                         <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Image<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" class="form-control mb-1" name="image" accept="image/*">
+                                                <img src="{{ $data->image }}" alt="" width="100px" height="100px">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Player Name<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">

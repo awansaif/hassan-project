@@ -44,7 +44,7 @@ Cassifiche
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $data->id }}">
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Federation<span
+                                            <label class="col-sm-2 col-form-label">Federation Movement<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <select name="federation" id="" class="form-control custom-select" required>
@@ -52,11 +52,11 @@ Cassifiche
                                                         federation ...</option>
                                                     @foreach($federations as $federation)
                                                     <option value="{{ $federation->id }}"
-                                                      
+
                                                       @if ($federation->id == $data->federation_id)
                                                           selected
                                                       @endif
-                                                      
+
                                                       >{{ $federation->name }}
                                                     </option>
                                                     @endforeach

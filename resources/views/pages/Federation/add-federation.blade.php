@@ -43,7 +43,17 @@ Federation
                                     <form  method="post"
                                         enctype="multipart/form-data">
                                         @csrf
+
                                         <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Image<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" class="form-control" name="image" required accept="image/*">
+                                            </div>
+                                        </div>
+
+
+                                        <divrm-group row">
                                             <label class="col-sm-2 col-form-label">Player Name<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">

@@ -51,7 +51,7 @@ Federation Movement
                                             <label class="col-sm-2 col-form-label">Image<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" name="image" class="form-control">
+                                                <input type="file" name="image" class="form-control" accept="image/*">
                                             </div>
                                         </div>
 

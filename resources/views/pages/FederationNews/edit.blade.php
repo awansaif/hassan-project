@@ -65,7 +65,7 @@
                                                 </div>
                                             @endif
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Federation<span
+                                                <label class="col-sm-2 col-form-label">Federation Movement<span
                                                         style="color:#ff0000"> *</span></label>
                                                 <div class="col-sm-10">
                                                     <select name="federation" id="" class="form-control custom-select">
@@ -116,7 +116,7 @@
                                                 <div class="col-sm-10">
                                                     <textarea rows="5" cols="5" class="form-control"
                                                         placeholder="News Description" name="details"
-                                                        
+
                                                         required>{{ $data->detail }}</textarea>
                                                 </div>
                                             </div>

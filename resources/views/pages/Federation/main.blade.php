@@ -24,6 +24,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Image</th>
                                                 <th>Name</th>
                                                 <th>Rank</th>
                                                 <th>FICB</th>
@@ -37,6 +38,9 @@
                                             @foreach ($federations as $key => $federation)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
+                                                    <td>
+                                                        <img src="{{ $federation->image }}" alt="" width="100px" height="100px">
+                                                    </td>
                                                     <td>{{ $federation->player_name }}</td>
                                                     <td>{{ $federation->player_rank }}</td>
                                                     <td>{{ $federation->FICB }}</td>
