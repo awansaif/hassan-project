@@ -53,7 +53,7 @@ Federation
                                         </div>
 
 
-                                        <divrm-group row">
+                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Player Name<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
