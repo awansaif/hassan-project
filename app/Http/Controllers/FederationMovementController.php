@@ -160,9 +160,9 @@ class FederationMovementController extends Controller
             }
             elseif($request->hasFile('icon'))
             {
-                $image = $request->file('image');
-                $image_name = time().$image->getClientOriginalName();
-                $image->move($destinationPath, $image_name);
+                $icon = $request->file('icon');
+                $icon_name = time().$icon->getClientOriginalName();
+                $icon->move($destinationPath, $icon_name);
 
                 FederationMovement::where('id', $request->id)->update([
                     'name' => $request->name,
