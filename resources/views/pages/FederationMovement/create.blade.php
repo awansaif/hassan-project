@@ -14,7 +14,7 @@ Federation Movement
                             <!-- Basic Form Inputs card start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h1 class="text-primary"> <a href="/federation-movement" class="btn btn-primary">Back</a> Add Federation</h1>
+                                    <h1 class="text-primary"> <a href="/federation-movement" class="btn btn-primary">Back</a> Add Federation Movement</h1>
 
                                 </div>
                                 <div class="card-body">
@@ -44,6 +44,14 @@ Federation Movement
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="name"
                                                     placeholder="Name"  value="{{ old('name') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">ICON<span
+                                                    style="color:#ff0000"> *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" name="icon" class="form-control" accept="image/*">
                                             </div>
                                         </div>
 

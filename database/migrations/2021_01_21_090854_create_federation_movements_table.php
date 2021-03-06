@@ -16,6 +16,7 @@ class CreateFederationMovementsTable extends Migration
         Schema::create('federation_movements', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('icon');
             $table->string('image');
             $table->string('latest_event');
             $table->timestamps();

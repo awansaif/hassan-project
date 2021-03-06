@@ -506,9 +506,8 @@
                                 </li>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            Movement</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation Movement</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -516,15 +515,7 @@
                                             <a href="/federation-movement">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Federations</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/add-federation-movement">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Federation</span>
+                                                    data-i18n="nav.basic-components.alert">Movements</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -533,9 +524,8 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            News</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation News</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -560,9 +550,8 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            Event</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation Event</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -587,9 +576,8 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            Sponsor</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation Sponsor</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -614,9 +602,8 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            Albodoro</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation Albodoro</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -650,9 +637,8 @@
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-music"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
-                                            Cassifiche</span>
+                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>Federation Cassifiche</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">

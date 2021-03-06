@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MembershipMail;
 use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class MembershipApiController extends Controller
@@ -53,6 +55,7 @@ class MembershipApiController extends Controller
             $data->agree = $req->agree;
             $data->total_payment = $req->total_payment;
             $data->save();
+            Mail::to($req->email)->send(new MembershipMail($data));
             $data = [
                 'response' => true,
                 'message'   => 'Data save successfully.',

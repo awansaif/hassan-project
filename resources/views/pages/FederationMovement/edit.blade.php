@@ -14,7 +14,8 @@ Federation Movement
                             <!-- Basic Form Inputs card start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h1 class="text-primary"> <a href="/federation-movement" class="btn btn-primary">Back</a> Add Federation</h1>
+                                    <h1 class="text-primary"> <a href="/federation-movement"
+                                            class="btn btn-primary">Back</a>Update Federation Movement</h1>
 
                                 </div>
                                 <div class="card-body">
@@ -35,27 +36,33 @@ Federation Movement
                                         </ul>
                                     </div>
                                     @endif
-                                    <form  method="post"
-                                        enctype="multipart/form-data">
+                                    <form method="post" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="movement_id" value="{{ $data->id }}">
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Name<span
-                                                    style="color:#ff0000"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Name<span style="color:#ff0000">
+                                                    *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="name"
-                                                    placeholder="Name"  value="{{ $data->name }}">
+                                                <input type="text" class="form-control" name="name" placeholder="Name"
+                                                    value="{{ $data->name }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Image<span
-                                                    style="color:#ff0000"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">ICON<span style="color:#ff0000">
+                                                    *</span></label>
                                             <div class="col-sm-10">
-                                                <div style="width: 200px; height: 200px;">
-                                                    <img src="{{  $data->image }}" alt="" width="100%" height="auto">
-                                                </div>
-                                                <input type="file" name="image" class="form-control">
+                                                <input type="file" name="icon" class="form-control" accept="image/*">
+                                                <img src="{{ $data->icon }}" alt="" width="100px" height="100px">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Image<span style="color:#ff0000">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="file" name="image" class="form-control" accept="image/*">
+                                                <img src="{{  $data->image }}" alt="" width="100px" height="100px">
                                             </div>
                                         </div>
 
@@ -63,13 +70,15 @@ Federation Movement
                                             <label class="col-sm-2 col-form-label">Latest Event<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="datetime-local" class="form-control" name="latest_event" value="{{ date("Y-m-d\TH:i:s", strtotime($data->latest_event )) }}" >
+                                                <input type="datetime-local" class="form-control" name="latest_event"
+                                                    value="{{ date("Y-m-d\TH:i:s", strtotime($data->latest_event )) }}">
                                             </div>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary float-right"
                                             id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Update Federation</button>
+                                            title="Primary color states" data-placement="bottom">Update
+                                            Federation</button>
                                     </form>
 
                                 </div>
