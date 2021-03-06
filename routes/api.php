@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\EventOrderController;
 use App\Http\Controllers\Api\FedEventOrderController;
+use App\Http\Controllers\Api\HomeApiController;
 use App\Http\Controllers\Api\MembershipApiController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -98,4 +99,7 @@ Route::get('/team-score/{id}', [ApiController::class, 'team_score']);
 
 // membership api
 Route::post('membership', [MembershipApiController::class, 'member']);
+
+// home page api
+Route::get('/home', [HomeApiController::class, 'home']);
 
