@@ -17,13 +17,13 @@ class HomeApiController extends Controller
     {
 
         $data = [
-            'movements' => FederationMovement::orderBY('id', 'DESC')->get(),
-            'flash_news' => FlashNews::orderBy('id', 'DESC')->get(),
-            'latest_news' => RecentNews::orderBy('id', 'DESC')->take(5)->get(),
-            'latest_event' => LatestEvent::orderBY('id', 'DESC')->take(5)->get(),
+            'federation' => FederationMovement::orderBY('id', 'DESC')->get(),
+            'flash' => FlashNews::orderBy('id', 'DESC')->get()->toArray(),
+            'news' => RecentNews::orderBy('id', 'DESC')->take(5)->get(),
+            'event' => LatestEvent::orderBY('id', 'DESC')->take(5)->get(),
             'sponsors' => Sponsor::orderby('id','DESC')->get(),
             'videos' => Video::orderBy('id', 'DESC')->get(),
         ];
-        return response()->json($data);
+        return [$data];
     }
 }

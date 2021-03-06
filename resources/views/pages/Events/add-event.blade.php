@@ -10,26 +10,6 @@ Event
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-                <!-- Page-header start -->
-                <div class="page-header card">
-                    <div class="row align-items-end">
-                        <div class="col-lg-8">
-                            <div class="page-header-title">
-                                <i class="icofont icofont-file-code bg-c-blue"></i>
-                                <div class="d-inline">
-                                    <h4>Add Event </h4>
-                                    <span>Lorem ipsum dolor sit <code>amet</code>, consectetur adipisicing elit</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="page-header-breadcrumb">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Page-header end -->
-
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="row">
@@ -44,9 +24,7 @@ Event
 
                                 </div>
                                 <div class="card-block">
-                                    <!--- <h4 class="sub-title">Basic Inputs</h4> -->
-
-
+                                    <h4 class="sub-title"> <a href="{{ url('events') }}" class="btn btn-primary btn-sm mr-4">Back</a> Add Event</h4>
                                     <form id="event-form" method="post" enctype="multipart/form-data">
                                     	@csrf
                                     	@if(Session::has('message'))
@@ -67,7 +45,7 @@ Event
                                             <label class="col-sm-2 col-form-label">Event Image<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="event_image" >
+                                                <input type="file" class="form-control" name="event_image" accept="image/*">
                                             </div>
                                         </div>
 
@@ -75,7 +53,7 @@ Event
                                             <label class="col-sm-2 col-form-label">Secondary-Event Image<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="secondary_event_mage"
+                                                <input type="file" class="form-control" name="secondary_event_mage" accept="image/*"
                                                      value="{{ old('secondary_event_mage') }}">
                                             </div>
                                         </div>
@@ -96,7 +74,7 @@ Event
                                             <div class="col-sm-10">
                                                 <textarea rows="4" cols="5" class="form-control"
                                                     placeholder="Event Details" name="event_long_description"
-                                                    >{{ old('event_long_description') }}"</textarea>
+                                                    >{{ old('event_long_description') }}</textarea>
                                             </div>
                                         </div>
 
@@ -135,15 +113,10 @@ Event
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Latitude<span style="color:#ff0000"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Location Map Link<span style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-file" name="latitude" value="{{ old('latitude') }}" >
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Longtitude<span style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-file" name="longtitude" value="{{ old('longtitude') }}">
+                                                <input type="url" class="form-control" name="location_map_link" value="{{ old('location_map_link') }}" placeholder="https://www.google.com/maps/place/London,+UK/@51.528308,-0.381781,10z/data=!4m13!1m7!3m6!1s0x47d8a00baf21de75:0x52963a5addd52a99!2sLondon,+UK!3b1!8m2!3d51.5073509!4d-0.1277583!3m4!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5073509!4d-0.1277583">
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -166,7 +139,7 @@ Event
                                             <label class="col-sm-2 col-form-label">Author
                                                 Image<span style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control form-control-file" name="author_image" >
+                                                <input type="file" class="form-control form-control-file" name="author_image" accept="image/*">
                                             </div>
                                         </div>
 

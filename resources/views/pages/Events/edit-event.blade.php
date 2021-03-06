@@ -10,25 +10,6 @@ Event
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-                <!-- Page-header start -->
-                <div class="page-header card">
-                    <div class="row align-items-end">
-                        <div class="col-lg-8">
-                            <div class="page-header-title">
-                                <i class="icofont icofont-file-code bg-c-blue"></i>
-                                <div class="d-inline">
-                                    <h4>Add Event </h4>
-                                    <span>Lorem ipsum dolor sit <code>amet</code>, consectetur adipisicing elit</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="page-header-breadcrumb">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Page-header end -->
 
                 <!-- Page body start -->
                 <div class="page-body">
@@ -44,9 +25,7 @@ Event
 
                                 </div>
                                 <div class="card-block">
-                                    <!--- <h4 class="sub-title">Basic Inputs</h4> -->
-
-
+                                    <h4 class="sub-title"><a href="{{ url('events') }}" class="btn btn-primary btn-sm mr-4">Back</a>Update Event</h4>
                                     <form id="event-form" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="event_id" value="{{ $data->id }}">
@@ -68,7 +47,7 @@ Event
                                             <label class="col-sm-2 col-form-label">Event Image<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="event_image" >
+                                                <input type="file" class="form-control" name="event_image" accept="image/*">
                                             </div>
                                         </div>
 
@@ -76,7 +55,7 @@ Event
                                             <label class="col-sm-2 col-form-label">Secondary-Event Image<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="secondary_event_mage">
+                                                <input type="file" class="form-control" name="secondary_event_mage" accept="image/*">
                                             </div>
                                         </div>
 
@@ -135,15 +114,9 @@ Event
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Latitude<span style="color:#ff0000"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Location Map Link<span style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-file" name="latitude" value="{{ $data->latitude }}" >
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Longtitude<span style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-file" name="longtitude" value="{{ $data->longtitude }}">
+                                                <input type="url" class="form-control" name="location_map_link" value="{{ $data->location_map_link }}" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -166,14 +139,12 @@ Event
                                             <label class="col-sm-2 col-form-label">Author
                                                 Image<span style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control form-control-file" name="author_image" >
+                                                <input type="file" class="form-control form-control-file" name="author_image" accept="image/*">
                                             </div>
                                         </div>
 
 
-                                        <button type="submit" class="btn btn-primary float-right"
-                                            id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Update Event</button>
+                                        <button type="submit" class="btn btn-success float-right">Update Event</button>
 
 
                                     </form>

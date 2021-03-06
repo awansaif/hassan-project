@@ -26,9 +26,8 @@ class CreateFederationEventsTable extends Migration
             $table->string('author_name');
             $table->string('federation_name');
             $table->string('author_image');
-            $table->string('further_detail');
-            $table->string('longtitude');
-            $table->string('latitude');
+            $table->mediumText('further_detail');
+            $table->mediumText('location_map_link');
             $table->timestamps();
         });
     }

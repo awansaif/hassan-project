@@ -53,8 +53,7 @@ class EventController extends Controller
             'federation_name'         => 'required',
             'author_image'            => 'required',
             'further_detail'           => 'required',
-            'latitude'                => 'required',
-            'longtitude'              => 'required',
+            'location_map_link'                => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -88,8 +87,7 @@ class EventController extends Controller
             $data->federation_name = $request->federation_name;
             $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
             $data->further_detail = $request->further_detail;
-            $data->longtitude = $request->longtitude;
-            $data->latitude = $request->latitude;
+            $data->location_map_link = $request->location_map_link;
             $data->save();
 
             $data = new LatestEvent();
@@ -104,8 +102,7 @@ class EventController extends Controller
             $data->federation_name = $request->federation_name;
             $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
             $data->further_detail = $request->further_detail;
-            $data->longtitude = $request->longtitude;
-            $data->latitude = $request->latitude;
+            $data->location_map_link = $request->location_map_link;
             $data->save();
 
             $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
@@ -184,8 +181,7 @@ class EventController extends Controller
             'federation_name'         => 'required',
             'author_image'            => 'nullable',
             'further_detail'           => 'required',
-            'latitude'                => 'required',
-            'longtitude'              => 'required',
+            'location_map_link'                => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -243,11 +239,10 @@ class EventController extends Controller
                 'author_name' => $request->aurthor_name,
                 'federation_name' => $request->federation_name,
                 'further_detail' => $request->further_detail,
-                'longtitude' => $request->longtitude,
-                'latitude' => $request->latitude,
+                'location_map_link' => $request->location_map_link,
             ]);
 
-            $request->session()->flash('message', 'Event data save successfully.');
+            $request->session()->flash('message', 'Event data updated successfully.');
             return redirect()->back();
 
 

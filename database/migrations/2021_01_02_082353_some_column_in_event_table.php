@@ -14,10 +14,8 @@ class SomeColumnInEventTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            //
-            $table->string('further_detail');
-            $table->string('longtitude');
-            $table->string('latitude');
+            $table->text('further_detail');
+            $table->mediumText('location_map_link');
         });
     }
 
@@ -29,7 +27,8 @@ class SomeColumnInEventTable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            //
+            $table->dropColumn('further_detail');
+            $table->dropColumn('location_map_link');
         });
     }
 }

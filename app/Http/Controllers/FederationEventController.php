@@ -56,9 +56,8 @@ class FederationEventController extends Controller
             'aurthor_name'            => 'required',
             'federation_name'         => 'required',
             'author_image'            => 'required',
-            'further_detail'           => 'required',
-            'latitude'                => 'required',
-            'longtitude'              => 'required',
+            'further_detail'          => 'required',
+            'location_map_link'       => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -93,8 +92,7 @@ class FederationEventController extends Controller
             $data->federation_name = $request->federation_name;
             $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
             $data->further_detail = $request->further_detail;
-            $data->longtitude = $request->longtitude;
-            $data->latitude = $request->latitude;
+            $data->location_map_link = $request->location_map_link;
             $data->save();
 
             $data = new LatestEvent();
@@ -109,8 +107,7 @@ class FederationEventController extends Controller
             $data->federation_name = $request->federation_name;
             $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
             $data->further_detail = $request->further_detail;
-            $data->longtitude = $request->longtitude;
-            $data->latitude = $request->latitude;
+            $data->location_map_link = $request->location_map_link;
             $data->save();
 
             $request->session()->flash('message', 'Federation Event data save successfully.');
@@ -163,9 +160,8 @@ class FederationEventController extends Controller
             'event_timing'            => 'required',
             'aurthor_name'            => 'required',
             'federation_name'         => 'required',
-            'further_detail'           => 'required',
-            'latitude'                => 'required',
-            'longtitude'              => 'required',
+            'further_detail'          => 'required',
+            'location_map_link'       => 'required|url',
         ]);
         if($validator->fails())
         {
@@ -218,20 +214,19 @@ class FederationEventController extends Controller
             }
 
             FederationEvent::where('id', $request->id)->update([
-                'federation_id' => $request->federation,
+                'federation_id'     => $request->federation,
                 'short_description' => $request->event_short_description,
-                'long_decription' => $request->event_long_description,
-                'even_price' => $request->event_price,
-                'event_place' => $request->event_place,
-                'event_timing' => $request->event_timing,
-                'author_name' => $request->aurthor_name,
+                'long_decription'   => $request->event_long_description,
+                'even_price'    => $request->event_price,
+                'event_place'   => $request->event_place,
+                'event_timing'  => $request->event_timing,
+                'author_name'     => $request->aurthor_name,
                 'federation_name' => $request->federation_name,
-                'further_detail' => $request->further_detail,
-                'longtitude' => $request->longtitude,
-                'latitude' => $request->latitude,
+                'further_detail'  => $request->further_detail,
+                'location_map_link'  => $request->location_map_link,
             ]);
 
-            $request->session()->flash('message', 'Federation Event data save successfully.');
+            $request->session()->flash('message', 'Federation Event data updated successfully.');
             return redirect()->back();
 
 
