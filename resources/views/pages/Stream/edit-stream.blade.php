@@ -37,7 +37,8 @@ Stream
                                     <div class="col-sm-10">
                                         <div class="row">
                                             <div class="col-6">
-                                                <input type="file" class="form-control" name="stream_featured_image">
+                                                <input type="file" class="form-control" name="featured_image"
+                                                    accept="image/*">
                                             </div>
                                             <div class="col-6">
                                                 <img src="{{ $data->featured_image }}" alt="" width="300px"

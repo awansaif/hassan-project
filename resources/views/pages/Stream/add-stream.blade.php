@@ -32,7 +32,8 @@ Stream
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label font-weight-bold">Featured Image</label>
                                     <div class="col-sm-10">
-                                        <input type="file" class="form-control" name="featured_image" required>
+                                        <input type="file" class="form-control" name="featured_image" accept="image/*"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
