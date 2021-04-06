@@ -25,7 +25,7 @@
                                     <th>#</th>
                                     <th>Featured Image</th>
                                     <th>Title</th>
-                                    <th>Live Stream</th>
+                                    <th>Live Stream Link</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -43,9 +43,7 @@
                                     </td>
                                     <td>
                                         <div style="width: 300px; height:150px;">
-                                            <iframe width="100%" height="auto"
-                                                src="https://www.youtube.com/embed/{{ $stream->stream_path }}">
-                                            </iframe>
+                                            {{ $stream->stream_path }}
                                         </div>
                                     </td>
                                     <td>

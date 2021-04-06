@@ -45,27 +45,25 @@ class StreamController extends Controller
             'title' => 'required',
             'stream' => 'required|url',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
+                ->withInput();
+        } else {
             $file1 = $request->file('featured_image');
             $destinationPath = 'stream-pics/';
-            $featured_image = time().$file1->getClientOriginalName();
-            $file1->move($destinationPath,$featured_image);
+            $featured_image = time() . $file1->getClientOriginalName();
+            $file1->move($destinationPath, $featured_image);
 
 
-            $path = $request->stream;
-            parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
+            // $path = $request->stream;
+            // parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
 
             $data = new Stream;
-            $data->featured_image = env('APP_URL'). $destinationPath.$featured_image;
+            $data->featured_image = env('APP_URL') . $destinationPath . $featured_image;
             $data->title = $request->title;
-            $data->stream_path = $stream_path['v'];
+            $data->stream_path = $request->stream;
             $data->save();
-            $request->session()->flash('message', $request->title.' stream add successfully.');
+            $request->session()->flash('message', $request->title . ' stream add successfully.');
             return redirect()->back();
         }
     }
@@ -109,31 +107,26 @@ class StreamController extends Controller
             'title' => 'required',
             'stream' => 'required|url',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
+                ->withInput();
+        } else {
             $path = $request->stream;
-            parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
-            if($request->file('featured_image'))
-            {
+            parse_str(parse_url($path, PHP_URL_QUERY), $stream_path);
+            if ($request->file('featured_image')) {
                 $file1 = $request->file('featured_image');
                 $destinationPath = 'stream-pics/';
-                $featured_image = time().$file1->getClientOriginalName();
-                $file1->move($destinationPath,$featured_image);
+                $featured_image = time() . $file1->getClientOriginalName();
+                $file1->move($destinationPath, $featured_image);
 
                 $update = Stream::where('id', $request->stream_id)->update([
-                    'featured_image'  => env('APP_URL'). $destinationPath.$featured_image,
+                    'featured_image'  => env('APP_URL') . $destinationPath . $featured_image,
                     'title'           => $request->title,
                     'stream_path'     => $stream_path['v'],
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
-            }
-            else
-            {
+            } else {
                 $update = Stream::where('id', $request->stream_id)->update([
                     'title'       => $request->title,
                     'stream_path' =>  $stream_path['v']
@@ -154,8 +147,7 @@ class StreamController extends Controller
     {
         //
         $check = Stream::where('id', $request->id)->delete();
-        if($check)
-        {
+        if ($check) {
             $request->session()->flash('message', 'Stream remove successfully.');
             return redirect()->back();
         }

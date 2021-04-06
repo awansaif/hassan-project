@@ -41,7 +41,7 @@ Stream
                                             </div>
                                             <div class="col-6">
                                                 <img src="{{ $data->featured_image }}" alt="" width="300px"
-                                                height="100px">
+                                                    height="100px">
                                             </div>
                                         </div>
                                     </div>
@@ -59,16 +59,17 @@ Stream
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label font-weight-bold">Stream Link</label>
                                     <div class="col-sm-10">
-                                        <input type="url" class="form-control mb-2" name="stream" value="https://www.youtube.com/watch?v={{ $data->stream_path }}">
-                                        <iframe width="400" height="200"
+                                        <input type="url" class="form-control mb-2" name="stream"
+                                            value="{{ $data->stream_path }}">
+                                        {{-- <iframe width="400" height="200"
                                             src="https://www.youtube.com/embed/{{ $data->stream_path }}">
-                                        </iframe>
+                                        </iframe> --}}
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary float-right m-2" id="primary-popover-content"
-                                    data-container="body" data-toggle="popover" title="Primary color states"
-                                    data-placement="bottom">Update Stream</button>
+                                <button type="submit" class="btn btn-primary float-right m-2"
+                                    id="primary-popover-content" data-container="body" data-toggle="popover"
+                                    title="Primary color states" data-placement="bottom">Update Stream</button>
                                 <a href="{{ url('streams') }}" class="btn btn-success m-2 float-right">Back</a>
 
                             </form>
@@ -79,4 +80,4 @@ Stream
             </div>
         </div>
     </div>
-@endsection
+    @endsection

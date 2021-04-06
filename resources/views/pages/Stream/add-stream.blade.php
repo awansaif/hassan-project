@@ -46,15 +46,17 @@ Stream
 
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label font-weight-bold">Toutube Stream Link<span style="color:#ff0000">
+                                    <label class="col-sm-2 col-form-label font-weight-bold">Twitch Stream Link<span
+                                            style="color:#ff0000">
                                             *</span></label>
                                     <div class="col-sm-10">
-                                        <input type="url" class="form-control" placeholder="Youtube stream link paste here." name="stream" required>
+                                        <input type="url" class="form-control"
+                                            placeholder="Twitch stream link paste here." name="stream" required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary float-right m-2" id="primary-popover-content"
-                                    data-container="body" data-toggle="popover" title="Primary color states"
-                                    data-placement="bottom">Add Stream</button>
+                                <button type="submit" class="btn btn-primary float-right m-2"
+                                    id="primary-popover-content" data-container="body" data-toggle="popover"
+                                    title="Primary color states" data-placement="bottom">Add Stream</button>
                                 <a href="{{ url('streams') }}" class="btn btn-success m-2 float-right">Back</a>
                             </form>
                         </div>
@@ -63,4 +65,4 @@ Stream
             </div>
         </div>
     </div>
-@endsection
+    @endsection
