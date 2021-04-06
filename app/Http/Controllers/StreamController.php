@@ -111,8 +111,6 @@ class StreamController extends Controller
             return redirect()->back()->withErrors($validator)
                 ->withInput();
         } else {
-            $path = $request->stream;
-            parse_str(parse_url($path, PHP_URL_QUERY), $stream_path);
             if ($request->file('featured_image')) {
                 $file1 = $request->file('featured_image');
                 $destinationPath = 'stream-pics/';
@@ -122,14 +120,14 @@ class StreamController extends Controller
                 $update = Stream::where('id', $request->stream_id)->update([
                     'featured_image'  => env('APP_URL') . $destinationPath . $featured_image,
                     'title'           => $request->title,
-                    'stream_path'     => $stream_path['v'],
+                    'stream_path'     => $request->stream,
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
             } else {
                 $update = Stream::where('id', $request->stream_id)->update([
                     'title'       => $request->title,
-                    'stream_path' =>  $stream_path['v']
+                    'stream_path' =>  $request->stream
                 ]);
                 $request->session()->flash('message', 'Stream update successfully.');
                 return redirect()->back();
