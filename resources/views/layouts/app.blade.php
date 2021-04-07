@@ -339,14 +339,6 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class=" ">
-                                            <a href="{{ url('add-shop') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    New Shop</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
 

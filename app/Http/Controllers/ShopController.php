@@ -45,19 +45,17 @@ class ShopController extends Controller
             'shop_img' => 'required|image',
             'shop_name'  => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
+                ->withInput();
+        } else {
             $file = $request->file('shop_img');
             $destinationPath = 'shop-pics/';
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destinationPath,$file_name);
+            $file_name = time() . $file->getClientOriginalName();
+            $check = $file->move($destinationPath, $file_name);
 
             $data = new Shop;
-            $data->shop_image = env('APP_URL'). $destinationPath.$file_name;
+            $data->shop_image = env('APP_URL') . $destinationPath . $file_name;
             $data->shop_name = $request->shop_name;
             $data->save();
             $request->session()->flash('message', 'shop add successfully.');
@@ -103,31 +101,27 @@ class ShopController extends Controller
             'shop_img' => 'nullable|image',
             'shop_name'  => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            if($request->file('shop_img'))
-            {
+                ->withInput();
+        } else {
+            if ($request->file('shop_img')) {
                 $file = $request->file('shop_img');
                 $destinationPath = 'shop-pics/';
-                $file_name = time().$file->getClientOriginalName();
-                $check = $file->move($destinationPath,$file_name);
+                $file_name = time() . $file->getClientOriginalName();
+                $check = $file->move($destinationPath, $file_name);
+
                 $update = Shop::where('id', $request->shop_id)->update([
                     'shop_name' => $request->shop_name,
-                    'shope_image' => env('APP_URL'). $destinationPath.$file_name
+                    'shop_image' => env('APP_URL') . $destinationPath . $file_name
                 ]);
                 $request->session()->flash('message', 'shop update successfully.');
                 return redirect()->back();
-
-            }
-            else{
+            } else {
                 $update = Shop::where('id', $request->shop_id)->update([
                     'shop_name' => $request->shop_name,
                 ]);
-                $request->session()->flash('message', 'shop update successfully.');
+                $request->session()->flash('message', $request->shop_name . ' shop update successfully.');
                 return redirect()->back();
             }
         }
@@ -144,8 +138,7 @@ class ShopController extends Controller
         //
         $check = Shop::where('id', $request->id)->delete();
 
-        if($check)
-        {
+        if ($check) {
             $data = Product::where('shop_id', $request->id)->delete();
             $request->session()->flash('message', 'shop data remove successfully.');
             return redirect()->back();
