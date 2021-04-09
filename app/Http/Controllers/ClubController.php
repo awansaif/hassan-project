@@ -14,10 +14,10 @@ class ClubController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
         //
-        $clubs = Club::orderBy('id', 'DESC')->get();
+        $clubs = Club::with('clubs')->where('club_id', $req->id)->orderBy('id', 'DESC')->get();
         return view('pages.Club.main', compact('clubs'));
     }
 
@@ -28,9 +28,7 @@ class ClubController extends Controller
      */
     public function create()
     {
-        //
-        $clubs = MainClub::orderBy('id', 'DESC')->get();
-        return view('pages.Club.create',compact('clubs'));
+        return view('pages.Club.create');
     }
 
     /**
@@ -47,20 +45,17 @@ class ClubController extends Controller
             'image' => 'required|image|mimes:png,jpg',
             'country' => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else{
-            if($request->file('image'))
-            {
+        } else {
+            if ($request->file('image')) {
                 $images = $request->file('image');
                 $new_name = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('club-images'), $new_name);
-                $image =  env('APP_URL').'club-images/'.$new_name;
+                $image =  env('APP_URL') . 'club-images/' . $new_name;
 
                 $data = new Club;
-                $data->club_id = $request->club;
+                $data->club_id = $request->id;
                 $data->name = $request->name;
                 $data->image = $image;
                 $data->country = $request->country;
@@ -110,17 +105,14 @@ class ClubController extends Controller
             'image' => 'nullable|image|mimes:png,jpg',
             'country' => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else{
-            if($request->file('image'))
-            {
+        } else {
+            if ($request->file('image')) {
                 $images = $request->file('image');
                 $new_name = rand() . '.' . $images->getClientOriginalExtension();
                 $images->move(public_path('club-images'), $new_name);
-                $image =  env('APP_URL').'club-images/'.$new_name;
+                $image =  env('APP_URL') . 'club-images/' . $new_name;
                 $update = Club::where('id', $request->club_id)->update([
                     'name' => $request->name,
                     'image' => $image,
@@ -128,8 +120,7 @@ class ClubController extends Controller
                 ]);
                 $request->session()->flash('message', 'Club data updated successfully.');
                 return redirect()->back();
-            }
-            else{
+            } else {
                 $update = Club::where('id', $request->club_id)->update([
                     'name' => $request->name,
                     'country' => $request->country

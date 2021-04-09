@@ -10,84 +10,54 @@ Club
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <!-- Basic Form Inputs card start -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <!--- <h5>Basic Form Inputs</h5>
-                    <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
-                                    <div class="card-header-right"><i class="icofont icofont-spinner-alt-5"></i></div>
-
-                                    <div class="card-header-right">
-                                        <i class="icofont icofont-spinner-alt-5"></i>
-
-                                    </div>
-
+                        <div class="col-sm-8 m-auto">
+                            <a href="/club?id={{ Request('id') }}" class="btn btn-primary float-left">Back</a>
+                            <h2 class="text-center text-muted">Add Club</h2>
+                            <hr>
+                            <form method="post" enctype="multipart/form-data">
+                                @if(Session::has('message'))
+                                <div class="alert alert-success">
+                                    {{ Session::get('message') }}
                                 </div>
-                                <div class="card-block">
-                                    <!--- <h4 class="sub-title">Basic Inputs</h4> -->
-
-                                    @if(Session::has('message'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('message') }}
-                                    </div>
-                                    @endif
-                                    @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    @endif
-                                    <form  method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Main Club<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <select name="club" id="" class="form-control custom-select">
-                                                    <option selected disabled class="selected disabled">Choose club...</option>
-                                                    @foreach($clubs as $club)
-                                                        <option value="{{ $club->id }}">{{ $club->club_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Name<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="name"
-                                                    placeholder="Name"  value="{{ old('name') }}"  required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Image<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="image"  required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Country<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="country"
-                                                    placeholder="Country"  value="{{ old('country') }}" required>
-                                            </div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary float-right"
-                                            id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Add Club</button>
-                                    </form>
+                                @endif
+                                @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            </div>
+                                @endif
+                                @csrf
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Club Name<span style="color:#ff0000">
+                                                *</span></label>
+                                        <input type="text" class="form-control" name="name" placeholder="Club Name"
+                                            value="{{ old('name') }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Club Image<span style="color:#ff0000">
+                                                *</span></label>
+                                        <input type="file" class="form-control" name="image" required accept="image/*">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Club Country<span style="color:#ff0000">
+                                                *</span></label>
+                                        <input type="text" class="form-control" name="country" placeholder="Country"
+                                            value="{{ old('country') }}" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success float-right">Add Club</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -95,6 +65,4 @@ Club
         </div>
     </div>
 </div>
-<!-- Basic Form Inputs card end -->
-
 @endsection

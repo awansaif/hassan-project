@@ -16,9 +16,12 @@ class ClubDetailController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        $clubDetail = ClubDetail::with('clubs')->where('club_id', $request->id)->get();
-        return view('pages.Club-detail.main', compact('clubDetail'));
+        $detail = ClubDetail::with('clubs')->where('club_id', $request->id)->get();
+        $club_id = ClubDetail::with('clubs')->where('club_id', $request->id)->first();
+        return view('pages.Club-detail.main', [
+            'clubDetail' => $detail,
+            'club_id' => $club_id->clubs->club_id,
+        ]);
     }
 
     /**
@@ -29,7 +32,7 @@ class ClubDetailController extends Controller
     public function create()
     {
         //
-        $clubs = Club::orderBy('id','DESC')->get();
+        $clubs = Club::orderBy('id', 'DESC')->get();
         return view('pages.Club-detail.add', compact('clubs'));
     }
 
@@ -43,30 +46,26 @@ class ClubDetailController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'club' => 'required',
             'sponsor.*' => 'required|image|mimes:png,jpg',
             'image' => 'required|image|mimes:png,jpg',
             'name'  => 'required',
         ]);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors()->withInput();
-        }
-        else{
+        } else {
             $images = $request->file('sponsor');
-            for($i=0; $i<count($images); $i++)
-            {
+            for ($i = 0; $i < count($images); $i++) {
                 $new_name = rand() . '.' . $images[$i]->getClientOriginalExtension();
                 $images[$i]->move(public_path('club-sponsor-imgs'), $new_name);
-                $img[] =  env('APP_URL').'club-sponsor-imgs/'.$new_name;
+                $img[] =  env('APP_URL') . 'club-sponsor-imgs/' . $new_name;
             }
             $image = $request->file('image');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('club-sponsor-imgs'), $new_name);
-            $image =  env('APP_URL').'club-sponsor-imgs/'.$new_name;
+            $image =  env('APP_URL') . 'club-sponsor-imgs/' . $new_name;
 
             $data = new ClubDetail();
-            $data->club_id = $request->club;
+            $data->club_id = $request->id;
             $data->sponsor_images = json_encode($img);
             $data->image = $image;
             $data->name = $request->name;
@@ -116,7 +115,7 @@ class ClubDetailController extends Controller
      * @param  \App\Models\ClubDetail  $clubDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,ClubDetail $clubDetail)
+    public function destroy(Request $request, ClubDetail $clubDetail)
     {
         //
         $delete = ClubDetail::where('id', $request->id)->delete();

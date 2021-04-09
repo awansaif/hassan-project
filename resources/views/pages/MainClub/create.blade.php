@@ -9,48 +9,38 @@ Main Clubs
             <div class="page-wrapper">
                 <!-- Page body start -->
                 <div class="page-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- Basic Form Inputs card start -->
-                            <div class="card">
-                                <div class="card-header">
-                                   <a href="/main-club" class="btn btn-primary">Back</a>
+                    <div class="row mt-5">
+                        <div class="col-sm-6 m-auto">
+                            <a href="/main-club" class="btn btn-primary float-left">Back</a>
+                            <h2 class="text-center text-muted">Add Main Club</h2>
+                            <hr>
+                            <form method="post" enctype="multipart/form-data">
+                                @if(Session::has('message'))
+                                <div class="alert alert-success">
+                                    {{ Session::get('message') }}
                                 </div>
-                                <div class="card-block">
-                                    <!--- <h4 class="sub-title">Basic Inputs</h4> -->
-
-                                    @if(Session::has('message'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('message') }}
-                                    </div>
-                                    @endif
-                                    @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    @endif
-                                    <form  method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Name<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="name"
-                                                    placeholder="Name"  value="{{ old('name') }}"  required>
-                                            </div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary float-right"
-                                            id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Add Main Club</button>
-                                    </form>
+                                @endif
+                                @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            </div>
+                                @endif
+                                @csrf
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label class="">Name<span style="color:#ff0000">
+                                                *</span></label>
+                                        <input type="text" class="form-control" name="name" placeholder="Main club name"
+                                            value="{{ old('name') }}" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-success float-right">Add Main Club</button>
+                            </form>
                         </div>
                     </div>
                 </div>

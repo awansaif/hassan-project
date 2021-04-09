@@ -465,24 +465,7 @@
                                         <li class=" ">
                                             <a href="/main-club">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Main
-                                                    Clubs</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/club">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Club</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/club-create">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Club</span>
+                                                <span class="pcoded-mtext">Clubs</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
