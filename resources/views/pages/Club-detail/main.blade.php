@@ -14,7 +14,6 @@ Club Detail
 
                         <a href="/add-club-detail?id={{  Request('id') }}" class="btn btn-success ml-2 float-right">Add
                             Detail</a>
-                        <a href="/club?id={{  $club_id }} " class="btn btn-primary float-right">Back</a>
                     </div>
                     <br>
                     <br>

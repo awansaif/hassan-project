@@ -17,10 +17,8 @@ class ClubDetailController extends Controller
     public function index(Request $request)
     {
         $detail = ClubDetail::with('clubs')->where('club_id', $request->id)->get();
-        $club_id = ClubDetail::with('clubs')->where('club_id', $request->id)->first();
         return view('pages.Club-detail.main', [
             'clubDetail' => $detail,
-            'club_id' => $club_id->clubs->club_id,
         ]);
     }
 

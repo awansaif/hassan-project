@@ -46,8 +46,7 @@ Club
                                             <div class="col-sm-12">
                                                 <label>Club Image<span style="color:#ff0000">
                                                         *</span></label>
-                                                <input type="file" class="form-control" name="image" accept="image/*"
-                                                    required>
+                                                <input type="file" class="form-control" name="image" accept="image/*">
                                             </div>
                                         </div>
 

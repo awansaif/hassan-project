@@ -45,7 +45,7 @@ Club
                                     </td>
                                     <td>
                                         <div style="width: 100px; height:100px;">
-                                            <img src="{{ $club->image }}" class="card-img">
+                                            <img src="{{ $club->image }}" class="card-img" width="100%" height="100%">
                                         </div>
 
                                     </td>
