@@ -102,71 +102,66 @@
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="/team-members">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Team Members</span>
-                                        <span class="pcoded-mcaret"></span>
+                                        <span><i class="ti-user"></i></span>
+                                        Members
                                     </a>
                                 </li>
-                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Layout</div>
+                                <div class="pcoded-navigatio-lavel">Layout</div>
                                 <li class="">
                                     <a href="/home">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
-                                        <span class="pcoded-mcaret"></span>
+                                        <span><i class="ti-home"></i></span>
+                                        Dashboard
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/registered">
-                                        <span class="pcoded-micon"><i class="ti-user"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Registered Users</span>
-                                        <span class="pcoded-mcaret"></span>
+                                        <span><i class="ti-user"></i></span>
+                                        Registered Users
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/flash-news">
-                                        <span class="pcoded-micon"><i class="ti-user"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Flash News</span>
-                                        <span class="pcoded-mcaret"></span>
+                                        <span><i class="ti-pencil"></i></span>
+                                        Flash News
                                     </a>
                                 </li>
-                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Orders</div>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Orders</span>
-                                        <span class="pcoded-mcaret"></span>
+
+                                {{-- links  --}}
+                                <div class="pcoded-navigatio-lavel">Links & Orders</div>
+                                <li>
+                                    <a href="{{ Route('links.index') }}" class="nav nav-item">
+                                        <span><i class="ti-link"></i></span>
+                                        Links
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('product-orders') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Product Orders</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-
-                                        <li class=" ">
-                                            <a href="{{ url('event-orders') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Event
-                                                    Orders</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-
-                                        <li class=" ">
-                                            <a href="{{ url('federation-event-orders') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Federation Event
-                                                    Orders</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
-                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Tesseramento
+                                <li>
+                                    <a href="{{ url('membership') }}" class="nav nav-item">
+                                        <span><i class="ti-shopping-cart"></i></span>
+                                        Orders
+                                    </a>
+                                </li>
+                                <div class="pcoded-navigatio-lavel">Orders</div>
+                                <li>
+                                    <a href="{{ url('product-orders') }}" class="nav nav-item">
+                                        <span><i class="ti-angle-right"></i></span>
+                                        Product Orders
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ url('event-orders') }}" class="nav nav-item">
+                                        <span><i class="ti-angle-right"></i></span>
+                                        Event Orders
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ url('federation-event-orders') }}" class="nav nav-item">
+                                        <span><i class="ti-angle-right"></i></span>
+                                        Federation Event Orders
+                                    </a>
+                                </li>
+                                <div class="pcoded-navigatio-lavel">Tesseramento
                                 </div>
                                 <li>
                                     <a href="{{ url('membership') }}" class="nav nav-item">

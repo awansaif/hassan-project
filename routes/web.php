@@ -31,6 +31,7 @@ use App\Http\Controllers\CollectionDetailController;
 use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationMovementController;
 use App\Http\Controllers\FlashNewsController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
@@ -42,35 +43,25 @@ use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
 use App\Http\Controllers\TeamController as ControllersTeamController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::group(['middleware', 'guest'],function(){
-  Route::get('/', function () {
-    return redirect('Adminlogin');
-});
+Route::group(['middleware', 'guest'], function () {
+    Route::get('/', function () {
+        return redirect('Adminlogin');
+    });
 });
 
 
-Route::get('reset-password',function(Request $request){
-    if(! $request->hasValidSignature()){
+Route::get('reset-password', function (Request $request) {
+    if (!$request->hasValidSignature()) {
         abort(401);
-    }
-    else{
+    } else {
         return view('auth.passwords.reset');
     }
 })->name('reset-password');
 Route::post('/reset-password', [LoginController::class, 'change_password']);
-// Auth::routes();
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['middleware'=> ['auth', 'admin']],function(){
+Route::group(['middleware' => ['auth', 'admin']], function () {
+
+    //link routers
+    Route::resource('links', LinkController::class);
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -272,14 +263,14 @@ Route::group(['middleware'=> ['auth', 'admin']],function(){
 
     // memberships routes
     Route::resource('membership', MembershipController::class);
-    Route::get('membership/delete/{id}', [MembershipController::class,'destroy']);
+    Route::get('membership/delete/{id}', [MembershipController::class, 'destroy']);
     // Team members routes
-    Route::get('/team-members', [TeamController::class,'index'])->name('team-members');
+    Route::get('/team-members', [TeamController::class, 'index'])->name('team-members');
     Route::get('/add-team-member', [TeamController::class, 'create']);
     Route::post('/add-team-member', [TeamController::class, 'store']);
-    Route::get('/edit-team-member/{id}', [TeamController::class,'edit']);
-    Route::post('/edit-team-member/{id}', [TeamController::class,'update']);
-    Route::get('/remove-team-member/{id}',[TeamController::class, 'destroy']);
+    Route::get('/edit-team-member/{id}', [TeamController::class, 'edit']);
+    Route::post('/edit-team-member/{id}', [TeamController::class, 'update']);
+    Route::get('/remove-team-member/{id}', [TeamController::class, 'destroy']);
 
     // team router
     Route::get('/scores', [ControllersTeamController::class, 'index'])->name('teams');
@@ -301,13 +292,13 @@ Route::group(['middleware'=> ['auth', 'admin']],function(){
     Route::get('/edit-team-score/{id}', [LiveScoreController::class, 'edit']);
     Route::post('/edit-team-score/{id}', [LiveScoreController::class, 'update']);
     Route::get('/remove-team-score/{id}', [LiveScoreController::class, 'destroy']);
-  });
+});
 
-  Route::group(['prefix' => 'admin'], function () {
-      Route::get('/login', [AuthController::class, 'create'])->name('login');
-      Route::post('/login', [AuthController::class, 'login']);
-      Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-  });
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login', [AuthController::class, 'create'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
 
 Route::group(['prefix' => 'team'], function () {
@@ -331,7 +322,7 @@ Route::group(['prefix' => 'team'], function () {
     Route::get('/remove-club/{id}', [TeamClubController::class, 'destroy_club']);
 
     // detail club router
-    Route::get('/detail-club/{id}',[TeamClubController::class, 'detail_club'])->name('team.detail.club');
+    Route::get('/detail-club/{id}', [TeamClubController::class, 'detail_club'])->name('team.detail.club');
     Route::get('add-club-detail/{id}', [TeamClubController::class, 'detail_Create']);
     Route::post('add-club-detail/{id}', [TeamClubController::class, 'detail_store']);
     Route::get('/remove-club-detail/{id}', [TeamClubController::class, 'detail_destroy']);
@@ -351,10 +342,7 @@ Route::group(['prefix' => 'team'], function () {
     Route::get('/edit-career/{id}', [PlayerController::class, 'edit_career']);
     Route::post('/edit-career/{id}', [PlayerController::class, 'update_career']);
     Route::get('/remove-career/{id}', [PlayerController::class, 'destroy_career']);
-
-
-
 });
 
 
-  Route::get('/show-stream', [StreamController::class,'show_stream']);
+Route::get('/show-stream', [StreamController::class, 'show_stream']);

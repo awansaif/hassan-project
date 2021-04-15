@@ -6,38 +6,31 @@ use App\Http\Controllers\Api\EventOrderController;
 use App\Http\Controllers\Api\FedEventOrderController;
 use App\Http\Controllers\Api\HomeApiController;
 use App\Http\Controllers\Api\MembershipApiController;
+use App\Http\Controllers\Api\LinkApiController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\News;
 use App\Models\RecentNews;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-Route::group(['middleware' => 'auth:api'],function(){
-    Route::get('user', [ApiController::class, 'user']);
-    Route::post('update-user', [ApiController::class, 'update_user']);
-    Route::get('logout', [ApiController::class, 'logout']);
-});
 
 //users api
 Route::post('login', [ApiController::class, 'login']);
 Route::post('signup', [ApiController::class, 'register']);
 Route::post('password-reset', [ApiController::class, 'password_reset']);
 
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('user', [ApiController::class, 'user']);
+    Route::post('update-user', [ApiController::class, 'update_user']);
+    Route::get('logout', [ApiController::class, 'logout']);
+});
+
+//link apis
+Route::get('links', [LinkApiController::class, 'show']);
 
 Route::get('news', [App\Http\Controllers\Api\ApiController::class, 'all_news']);
 Route::get('events', [App\Http\Controllers\Api\ApiController::class, 'all_events']);
@@ -77,7 +70,7 @@ Route::get('/flash-news', [ApiController::class, 'flash_news']);
 Route::get('/all-videos', [ApiController::class, 'all_videos']);
 
 //latst 5 news
-Route::get('/latest_news', function(){
+Route::get('/latest_news', function () {
     return RecentNews::orderBy('id', 'DESC')->take(5)->get();
 });
 
@@ -102,4 +95,3 @@ Route::post('membership', [MembershipApiController::class, 'member']);
 
 // home page api
 Route::get('/home', [HomeApiController::class, 'home']);
-
