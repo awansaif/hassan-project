@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 //link apis
 Route::get('links', [LinkApiController::class, 'show']);
+Route::post('link-order', [LinkApiController::class, 'store']);
 
 Route::get('news', [App\Http\Controllers\Api\ApiController::class, 'all_news']);
 Route::get('events', [App\Http\Controllers\Api\ApiController::class, 'all_events']);

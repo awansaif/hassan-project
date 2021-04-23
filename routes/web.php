@@ -36,6 +36,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductOrderController;
 use App\Http\Controllers\EventOrderController;
 use App\Http\Controllers\FedEventOrderController;
+use App\Http\Controllers\LinkOrderController;
 use App\Http\Controllers\LiveScoreController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     //link routers
     Route::resource('links', LinkController::class);
+    Route::get('link-order', [LinkOrderController::class, 'show'])->name('linkOrder');
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

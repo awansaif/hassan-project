@@ -135,7 +135,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('membership') }}" class="nav nav-item">
+                                    <a href="{{ Route('linkOrder') }}" class="nav nav-item">
                                         <span><i class="ti-shopping-cart"></i></span>
                                         Orders
                                     </a>
@@ -651,3 +651,4 @@
 </body>
 
 </html>
+
