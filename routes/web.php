@@ -141,13 +141,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/remove-collection', [App\Http\Controllers\CollectionController::class, 'destroy']);
     Route::get('/remove-collection-image', [CollectionDetailController::class, 'destroy']);
 
-    Route::get('federations', [FederationController::class, 'index']);
-    Route::get('/add-player-federation', [FederationController::class, 'create']);
-    Route::post('/add-player-federation', [FederationController::class, 'store']);
-    Route::get('/edit-federation', [FederationController::class, 'edit']);
-    Route::post('/edit-federation', [FederationController::class, 'update']);
-    Route::delete('/remove-federation', [FederationController::class, 'destroy']);
-
+    // Route::get('federations', [FederationController::class, 'index']);
+    // Route::get('/add-player-federation', [FederationController::class, 'create']);
+    // Route::post('/add-player-federation', [FederationController::class, 'store']);
+    // Route::get('/edit-federation', [FederationController::class, 'edit']);
+    // Route::post('/edit-federation', [FederationController::class, 'update']);
+    // Route::delete('/remove-federation', [FederationController::class, 'destroy']);
+    Route::resource('federations', FederationController::class);
 
     Route::get('/sponsor', [SponsorController::class, 'index']);
     Route::get('/add-sponsor', [SponsorController::class, 'create']);

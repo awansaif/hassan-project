@@ -28,7 +28,7 @@ class FederationController extends Controller
     public function create()
     {
         //
-        return view('pages.Federation.add-federation');
+        return view('pages.Federation.create');
     }
 
     /**
@@ -40,39 +40,39 @@ class FederationController extends Controller
     public function store(Request $request)
     {
         //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'image'       => 'required|image',
             'player_name' => 'required',
             'player_rank' => 'required',
-            'FICB'  => 'required',
-            'UISP' => 'required',
-            'ITSF'            => 'required',
-            'LICB'   => 'required',
+            'ficb'   => 'required',
+            'uisp'   => 'required',
+            'itsf'   => 'required',
+            'licb'   => 'required',
+            'fpicb'  => 'required',
+            'p4p'    => 'required',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            $destinationPath = 'federation-pics/';
 
-            $image = $request->file('image');
-            $image_name = time().$image->getClientOriginalName();
-            $check = $image->move($destinationPath,$image_name);
+        $destinationPath = 'federation-pics/';
 
-            $data = new Federation;
-            $data->image = env('APP_URL').$destinationPath.$image_name;
-            $data->player_name = $request->player_name;
-            $data->FICB = $request->FICB;
-            $data->UISP = $request->UISP;
-            $data->ITSF = $request->ITSF;
-            $data->LICB = $request->LICB;
-            $data->player_rank = $request->player_rank;
-            $data->save();
-            $request->session()->flash('message', 'Federation add successfully.');
-            return redirect()->back();
-        }
+        $image = $request->file('image');
+        $image_name = time() . $image->getClientOriginalName();
+        $check = $image->move($destinationPath, $image_name);
+
+        $data = new Federation;
+        $data->image = env('APP_URL') . $destinationPath . $image_name;
+        $data->player_name = $request->player_name;
+
+        $data->FICB = $request->ficb;
+        $data->UISP = $request->uisp;
+        $data->ITSF = $request->itsf;
+        $data->LICB = $request->licb;
+        $data->fpicb = $request->fpicb;
+        $data->p4p = $request->p4p;
+        $data->player_rank = $request->player_rank;
+        $data->save();
+
+        $request->session()->flash('message', 'Federation add successfully.');
+        return redirect()->back();
     }
 
     /**
@@ -92,11 +92,11 @@ class FederationController extends Controller
      * @param  \App\Models\Federation  $federation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Federation $federation)
+    public function edit(Federation $federation)
     {
-        //
-        $data = Federation::where('id', $request->id)->first();
-        return view('pages.Federation.edit',compact('data'));
+        return view('pages.Federation.edit', [
+            'data' => $federation
+        ]);
     }
 
     /**
@@ -109,54 +109,49 @@ class FederationController extends Controller
     public function update(Request $request, Federation $federation)
     {
         //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
+            'image'       => 'nullable|image',
             'player_name' => 'required',
             'player_rank' => 'required',
-            'FICB'  => 'required',
-            'UISP' => 'required',
-            'ITSF'            => 'required',
-            'LICB'   => 'required',
+            'ficb'  => 'required',
+            'uisp'  => 'required',
+            'itsf'  => 'required',
+            'licb'  => 'required',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            if($request->hasFile('image'))
-            {
-                $destinationPath = 'federation-pics/';
 
-                $image = $request->file('image');
-                $image_name = time().$image->getClientOriginalName();
-                $check = $image->move($destinationPath,$image_name);
+        if ($request->hasFile('image')) {
+            $destinationPath = 'federation-pics/';
 
-                $upadte = Federation::where('id', $request->federation_id)->update([
-                    'image'       => env('APP_URL').$destinationPath.$image_name,
-                    'player_name' => $request->player_name,
-                    'FICB'            => $request->FICB,
-                    'UISP'            => $request->UISP,
-                    'ITSF'            => $request->ITSF,
-                    'LICB'            => $request->LICB,
-                    'player_rank'     =>  $request->player_rank,
-                ]);
-                $request->session()->flash('message', 'Federation update successfully.');
-                return redirect()->back();
-            }
-            else
-            {
-                $upadte = Federation::where('id', $request->federation_id)->update([
-                    'player_name' => $request->player_name,
-                    'FICB'            => $request->FICB,
-                    'UISP'            => $request->UISP,
-                    'ITSF'            => $request->ITSF,
-                    'LICB'            => $request->LICB,
-                    'player_rank'            =>  $request->player_rank,
-                ]);
-                $request->session()->flash('message', 'Federation update successfully.');
-                return redirect()->back();
-            }
+            $image = $request->file('image');
+            $image_name = time() . $image->getClientOriginalName();
+            $image->move($destinationPath, $image_name);
+
+            Federation::where('id', $federation->id)->update([
+                'image'       => env('APP_URL') . $destinationPath . $image_name,
+                'player_name' => $request->player_name,
+                'FICB'            => $request->ficb,
+                'UISP'            => $request->uisp,
+                'ITSF'            => $request->itsf,
+                'LICB'            => $request->licb,
+                'fpicb'           => $request->fpicb,
+                'p4p'             => $request->p4p,
+                'player_rank'     =>  $request->player_rank,
+            ]);
+        } else {
+            $upadte = Federation::where('id', $federation->id)->update([
+                'player_name' => $request->player_name,
+                'FICB'            => $request->ficb,
+                'UISP'            => $request->uisp,
+                'ITSF'            => $request->itsf,
+                'LICB'            => $request->licb,
+                'fpicb'           => $request->fpicb,
+                'p4p'             => $request->p4p,
+                'player_rank'     =>  $request->player_rank,
+            ]);
         }
+
+        $request->session()->flash('message', 'Federation update successfully.');
+        return back();
     }
 
     /**
@@ -167,12 +162,8 @@ class FederationController extends Controller
      */
     public function destroy(Request $request, Federation $federation)
     {
-        //
-        $check = Federation::where('id', $request->id)->delete();
-        if($check)
-        {
-            $request->session()->flash('message', 'Federation data remove successfully.');
-            return redirect()->back();
-        }
+        $federation->delete();
+        $request->session()->flash('message', 'Federation data remove successfully.');
+        return back();
     }
 }

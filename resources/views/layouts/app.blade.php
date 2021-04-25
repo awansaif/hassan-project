@@ -140,24 +140,58 @@
                                         Orders
                                     </a>
                                 </li>
-                                <div class="pcoded-navigatio-lavel">Orders</div>
+
+                                {{-- Products  --}}
+                                <div class="pcoded-navigatio-lavel">Products & Orders</div>
+                                <li>
+                                    <a href="{{ url('shops') }}" class="nav nav-item">
+                                        <span><i class="ti-shopping-cart"></i></span>
+                                        Shops
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('products') }}" class="nav nav-item">
+                                        <span><i class="ti-truck"></i></span>
+                                        Products
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('product-orders') }}" class="nav nav-item">
-                                        <span><i class="ti-angle-right"></i></span>
-                                        Product Orders
+                                        <span><i class="ti-shopping-cart"></i></span>
+                                        Orders
                                     </a>
                                 </li>
 
+                                <div class="pcoded-navigatio-lavel">Events & Orders</div>
+                                <li>
+                                    <a href="{{ url('events') }}" class="nav nav-item">
+                                        <span>
+                                            <i class="ti-ticket"></i>
+                                        </span>
+                                        Events
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('event-orders') }}" class="nav nav-item">
-                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>
+                                            <i class="ti-ticket"></i>
+                                        </span>
                                         Event Orders
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ url('federation-event') }}" class="nav nav-item">
+                                        <span>
+                                            <i class="ti-ticket"></i>
+                                        </span>
+                                        Federaion Events
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('federation-event-orders') }}" class="nav nav-item">
-                                        <span><i class="ti-angle-right"></i></span>
+                                        <span>
+                                            <i class="ti-ticket"></i>
+                                        </span>
                                         Federation Event Orders
                                     </a>
                                 </li>
@@ -169,303 +203,120 @@
                                         Tesseramento
                                     </a>
                                 </li>
+
+
                                 <div class="pcoded-navigatio-lavel">Live</div>
                                 <li>
-                                    <a href="{{ url('scores') }}">
-                                        <span class="pcoded-micon"><i class="ti-game"></i><b>D</b></span>
-                                        <span class="pcoded-mtext">Score</span>
+                                    <a href="{{ url('scores') }}" class="nav nav-item">
+                                        <span><i class="ti-game"></i></span>
+                                        Scores
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('streams') }}">
-                                        <span class="pcoded-micon"><i class="ti-music"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Stream</span>
-                                    </a>
-                                </li>
-
-                                <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Function</div>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext"
-                                            data-i18n="nav.basic-components.main">Countries</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-
-                                        <li class=" ">
-                                            <a href="{{ url('countries') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Countries</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url('add-country') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Country</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Videos</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('video-list') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Videos</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Events</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('events') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Events</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Sponsor </span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/sponsor">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Sponsor</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        {{-- <li class=" ">
-                                            <a href="/add-sponsor">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Sponsor</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li> --}}
-                                    </ul>
-                                </li>
-
-
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Gallery</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('collections') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Collection</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url('collection-images') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Collection
-                                                    Image</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url('add-collection') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Collection</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url('add-collection-images') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Collection Images</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Shop</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('shops') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Shops</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Product</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="{{ url('products') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Product</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="{{ url('add-product') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    New Product</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">News </span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/news">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">News</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/add-news">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    News </span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Player </span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/players">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Players
-                                                </span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/add-player">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Player </span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/add-player-career">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Player Career</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Federation
+                                    <a href="{{ url('streams') }}" class="nav nav-item">
+                                        <span>
+                                            <i class="ti-music"></i>
                                         </span>
-                                        <span class="pcoded-mcaret"></span>
+                                        Stream
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/federations">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Federation</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="/add-player-federation">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add
-                                                    Player Federation</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Club</span>
-                                        <span class="pcoded-mcaret"></span>
+
+
+                                <div class="pcoded-navigatio-lavel">Countires</div>
+                                <li>
+                                    <a href="{{ url('countries') }}" class="nav nav-item">
+                                        <span><i class="ti-world"></i></span>
+                                        Countires
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/main-club">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Clubs</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
+
+
+                                <div class="pcoded-navigatio-lavel">Videos</div>
+                                <li>
+                                    <a href="{{ url('video-list') }}" class="nav nav-item">
+                                        <span>
+                                            <i class="ti-video-camera"></i>
+                                        </span>
+                                        Videos
+                                    </a>
+                                </li>
+
+
+                                <div class="pcoded-navigatio-lavel">Countires</div>
+                                <li>
+                                    <a href="{{ url('countries') }}" class="nav nav-item">
+                                        <span><i class="ti-world"></i></span>
+                                        Countires
+                                    </a>
+                                </li>
+
+
+                                <div class="pcoded-navigatio-lavel">Gallery</div>
+                                <li>
+                                    <a href="{{ url('collections') }}">
+                                        <span>
+                                            <i class="ti-gallery"></i>
+                                        </span>
+                                        Collection
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('collection-images') }}">
+                                        <span>
+                                            <i class="ti-image"></i>
+                                        </span>
+                                        Collection Images
+                                    </a>
+                                </li>
+
+
+                                <div class="pcoded-navigatio-lavel">Sponsors & Players</div>
+                                <li>
+                                    <a href="{{ url('main-club') }}">
+                                        <span>
+                                            <i class="ti-cloud"></i>
+                                        </span>
+                                        Clubs
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('sponsor') }}">
+                                        <span>
+                                            <i class="ti-gift"></i>
+                                        </span>
+                                        Sponsors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('players') }}">
+                                        <span>
+                                            <i class="ti-game"></i>
+                                        </span>
+                                        Player
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ Route('federations.index') }}">
+                                        <span>
+                                            <i class="ti-layout-grid2-alt"></i>
+                                        </span>
+                                        Player Federation
+                                    </a>
+                                    {{-- /  --}}
+                                </li>
+
+                                <div class="pcoded-navigatio-lavel">News</div>
+                                <li>
+                                    <a href="/news">
+                                        <span>
+                                            <i class="ti-wordpress"></i>
+                                        </span>
+                                        News
+                                    </a>
+                                </li>
+
+                                <div class="pcoded-navigatio-lavel">Federations</div>
+
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span><i class="ti-angle-right"></i></span>
@@ -510,23 +361,6 @@
                                     </ul>
                                 </li>
 
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span><i class="ti-angle-right"></i></span>
-                                        <span>Federation Event</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/federation-event">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Federations Events</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
@@ -651,4 +485,3 @@
 </body>
 
 </html>
-

@@ -20,7 +20,8 @@ class CreateFederationsTable extends Migration
             $table->string('UISP');
             $table->string('ITSF');
             $table->string('LICB');
-
+            $table->string('fpicb');
+            $table->string('p4p');
             $table->timestamps();
         });
     }

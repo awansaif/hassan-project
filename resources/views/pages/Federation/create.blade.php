@@ -10,11 +10,10 @@ Federation
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="mb-2">
-                        <h2 class="font-weight-bold text-secondary float-left">Update Federation</h2>
+                        <h2 class="font-weight-bold text-secondary float-left">Add Federation</h2>
                         <a href="{{ Route('federations.index') }}" class="btn btn-success float-right">Back</a>
                     </div>
-                    <br>
-                    <br>
+                    <br><br>
                     <hr>
                     @if(Session::has('message'))
                     <div class="alert alert-success">
@@ -30,74 +29,90 @@ Federation
                         </ul>
                     </div>
                     @endif
-                    <form method="post" enctype="multipart/form-data"
-                        action="{{ Route('federations.update',$data->id) }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ Route('federations.store') }}">
                         @csrf
-                        @method('PATCH')
+
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Image<span style="color:#ff0000"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control mb-1" name="image" accept="image/*">
-                                <img src="{{ $data->image }}" alt="" width="100px" height="100px">
+                                <input type="file" class="form-control" name="image" accept="image/*" required>
                             </div>
                         </div>
+
+
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Player Name<span style="color:#ff0000">
-                                    *</span></label>
+                            <label class="col-sm-2 col-form-label">Player Name
+                                <span style="color:#ff0000">*</span>
+                            </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="player_name" placeholder="Player Name"
-                                    required value="{{$data->player_name }}">
+                                    value="{{ old('player_name') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Player Rank<span style="color:#ff0000">
-                                    *</span></label>
+                            <label class="col-sm-2 col-form-label">Player Rank
+                                <span style="color:#ff0000">
+                                    *</span>
+                            </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="player_rank" placeholder="Player Rank"
-                                    required value="{{ $data->player_rank }}">
+                                    value="{{ old('player_rank') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">FICB<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">FICB
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="ficb" value="{{ $data->FICB }}" required>
+                                <input type="text" class="form-control" name="ficb" value="{{ old('ficb') }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">UISP<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">UISP
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="uisp" value="{{ $data->UISP }}" required>
+                                <input type="text" class="form-control" name="uisp" value="{{ old('uisp') }}" rquired>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">ITSF<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">ITSF
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="itsf" value="{{ $data->ITSF }}" required>
+                                <input type="text" class="form-control" name="itsf" value="{{ old('itsf') }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">LICB<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">LICB
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="licb" value="{{ $data->LICB }}" required>
+                                <input type="text" class="form-control" name="licb" value="{{ old('licb') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">fpicb<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Fpicb
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="fpicb" value="{{ $data->fpicb }}"
+                                <input type="text" class="form-control" name="fpicb" value="{{ old('fpicb') }}"
                                     required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">p4p<span style="color:#ff0000"> *</span></label>
+                            <label class="col-sm-2 col-form-label">p4p
+                                <span style="color:#ff0000"> *</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="p4p" value="{{ $data->p4p }}" required>
+                                <input type="text" class="form-control" name="p4p" value="{{ old('p4p') }}" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary float-right">Update Federation</button>
+
+                        <button type="submit" class="btn btn-primary float-right">Add Federation</button>
 
 
                     </form>
