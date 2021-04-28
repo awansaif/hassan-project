@@ -28,6 +28,7 @@ Links
                                     <th>Title</th>
                                     <th>Thumbnail</th>
                                     <th>Link</th>
+                                    <th>Type</th>
                                     <th>Price</th>
                                     <th>Action</th>
                                 </tr>
@@ -41,9 +42,13 @@ Links
                                         <img src="{{ $link->thumbnail }}" alt="" width="100px" height="100px">
                                     </td>
                                     <td>{{ $link->link }}</td>
+                                    <td>
+                                        <span
+                                            class="badge badge-pill {{ $link->is_paid == 'Paid'?  'badge-success' : 'badge-info'}}">{{ $link->is_paid  }}</span>
+                                    </td>
                                     <td>{{ $link->price }}</td>
                                     <td>
-                                        <a href="{{ Route('links.edit',$link->id) }}" class="btn btn-success">Edit</a>
+                                        <a href=" {{ Route('links.edit',$link->id) }}" class="btn btn-success">Edit</a>
                                         <form action="{{ Route('links.destroy',$link->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')

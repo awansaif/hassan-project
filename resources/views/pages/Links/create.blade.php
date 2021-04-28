@@ -58,6 +58,18 @@ Add Link
 
                                 <div class="form-group row">
                                     <div class="col-12">
+                                        <label>Type</label>
+                                        <select name="type" class="form-control custom-select">
+                                            <option {{ old('type') == 'Paid' ? 'selected' : '' }} value="Paid">Paid
+                                            </option>
+                                            <option {{ old('type') == 'Free' ? 'selected' : '' }} value="Free">Free
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-12">
                                         <label>Price *</label>
                                         <input type="number" name="price" class="form-control" placeholder="Price"
                                             value="{{ old('price') }}">

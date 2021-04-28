@@ -11,7 +11,7 @@ Shops
                 <div class="page-body">
                     <div class="mb-2">
                         <h2 class="text-secondary float-left">Shops List</h2>
-                        <a href="{{ url('add-shop') }}" class="btn btn-success float-right">Add Shop</a>
+                        <a href="{{ Route('shops.create')}}" class="btn btn-success float-right">Add Shop</a>
                     </div>
                     <br>
                     <br>
@@ -36,14 +36,17 @@ Shops
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        <div style="width: 100px; height:100px;">
-                                            <img src="{{ $shop->shop_image}}" class="card-img">
-                                        </div>
+                                        <img src="{{ $shop->shop_image}}" width="100px" height="100px">
                                     </td>
                                     <td>{{ $shop->shop_name }}</td>
                                     <td>
-                                        <a href="/edit-shop?id={{$shop->id}}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-shop?id={{$shop->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="{{ Route('shops.edit', $shop->id) }}"
+                                            class="btn btn-primary float-left mr-2">Edit</a>
+                                        <form action="{{ Route('shops.destroy', $shop->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">Remove</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

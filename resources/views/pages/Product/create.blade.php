@@ -37,7 +37,8 @@ Product
 
                                     @if(!$shops->isEmpty())
 
-                                    <form id="event-form" method="post" enctype="multipart/form-data">
+                                    <form action="{{ Route('products.store') }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">
@@ -121,10 +122,10 @@ Product
                                             <div class="col-sm-10">
                                                 <span>Fill all these images file.</span>
                                                 <input type="file" class="form-control" name="images[]" required>
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -176,7 +177,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
 
@@ -184,7 +186,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
 
@@ -192,7 +195,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
 
@@ -201,9 +205,9 @@ Product
                                             title="Primary color states" data-placement="bottom">Add Product</button>
                                     </form>
                                     @else
-                                        <div class="alert alert-danger">
-                                            <span>Please add shop first....</span>
-                                        </div>
+                                    <div class="alert alert-danger">
+                                        <span>Please add shop first....</span>
+                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -217,3 +221,4 @@ Product
     <div>
 
         @endsection
+

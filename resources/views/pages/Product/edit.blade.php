@@ -37,9 +37,10 @@ Product
 
                                     @if(!$shops->isEmpty())
 
-                                    <form id="event-form" method="post" enctype="multipart/form-data">
+                                    <form action="{{ Route('products.update', $data->id) }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{ $data->id }}">
+                                        @method('PUT')
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">
                                                 Shop<span style="color:#ff0000"> *</span>
@@ -62,7 +63,8 @@ Product
                                             <div class="col-sm-10">
                                                 <select name="category" class="form-control custom-select" required>
 
-                                                    <option selected class="selected " value="{{ $data->category }}">{{ $data->category }}</option>
+                                                    <option selected class="selected " value="{{ $data->category }}">
+                                                        {{ $data->category }}</option>
                                                     <option value="ANGOLARI FERMAVETRO">ANGOLARI FERMAVETRO</option>
                                                     <option value="ASTE Ø 16 PASSANTI">ASTE Ø 16 PASSANTI</option>
                                                     <option value="ASTE Ø 16 PASSANTI RT">ASTE Ø 16 PASSANTI RT</option>
@@ -113,11 +115,11 @@ Product
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <span>Fill all these images file.</span>
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
-                                                <input type="file" class="form-control" name="images[]" >
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
+                                                <input type="file" class="form-control" name="images[]">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -125,7 +127,8 @@ Product
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="product_name"
-                                                    placeholder="Product Name" value="{{$data->product_name }}" required>
+                                                    placeholder="Product Name" value="{{$data->product_name }}"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -133,7 +136,8 @@ Product
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <select class="form-control custom-select" name="product_size" required>
-                                                    <option value="{{ $data->product_size }}"> {{ $data->product_size }} </option>
+                                                    <option value="{{ $data->product_size }}"> {{ $data->product_size }}
+                                                    </option>
                                                     <option value="Extra-large">Extra Large</option>
                                                     <option value="Large">Large</option>
                                                     <option value="medium">Medium</option>
@@ -146,8 +150,8 @@ Product
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea rows="3" cols="2" class="form-control"
-                                                    placeholder="News Description"
-                                                    name="product_description" required>{{ $data->product_description }}</textarea>
+                                                    placeholder="News Description" name="product_description"
+                                                    required>{{ $data->product_description }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -182,7 +186,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
 
@@ -190,7 +195,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
 
@@ -198,7 +204,8 @@ Product
                                             <label class="col-sm-2 col-form-label">Product Colour<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="color" class="form-control" value="" name="product_color[]">
+                                                <input type="color" class="form-control" value=""
+                                                    name="product_color[]">
                                             </div>
                                         </div>
                                         @endif
@@ -207,9 +214,9 @@ Product
                                             title="Primary color states" data-placement="bottom">Update Product</button>
                                     </form>
                                     @else
-                                        <div class="alert alert-danger">
-                                            <span>Please add shop first....</span>
-                                        </div>
+                                    <div class="alert alert-danger">
+                                        <span>Please add shop first....</span>
+                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -221,4 +228,4 @@ Product
         </div>
     </div>
     <div>
- @endsection
+        @endsection

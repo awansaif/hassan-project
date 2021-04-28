@@ -11,12 +11,12 @@ Update Shop
                 <div class="page-body">
                     <div class="pb-2">
                         <h1 class="float-left text-secondary">Update Shop</h1>
-                        <a href="{{ url('shops') }}" class="btn btn-success float-right">Back</a>
+                        <a href="{{ Route('shops.index') }}" class="btn btn-success float-right">Back</a>
                     </div>
                     <br>
                     <br>
                     <hr>
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST" action="{{ Route('shops.update', $data->id) }}" enctype="multipart/form-data">
                         @if(Session::has('message'))
                         <div class="alert alert-success">
                             {{ Session::get('message') }}
@@ -32,9 +32,9 @@ Update Shop
                         </div>
                         @endif
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-8">
-                                <input type="hidden" name="shop_id" value="{{ $data->id }}">
                                 <div class="form-group row">
                                     <div class="col-2">
                                         <label>Shop Image *</label>

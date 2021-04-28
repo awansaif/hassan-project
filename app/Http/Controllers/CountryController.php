@@ -17,7 +17,7 @@ class CountryController extends Controller
     {
         //
         $countries = Country::orderBy('id', 'DESC')->get();
-        return view('pages.country.main',compact('countries'));
+        return view('pages.country.main', compact('countries'));
     }
 
     /**
@@ -27,8 +27,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
-        return view('pages.country.add-country');
+        return view('pages.country.create');
     }
 
     /**
@@ -39,30 +38,24 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'country_name' => 'required',
             'flag'         => 'required|image',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else
-        {
-            $destinationPath = 'flag-pics/';
 
-            $flag_pic = $request->file('flag');
-            $flag_file_name = time().$flag_pic->getClientOriginalName();
-            $check = $flag_pic->move($destinationPath,$flag_file_name);
+        $destinationPath = 'flag-pics/';
 
-            $data = new Country;
-            $data->country = $request->country_name;
-            $data->flag  = env('APP_URL'). $destinationPath . $flag_file_name;
-            $data->save();
-            $request->session()->flash('message', 'Country data save successfully.');
-            return redirect()->back();
-        }
+        $flag_pic = $request->file('flag');
+        $flag_file_name = time() . $flag_pic->getClientOriginalName();
+        $flag_pic->move($destinationPath, $flag_file_name);
+
+        Country::Create([
+            'country' => $request->country_name,
+            'flag'  => env('APP_URL') . $destinationPath . $flag_file_name,
+        ]);
+
+        $request->session()->flash('message', 'Country data save successfully.');
+        return back();
     }
 
     /**
@@ -82,11 +75,11 @@ class CountryController extends Controller
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Country $country)
+    public function edit(Country $country)
     {
-        //
-        $data = Country::where('id', $request->id)->first();
-        return view('pages.country.edit-country',compact('data'));
+        return view('pages.country.edit', [
+            'data' => $country
+        ]);
     }
 
     /**
@@ -98,43 +91,29 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
-        //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'country_name' => 'required',
             'flag'         => 'nullable|image',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
+
+        if ($request->file('flag')) {
+            $destinationPath = 'flag-pics/';
+
+            $flag_pic = $request->file('flag');
+            $flag_file_name = time() . $flag_pic->getClientOriginalName();
+            $flag_pic->move($destinationPath, $flag_file_name);
+
+            $country->update([
+                'flag'    => env('APP_URL') . $destinationPath . $flag_file_name,
+                'country' => $request->country_name,
+            ]);
+        } else {
+            $country->update([
+                'country' => $request->country_name,
+            ]);
         }
-        else
-        {
-            if($request->file('flag'))
-            {
-                $destinationPath = 'flag-pics/';
-
-                $flag_pic = $request->file('flag');
-                $flag_file_name = time().$flag_pic->getClientOriginalName();
-                $check = $flag_pic->move($destinationPath,$flag_file_name);
-
-                $update = Country::where('id', $request->country_id)->update([
-                    'flag'    => env('APP_URL'). $destinationPath . $flag_file_name,
-                    'country' => $request->country_name,
-                ]);
-                $request->session()->flash('message', 'Country data save successfully.');
-                return redirect()->back();
-            }
-            else
-            {
-                $update = Country::where('id', $request->country_id)->update([
-                    'country' => $request->country_name,
-                ]);
-                $request->session()->flash('message', 'Country data update successfully.');
-                return redirect()->back();
-            }
-
-        }
-
+        $request->session()->flash('message', 'Country data update successfully.');
+        return back();
     }
 
     /**
@@ -145,12 +124,8 @@ class CountryController extends Controller
      */
     public function destroy(Request $request, Country $country)
     {
-        //
-        $check = Country::where('id', $request->id)->delete();
-        if($check)
-        {
-            $request->session()->flash('message', 'Country data remove successfully.');
-            return redirect()->back();
-        }
+        $country->delete();
+        $request->session()->flash('message', 'Country data remove successfully.');
+        return back();
     }
 }

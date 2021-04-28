@@ -11,12 +11,12 @@ Add Shop
                 <div class="page-body">
                     <div class="pb-2">
                         <h1 class="float-left text-secondary">Add Shop</h1>
-                        <a href="{{ url('shops') }}" class="btn btn-success float-right">Back</a>
+                        <a href="{{ Route('shops.index') }}" class="btn btn-success float-right">Back</a>
                     </div>
                     <br>
                     <br>
                     <hr>
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST" action="{{ Route('shops.store') }}" enctype="multipart/form-data">
                         @if(Session::has('message'))
                         <div class="alert alert-success">
                             {{ Session::get('message') }}

@@ -27,8 +27,7 @@ class StreamController extends Controller
      */
     public function create()
     {
-        //
-        return view('pages.Stream.add-stream');
+        return view('pages.Stream.create');
     }
 
     /**
@@ -39,33 +38,29 @@ class StreamController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'featured_image' => 'required|image',
             'title' => 'required',
             'stream' => 'required|url',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)
-                ->withInput();
-        } else {
-            $file1 = $request->file('featured_image');
-            $destinationPath = 'stream-pics/';
-            $featured_image = time() . $file1->getClientOriginalName();
-            $file1->move($destinationPath, $featured_image);
+
+        $file1 = $request->file('featured_image');
+        $destinationPath = 'stream-pics/';
+        $featured_image = time() . $file1->getClientOriginalName();
+        $file1->move($destinationPath, $featured_image);
 
 
-            // $path = $request->stream;
-            // parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
+        // $path = $request->stream;
+        // parse_str( parse_url( $path, PHP_URL_QUERY ), $stream_path);
 
-            $data = new Stream;
-            $data->featured_image = env('APP_URL') . $destinationPath . $featured_image;
-            $data->title = $request->title;
-            $data->stream_path = $request->stream;
-            $data->save();
-            $request->session()->flash('message', $request->title . ' stream add successfully.');
-            return redirect()->back();
-        }
+        Stream::create([
+            'featured_image' => env('APP_URL') . $destinationPath . $featured_image,
+            'title' => $request->title,
+            'stream_path' => $request->stream,
+        ]);
+
+        $request->session()->flash('message', $request->title . ' stream add successfully.');
+        return back();
     }
 
     /**
@@ -85,11 +80,11 @@ class StreamController extends Controller
      * @param  \App\Models\Stream  $stream
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Stream $stream)
+    public function edit(Stream $stream)
     {
-        //
-        $data = Stream::where('id', $request->id)->first();
-        return view('pages.Stream.edit-stream', compact('data'));
+        return view('pages.Stream.edit', [
+            'data' => $stream
+        ]);
     }
 
     /**
@@ -101,38 +96,31 @@ class StreamController extends Controller
      */
     public function update(Request $request, Stream $stream)
     {
-        //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'featured_image' => 'nullable|image',
             'title' => 'required',
             'stream' => 'required|url',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)
-                ->withInput();
-        } else {
-            if ($request->file('featured_image')) {
-                $file1 = $request->file('featured_image');
-                $destinationPath = 'stream-pics/';
-                $featured_image = time() . $file1->getClientOriginalName();
-                $file1->move($destinationPath, $featured_image);
 
-                $update = Stream::where('id', $request->stream_id)->update([
-                    'featured_image'  => env('APP_URL') . $destinationPath . $featured_image,
-                    'title'           => $request->title,
-                    'stream_path'     => $request->stream,
-                ]);
-                $request->session()->flash('message', 'Stream update successfully.');
-                return redirect()->back();
-            } else {
-                $update = Stream::where('id', $request->stream_id)->update([
-                    'title'       => $request->title,
-                    'stream_path' =>  $request->stream
-                ]);
-                $request->session()->flash('message', 'Stream update successfully.');
-                return redirect()->back();
-            }
+        if ($request->file('featured_image')) {
+            $file1 = $request->file('featured_image');
+            $destinationPath = 'stream-pics/';
+            $featured_image = time() . $file1->getClientOriginalName();
+            $file1->move($destinationPath, $featured_image);
+
+            $stream->update([
+                'featured_image'  => env('APP_URL') . $destinationPath . $featured_image,
+                'title'           => $request->title,
+                'stream_path'     => $request->stream,
+            ]);
+        } else {
+            $stream->update([
+                'title'       => $request->title,
+                'stream_path' =>  $request->stream
+            ]);
         }
+        $request->session()->flash('message', 'Stream update successfully.');
+        return redirect()->back();
     }
 
     /**
@@ -143,12 +131,9 @@ class StreamController extends Controller
      */
     public function destroy(Request $request, Stream $stream)
     {
-        //
-        $check = Stream::where('id', $request->id)->delete();
-        if ($check) {
-            $request->session()->flash('message', 'Stream remove successfully.');
-            return redirect()->back();
-        }
+        $stream->delete();
+        $request->session()->flash('message', 'Stream remove successfully.');
+        return back();
     }
 
     public function start_stream()

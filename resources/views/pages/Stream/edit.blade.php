@@ -29,9 +29,10 @@ Stream
                                 </ul>
                             </div>
                             @endif
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" action="{{ Route('streams.update',$data->id) }}"
+                                enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="stream_id" value="{{ $data->id }}">
+                                @method('PUT')
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label font-weight-bold">Featured Image</label>
                                     <div class="col-sm-10">
@@ -68,10 +69,8 @@ Stream
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary float-right m-2"
-                                    id="primary-popover-content" data-container="body" data-toggle="popover"
-                                    title="Primary color states" data-placement="bottom">Update Stream</button>
-                                <a href="{{ url('streams') }}" class="btn btn-success m-2 float-right">Back</a>
+                                <button type="submit" class="btn btn-primary float-right m-2">Update Stream</button>
+                                <a href="{{ Route('streams.index') }}" class="btn btn-success m-2 float-right">Back</a>
 
                             </form>
 

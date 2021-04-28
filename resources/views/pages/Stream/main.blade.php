@@ -9,7 +9,7 @@
                 <div class="page-body">
                     <div class="pb-2">
                         <h2 class="text-secondary float-left">Streams</h2>
-                        <a href="{{ url('add-stream') }}" class="btn btn-success float-right">Add Stream</a>
+                        <a href="{{ Route('streams.create') }}" class="btn btn-success float-right">Add Stream</a>
                     </div>
                     <br>
                     <hr>
@@ -19,7 +19,7 @@
                     </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="dataTable">
+                        <table class="table table-striped table-bordered nowrap" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -34,21 +34,22 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        <div style="width: 100px; height:100px;">
-                                            <img src="{{ $stream->featured_image}}" class="card-img">
-                                        </div>
+                                        <img src="{{ $stream->featured_image}}" width="100px" height="100px">
                                     </td>
                                     <td>
                                         <p> {{ $stream->title }}</p>
                                     </td>
                                     <td>
-                                        <div style="width: 300px; height:150px;">
-                                            {{ $stream->stream_path }}
-                                        </div>
+                                        {{ $stream->stream_path }}
                                     </td>
                                     <td>
-                                        <a href="/edit-stream?id={{$stream->id}}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-stream?id={{$stream->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="{{ Route('streams.edit', $stream->id ) }}"
+                                            class="btn btn-primary">Edit</a>
+                                        <form action="{{ Route('streams.destroy',$stream->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">{{ __('Remove') }}</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

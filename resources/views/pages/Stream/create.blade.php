@@ -27,7 +27,7 @@ Stream
                                 </ul>
                             </div>
                             @endif
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" action="{{ Route('streams.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label font-weight-bold">Featured Image</label>
@@ -55,9 +55,7 @@ Stream
                                             placeholder="Twitch stream link paste here." name="stream" required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary float-right m-2"
-                                    id="primary-popover-content" data-container="body" data-toggle="popover"
-                                    title="Primary color states" data-placement="bottom">Add Stream</button>
+                                <button type="submit" class="btn btn-primary float-right m-2">Add Stream</button>
                                 <a href="{{ url('streams') }}" class="btn btn-success m-2 float-right">Back</a>
                             </form>
                         </div>

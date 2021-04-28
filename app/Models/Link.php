@@ -13,6 +13,7 @@ class Link extends Model
         'title',
         'thumbnail',
         'link',
+        'is_paid',
         'price'
     ];
 

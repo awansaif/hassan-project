@@ -40,7 +40,7 @@ Country
                                         </ul>
                                     </div>
                                     @endif
-                                    <form  method="post"
+                                    <form action="{{ Route('countries.store') }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row">
@@ -48,7 +48,8 @@ Country
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="country_name"
-                                                    placeholder="Country Name" required value="{{ old('country_name') }}">
+                                                    placeholder="Country Name" required
+                                                    value="{{ old('country_name') }}">
                                             </div>
                                         </div>
 
@@ -56,7 +57,8 @@ Country
                                             <label class="col-sm-2 col-form-label">Country Flag<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="flag" required>
+                                                <input type="file" class="form-control" name="flag" required
+                                                    accept="image/*">
                                             </div>
                                         </div>
 

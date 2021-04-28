@@ -82,9 +82,9 @@ class ShopController extends Controller
      */
     public function edit(Request $request, Shop $shop)
     {
-        //
-        $data = Shop::where('id', $request->id)->first();
-        return view('pages.shop.edit', compact('data'));
+        return view('pages.shop.edit', [
+            'data' => $shop
+        ]);
     }
 
     /**
@@ -109,21 +109,18 @@ class ShopController extends Controller
                 $file = $request->file('shop_img');
                 $destinationPath = 'shop-pics/';
                 $file_name = time() . $file->getClientOriginalName();
-                $check = $file->move($destinationPath, $file_name);
+                $file->move($destinationPath, $file_name);
 
-                $update = Shop::where('id', $request->shop_id)->update([
-                    'shop_name' => $request->shop_name,
-                    'shop_image' => env('APP_URL') . $destinationPath . $file_name
-                ]);
-                $request->session()->flash('message', 'shop update successfully.');
-                return redirect()->back();
+                $shop->shop_name = $request->shop_name;
+                $shop->shop_image = env('APP_URL') . $destinationPath . $file_name;
+
+                $shop->save();
             } else {
-                $update = Shop::where('id', $request->shop_id)->update([
-                    'shop_name' => $request->shop_name,
-                ]);
-                $request->session()->flash('message', $request->shop_name . ' shop update successfully.');
-                return redirect()->back();
+                $shop->shop_name = $request->shop_name;
+                $shop->save();
             }
+            $request->session()->flash('message', $request->shop_name . ' shop update successfully.');
+            return back();
         }
     }
 
@@ -136,12 +133,10 @@ class ShopController extends Controller
     public function destroy(Request $request, Shop $shop)
     {
         //
-        $check = Shop::where('id', $request->id)->delete();
+        $shop->delete();
 
-        if ($check) {
-            $data = Product::where('shop_id', $request->id)->delete();
-            $request->session()->flash('message', 'shop data remove successfully.');
-            return redirect()->back();
-        }
+        Product::where('shop_id', $shop->id)->delete();
+        $request->session()->flash('message', 'shop data remove successfully.');
+        return back();
     }
 }

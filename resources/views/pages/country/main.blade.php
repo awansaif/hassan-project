@@ -11,7 +11,7 @@ Country
                 <div class="page-body">
                     <div class="mb-3">
                         <h2 class="text-secondary float-left">Country List</h2>
-                        <a href="{{ url('add-country') }}" class="btn btn-success float-right">Add Country</a>
+                        <a href="{{ Route('countries.create') }}" class="btn btn-success float-right">Add Country</a>
                     </div>
                     <br>
                     <br>
@@ -43,8 +43,13 @@ Country
                                     </td>
                                     <td>{{ $country->country }}</td>
                                     <td>
-                                        <a href="/edit-country?id={{ $country->id }}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-country?id={{$country->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="{{ Route('countries.edit', $country->id)  }}"
+                                            class="btn btn-primary float-left">Edit</a>
+                                        <form action="{{ Route('countries.destroy', $country->id) }}" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-danger">{{ __("Remove")}}</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

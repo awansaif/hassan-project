@@ -14,8 +14,7 @@ Country
                             <!-- Basic Form Inputs card start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <!--- <h5>Basic Form Inputs</h5>
-                    <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
+
                                     <div class="card-header-right"><i class="icofont icofont-spinner-alt-5"></i></div>
 
                                     <div class="card-header-right">
@@ -40,16 +39,16 @@ Country
                                         </ul>
                                     </div>
                                     @endif
-                                    <form method="post" enctype="multipart/form-data">
+                                    <form method="post" action="{{ Route('countries.update',$data->id) }}"
+                                        enctype="multipart/form-data">
                                         @csrf
-                                        <input type="hidden" name="country_id" value="{{ $data->id }}">
+                                        @method('PUT')
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Country Name<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" name="country_name"
-                                                    placeholder="Country Name" required
-                                                    value="{{ $data->country }}">
+                                                    placeholder="Country Name" required value="{{ $data->country }}">
                                             </div>
                                         </div>
 
@@ -57,15 +56,14 @@ Country
                                             <label class="col-sm-2 col-form-label">Country Flag<span
                                                     style="color:#ff0000"> *</span></label>
                                             <div class="col-sm-10">
-                                                <img src="{{ $data->flag }}" alt="" >
-                                                <input type="file" class="form-control" name="flag" >
+                                                <img src="{{ $data->flag }}" alt="" width="100px" height="100px">
+                                                <input type="file" class="form-control" name="flag" accept="image/*">
                                             </div>
                                         </div>
 
 
-                                        <button type="submit" class="btn btn-primary float-right"
-                                            id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Update Country</button>
+                                        <button type="submit"
+                                            class="btn btn-primary float-right">{{ __('Update')}}</button>
                                     </form>
 
                                 </div>

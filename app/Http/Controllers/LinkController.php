@@ -41,7 +41,10 @@ class LinkController extends Controller
             'title' => 'required',
             'thumbnail'  => 'required|image',
             'link'       => 'required|url',
-            'price'      => 'required'
+            'type'       => 'required',
+            'price'      => 'required_if:type,==,Paid'
+        ], [], [
+            'price' => 'Price is required when you select paid option',
         ]);
 
         $destination = 'link-thumbnail/';
@@ -53,6 +56,7 @@ class LinkController extends Controller
             'title' => $request->title,
             'thumbnail' => env('APP_URL') . $destination . $thumbnail_new_name,
             'link'      => $request->link,
+            'is_paid'   => $request->type,
             'price'     => $request->price,
         ]);
 
@@ -97,7 +101,10 @@ class LinkController extends Controller
             'title' => 'required',
             'thumbnail'  => 'nullable|image',
             'link'       => 'required|url',
-            'price'      => 'required'
+            'type'       => 'required',
+            'price'      => 'required_if:type,==,Paid'
+        ], [], [
+            'price' => 'Price is required when you select paid option',
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -107,23 +114,24 @@ class LinkController extends Controller
             $thumbnail_new_name = time() . $thumbnail->getClientOriginalName();
             $thumbnail->move($destination, $thumbnail_new_name);
 
-            $link->title = $request->title;
-            $link->thumbnail = env('APP_URL') . $destination . $thumbnail_new_name;
-            $link->link = $request->link;
-            $link->price = $link->price;
-            $link->save();
-
-            $request->session()->flash('message', 'Link updated successfully');
-            return back();
+            $link->update([
+                'title' => $request->title,
+                'thumbnail' => env('APP_URL') . $destination . $thumbnail_new_name,
+                'link' => $request->link,
+                'is_paid' => $request->type,
+                'price' => $link->price,
+            ]);
         } else {
-            $link->title = $request->title;
-            $link->link = $request->link;
-            $link->price = $request->price;
-            $link->save();
-
-            $request->session()->flash('message', 'Link updated successfully');
-            return back();
+            $link->update([
+                'title' => $request->title,
+                'link' => $request->link,
+                'is_paid' => $request->type,
+                'price' => $link->price,
+            ]);
         }
+
+        $request->session()->flash('message', 'Link updated successfully');
+        return back();
     }
 
     /**

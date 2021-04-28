@@ -9,14 +9,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <!-- Favicon icon -->
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css') }}">
     <!-- themify-icons line icon -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css') }}">
-    <!-- ico font -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/icofont/css/icofont.css') }}">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css') }}">
@@ -96,9 +94,13 @@
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
                     <nav class="pcoded-navbar">
-                        <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                        <div class="sidebar_toggle">
+                            <a href="#">
+                                <i class="icon-close icons"></i>
+                            </a>
+                        </div>
                         <div class="pcoded-inner-navbar main-menu">
-                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Team</div>
+                            <div class="pcoded-navigatio-lavel">Team</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="/team-members">
@@ -144,13 +146,13 @@
                                 {{-- Products  --}}
                                 <div class="pcoded-navigatio-lavel">Products & Orders</div>
                                 <li>
-                                    <a href="{{ url('shops') }}" class="nav nav-item">
+                                    <a href="{{ Route('shops.index') }}" class="nav nav-item">
                                         <span><i class="ti-shopping-cart"></i></span>
                                         Shops
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('products') }}" class="nav nav-item">
+                                    <a href="{{ Route('products.index') }}" class="nav nav-item">
                                         <span><i class="ti-truck"></i></span>
                                         Products
                                     </a>
@@ -213,7 +215,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('streams') }}" class="nav nav-item">
+                                    <a href="{{ Route('streams.index') }}" class="nav nav-item">
                                         <span>
                                             <i class="ti-music"></i>
                                         </span>
@@ -224,7 +226,7 @@
 
                                 <div class="pcoded-navigatio-lavel">Countires</div>
                                 <li>
-                                    <a href="{{ url('countries') }}" class="nav nav-item">
+                                    <a href="{{ Route('countries.index') }}" class="nav nav-item">
                                         <span><i class="ti-world"></i></span>
                                         Countires
                                     </a>
@@ -467,12 +469,10 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
 
-    <script type="text/javascript" charset="utf8" src="{{ asset('datatable/js/jquery.dataTables.js') }}">
+    <script type="text/javascript" src="{{ asset('datatable/js/jquery.dataTables.js') }}">
     </script>
     <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo-12.js') }}"></script>

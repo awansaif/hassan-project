@@ -11,7 +11,7 @@ Product
                 <div class="page-body">
                     <div class="mb-2">
                         <h2 class="text-secondary float-left">Product List</h2>
-                        <a href="{{ url('add-product') }}" class="btn btn-success float-right">Add Product</a>
+                        <a href="{{ Route('products.create') }}" class="btn btn-success float-right">Add Product</a>
                     </div>
                     <br>
                     <br>
@@ -49,9 +49,7 @@ Product
                                     <td>{{ $product->category }}</td>
                                     <td>
                                         @foreach(json_decode($product->product_images) as $image)
-                                        <div style="width: 100px; height:100px;">
-                                            <img src="{{ $image }}" class="card-img">
-                                        </div>
+                                        <img src="{{ $image }}" width="50px" height="50px" class="float-left">
                                         @endforeach
                                     </td>
                                     <td>{{ $product->product_name }}</td>
@@ -63,7 +61,7 @@ Product
                                         @if($product->product_colour != null)
                                         @foreach(json_decode($product->product_colour) as $color)
                                         <div
-                                            style="width: 100px; height:100px; background-color:{{$color}}; color:white;">
+                                            style="width: 50px; height:50px; background-color:{{$color}}; color:white;">
                                             <span>Color</span>
                                         </div>
                                         @endforeach
@@ -79,8 +77,13 @@ Product
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="/edit-product?id={{$product->id}}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-product?id={{$product->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="{{ Route('products.edit', $product->id) }}"
+                                            class="btn btn-primary">Edit</a>
+                                        <form action="{{ Route('products.destroy', $product->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">{{ __("REMOVE") }}</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

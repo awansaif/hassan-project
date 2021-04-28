@@ -57,7 +57,17 @@ Update Link
                                             value="{{ $link->link }}">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label>Type</label>
+                                        <select name="type" class="form-control custom-select">
+                                            <option {{ $link->is_paid == 'Paid' ? 'selected' : '' }} value="Paid">Paid
+                                            </option>
+                                            <option {{ $link->is_paid == 'Free' ? 'selected' : '' }} value="Free">Free
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <label>Price *</label>

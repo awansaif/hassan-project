@@ -2,9 +2,6 @@
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Mail\WelcomeMail;
-use App\Models\CollectionDetail;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ShopController;
@@ -61,19 +58,15 @@ Route::get('reset-password', function (Request $request) {
 Route::post('/reset-password', [LoginController::class, 'change_password']);
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
-    //link routers
-    Route::resource('links', LinkController::class);
-    Route::get('link-order', [LinkOrderController::class, 'show'])->name('linkOrder');
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/countries', [App\Http\Controllers\CountryController::class, 'index']);
-    Route::get('add-country', [\App\Http\Controllers\CountryController::class, 'create']);
-    Route::post('add-country', [\App\Http\Controllers\CountryController::class, 'store']);
-    Route::get('/remove-country', [CountryController::class, 'destroy']);
-    Route::get('/edit-country', [CountryController::class, 'edit']);
-    Route::post('/edit-country', [CountryController::class, 'update']);
+    //link routers
+    Route::resource('links', LinkController::class);
+    Route::get('link-order', [LinkOrderController::class, 'show'])->name('linkOrder');
+
+    Route::resource('countries', CountryController::class);
 
     Route::get('/news', [App\Http\Controllers\NewsController::class, 'index']);
     Route::get('/add-news', [App\Http\Controllers\NewsController::class, 'create']);
@@ -90,29 +83,15 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('/edit-event', [EventController::class, 'update']);
 
     // stream Routes
-    Route::get('/start-stream', [StreamController::class, 'start_stream']);
-    Route::get('/streams', [StreamController::class, 'index']);
-    Route::get('/add-stream', [App\Http\Controllers\StreamController::class, 'create']);
-    Route::post('/add-stream', [App\Http\Controllers\StreamController::class, 'store']);
-    Route::get('/edit-stream', [StreamController::class, 'edit']);
-    Route::post('/edit-stream', [StreamController::class, 'update']);
-    route::get('/remove-stream', [StreamController::class, 'destroy']);
+    Route::resource('streams', StreamController::class);
 
-    Route::get('/products', [ProductController::class, 'index']);
-    Route::get('/add-product', [App\Http\Controllers\ProductController::class, 'create']);
-    Route::post('/add-product', [App\Http\Controllers\ProductController::class, 'store']);
-    Route::get('/edit-product', [ProductController::class, 'edit']);
-    Route::post('/edit-product', [ProductController::class, 'update']);
-    Route::get('/remove-product', [ProductController::class, 'destroy']);
+    // shops routes
+    Route::resource('shops', ShopController::class);
+
+    // product routes
     Route::get('/update-stock', [ProductController::class, 'update_stock']);
+    Route::resource('products', ProductController::class);
 
-
-    Route::get('/shops', [App\Http\Controllers\ShopController::class, 'index']);
-    Route::get('/add-shop', [App\Http\Controllers\ShopController::class, 'create']);
-    Route::post('/add-shop', [App\Http\Controllers\ShopController::class, 'store']);
-    Route::get('/edit-shop', [ShopController::class, 'edit']);
-    Route::post('/edit-shop', [ShopController::class, 'update']);
-    Route::get('/remove-shop', [App\Http\Controllers\ShopController::class, 'destroy']);
 
     Route::get('/add-player', [App\Http\Controllers\PlayerController::class, 'create']);
     Route::get('/players', [App\Http\Controllers\PlayerController::class, 'index']);
@@ -141,12 +120,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/remove-collection', [App\Http\Controllers\CollectionController::class, 'destroy']);
     Route::get('/remove-collection-image', [CollectionDetailController::class, 'destroy']);
 
-    // Route::get('federations', [FederationController::class, 'index']);
-    // Route::get('/add-player-federation', [FederationController::class, 'create']);
-    // Route::post('/add-player-federation', [FederationController::class, 'store']);
-    // Route::get('/edit-federation', [FederationController::class, 'edit']);
-    // Route::post('/edit-federation', [FederationController::class, 'update']);
-    // Route::delete('/remove-federation', [FederationController::class, 'destroy']);
     Route::resource('federations', FederationController::class);
 
     Route::get('/sponsor', [SponsorController::class, 'index']);
@@ -266,6 +239,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // memberships routes
     Route::resource('membership', MembershipController::class);
     Route::get('membership/delete/{id}', [MembershipController::class, 'destroy']);
+
     // Team members routes
     Route::get('/team-members', [TeamController::class, 'index'])->name('team-members');
     Route::get('/add-team-member', [TeamController::class, 'create']);

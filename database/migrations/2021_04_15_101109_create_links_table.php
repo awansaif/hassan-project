@@ -18,7 +18,8 @@ class CreateLinksTable extends Migration
             $table->string('title');
             $table->string('thumbnail');
             $table->string('link');
-            $table->float('price');
+            $table->string('is_paid', 50);
+            $table->float('price')->nullable();
             $table->timestamps();
         });
     }
