@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Club
+{{ Auth::guard('admin')->user()->name }} -- Club
 @endsection
 
 @section('content')
@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-6">
                             <label for="name">Player Contry:</label>
-                            <select name="country" id="country"  class="form-control">
+                            <select name="country" id="country" class="form-control">
                                 <option disabled selected>Choose Country .... </option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country->id }}">{{ $country->country }}</option>
@@ -103,8 +103,7 @@
                         </div>
                         <div class="col-6">
                             <label for="name">Sponsor Image Two:</label>
-                            <input type="file" name="sponsor_image_two" id="sponsor_image_two"  class="form-control"
-                                >
+                            <input type="file" name="sponsor_image_two" id="sponsor_image_two" class="form-control">
                             @error('sponsor_image_two')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror

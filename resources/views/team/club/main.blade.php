@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Club
+{{ Auth::guard('admin')->user()->name }} -- Club
 @endsection
 
 @section('content')
@@ -17,9 +17,9 @@
 
                 <div class="table-responsive">
                     @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{ Session::get('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
                     @endif
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -36,8 +36,10 @@
                                 <td>{{ $club->club_name }}</td>
                                 <td>
                                     <a href="{{ url('team/show-club',$club->id) }}" class="btn btn-primary">Show</a>
-                                    <a href="{{ url('team/edit-main-club',$club->id) }}" class="btn btn-success">Edit</a>
-                                    <a href="{{ url('team/remove-main-club',$club->id) }}" class="btn btn-danger">Remove</a>
+                                    <a href="{{ url('team/edit-main-club',$club->id) }}"
+                                        class="btn btn-success">Edit</a>
+                                    <a href="{{ url('team/remove-main-club',$club->id) }}"
+                                        class="btn btn-danger">Remove</a>
                                 </td>
                             </tr>
                             @endforeach

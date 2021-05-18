@@ -19,61 +19,48 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email|exists:admins|min:5|max:191',
-         'password' => 'required|string|min:4|max:255',
+            'password' => 'required|string|min:4|max:255',
         ]);
-        if($validator->fails())
-        {
-             return redirect()->back()->withErrors($validator)
-                     ->withInput();
-        }
-        else
-        {
-            if(Auth::guard('admin')->attempt($request->only('email', 'password'), $request->filled('remember')))
-            {
-                if(Auth::user()->role == 1)
-                {
-                    return redirect('/home');
-                }
-                else
-                {
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)
+                ->withInput();
+        } else {
+            if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->filled('remember'))) {
+                if (Auth::guard('admin')->user()->role == 1) {
+                    return redirect()->route('home');
+                } else {
                     return redirect()->route('team.dashboard');
                 }
-
-            }
-            else{
+            } else {
                 return redirect()
-                ->back()
-                ->withInput()
-                ->with('error','Incorrect email/password, please try again!');
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Incorrect email/password, please try again!');
             }
         }
     }
     public function logout()
     {
         Auth::guard('admin')->logout();
-        return redirect('/admin/login');
-
+        return redirect()->route('login');
     }
 
     public function change_password(Request $request)
     {
 
         $data = Admin::where('id', 1)->first();
-        if(Hash::check($request->current_pass, $data->password))
-        {
+        if (Hash::check($request->current_pass, $data->password)) {
             $update = Admin::where('id', $data->id)->update([
                 'password' => Hash::make($request->new_pass),
             ]);
-            if($update)
-            {
+            if ($update) {
                 $data = [
                     'response' => 1,
                     'message'  => 'Password change successfully'
                 ];
                 return response()->json($data);
             }
-        }
-        else{
+        } else {
             $data = [
                 'response' => 0,
                 'message'  => 'Your current password is incorrect',
@@ -81,6 +68,4 @@ class AuthController extends Controller
             return response()->json($data);
         }
     }
-
-
 }

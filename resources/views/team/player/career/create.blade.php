@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Career
+{{ Auth::guard('admin')->user()->name }} -- Career
 @endsection
 
 @section('content')
@@ -48,8 +48,8 @@
                         </div>
                         <div class="col-6">
                             <label for="name">Sport Movement:</label>
-                            <input type="text" name="movement" id="movement" value="{{ old('movement') }}" class="form-control"
-                                placeholder="Sport Movement">
+                            <input type="text" name="movement" id="movement" value="{{ old('movement') }}"
+                                class="form-control" placeholder="Sport Movement">
                             @error('movement')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -59,8 +59,8 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="name">Player Position:</label>
-                            <input type="text" name="position" id="position" value="{{ old('position') }}" class="form-control"
-                                placeholder="Player Position">
+                            <input type="text" name="position" id="position" value="{{ old('position') }}"
+                                class="form-control" placeholder="Player Position">
                             @error('position')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror

@@ -9,13 +9,13 @@ class Player extends Model
 {
     use HasFactory;
 
-    public function countries()
+    public function country()
     {
-    	return $this->belongsTo('App\Models\Country', 'country_id');
+        return $this->belongsTo(Country::class);
     }
 
-     public function career()
+    public function career()
     {
-    	return $this->hasMany('App\Models\Career');
+        return $this->hasMany('App\Models\Career');
     }
 }

@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Career
+{{ Auth::guard('admin')->user()->name }} -- Career
 @endsection
 
 @section('content')
@@ -29,8 +29,8 @@
                         </div>
                         <div class="col-6">
                             <label for="name">Tournament Name:</label>
-                            <input type="text" name="name" id="name" value="{{ $career->tournament_name }}" class="form-control"
-                                placeholder="Tournament name">
+                            <input type="text" name="name" id="name" value="{{ $career->tournament_name }}"
+                                class="form-control" placeholder="Tournament name">
                             @error('name')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -40,16 +40,16 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="name">Tournament Year:</label>
-                            <input type="text" name="year" id="year" value="{{ $career->tounament_year }}" class="form-control"
-                                placeholder="Tournament year">
+                            <input type="text" name="year" id="year" value="{{ $career->tounament_year }}"
+                                class="form-control" placeholder="Tournament year">
                             @error('year')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="col-6">
                             <label for="name">Sport Movement:</label>
-                            <input type="text" name="movement" id="movement" value="{{ $career->sport_movement }}" class="form-control"
-                                placeholder="Sport Movement">
+                            <input type="text" name="movement" id="movement" value="{{ $career->sport_movement }}"
+                                class="form-control" placeholder="Sport Movement">
                             @error('movement')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -59,8 +59,8 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="name">Player Position:</label>
-                            <input type="text" name="position" id="position" value="{{ $career->player_position }}" class="form-control"
-                                placeholder="Player Position">
+                            <input type="text" name="position" id="position" value="{{ $career->player_position }}"
+                                class="form-control" placeholder="Player Position">
                             @error('position')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror

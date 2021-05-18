@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Club
+{{ Auth::guard('admin')->user()->name }} -- Club
 @endsection
 
 @section('content')
@@ -17,9 +17,9 @@
 
                 <div class="table-responsive">
                     @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{ Session::get('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
                     @endif
                     <table class="table table-striped table-bordered">
                         <thead>

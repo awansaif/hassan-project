@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Club
+{{ Auth::guard('admin')->user()->name }} -- Club
 @endsection
 
 @section('content')
@@ -12,14 +12,15 @@
         <div class="container">
             <div class="p-4">
                 <h1 class="text-secondary font-weight-bold float-left">Club Detail</h1>
-                <a href="{{ url('team/add-club-detail',Request::route('id')) }}" class="btn btn-success float-right">Add</a>
+                <a href="{{ url('team/add-club-detail',Request::route('id')) }}"
+                    class="btn btn-success float-right">Add</a>
 
 
                 <div class="table-responsive">
                     @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{ Session::get('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
                     @endif
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -37,7 +38,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>
                                     @foreach (json_decode($club->sponsor_images) as $item)
-                                        <img src="{{ $item }}" class="float-left" alt="" width="100px" height="100px">
+                                    <img src="{{ $item }}" class="float-left" alt="" width="100px" height="100px">
                                     @endforeach
                                 </td>
                                 <td>
@@ -45,7 +46,8 @@
                                 </td>
                                 <td>{{ $club->name }}</td>
                                 <td>
-                                    <a href="{{ url('team/remove-club-detail',$club->id) }}" class="btn btn-danger">Remove</a>
+                                    <a href="{{ url('team/remove-club-detail',$club->id) }}"
+                                        class="btn btn-danger">Remove</a>
                                 </td>
                             </tr>
                             @endforeach

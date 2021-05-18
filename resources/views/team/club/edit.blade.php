@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Club
+{{ Auth::guard('admin')->user()->name }} -- Club
 @endsection
 
 @section('content')
@@ -19,9 +19,10 @@
                     <br>
                     @csrf
                     <label for="name">Name:</label>
-                    <input type="text" name="name" id="name" value="{{ $club->club_name }}" class="form-control" placeholder="Main club name">
+                    <input type="text" name="name" id="name" value="{{ $club->club_name }}" class="form-control"
+                        placeholder="Main club name">
                     @error('name')
-                        <p class="text-danger">{{ $message }}</p>
+                    <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <br>
                     <br>

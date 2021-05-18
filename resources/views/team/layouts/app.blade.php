@@ -26,7 +26,8 @@
                 <ul class="order-1 order-md-3 mr-5 navbar-nav navbar-no-expand ml-auto">
                     <li class="nav-item dropdown mr-4">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="nav-link dropdown-toggle">{{ Auth::user()->name }}</a>
+                            aria-expanded="false"
+                            class="nav-link dropdown-toggle">{{ Auth::guard('admin')->user()->name }}</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                             <li><a href="{{ Route('team.logout') }}" class="dropdown-item">Logout</a></li>
                         </ul>

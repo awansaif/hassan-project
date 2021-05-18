@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Player
+{{ Auth::guard('admin')->user()->name }} -- Player
 @endsection
 
 @section('content')
@@ -17,11 +17,11 @@
 
                 <div class="table-responsive">
                     @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{ Session::get('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
                     @endif
-                    <table class="table table-striped table-bordered" >
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -43,27 +43,33 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
-                                    <img src="{{ $player->player_picture }}" alt="" width="100px" height="100px" class="border-rounded">
+                                    <img src="{{ $player->player_picture }}" alt="" width="100px" height="100px"
+                                        class="border-rounded">
                                 </td>
                                 <td>{{ $player->player_name }}</td>
                                 <td>{{ $player->player_role }}</td>
-                                <td>{{ $player->countries->country }}</td>
+                                <td>{{ $player->country->country }}</td>
                                 <td>
-                                    <img src="{{ $player->club_image }}" alt="" width="100px" height="100px" class="border-rounded">
+                                    <img src="{{ $player->club_image }}" alt="" width="100px" height="100px"
+                                        class="border-rounded">
                                 </td>
                                 <td>{{ $player->club_name }}</td>
                                 <td>{{ $player->player_favorite_shot }}</td>
                                 <td>{{ $player->player_favourite_table }}</td>
                                 <td>
-                                    <img src="{{ $player->sponser_image_one }}" alt="" width="100px" height="100px" class="border-rounded">
+                                    <img src="{{ $player->sponser_image_one }}" alt="" width="100px" height="100px"
+                                        class="border-rounded">
                                 </td>
                                 <td>
-                                    <img src="{{ $player->sponser_image_two }}" alt="" width="100px" height="100px" class="border-rounded">
+                                    <img src="{{ $player->sponser_image_two }}" alt="" width="100px" height="100px"
+                                        class="border-rounded">
                                 </td>
                                 <td>
-                                    <a href="{{ url('team/player-career',$player->id) }}" class="btn btn-primary">Career</a>
+                                    <a href="{{ url('team/player-career',$player->id) }}"
+                                        class="btn btn-primary">Career</a>
                                     <a href="{{ url('team/edit-player',$player->id) }}" class="btn btn-success">Edit</a>
-                                    <a href="{{ url('team/remove-player',$player->id) }}" class="btn btn-danger">Remove</a>
+                                    <a href="{{ url('team/remove-player',$player->id) }}"
+                                        class="btn btn-danger">Remove</a>
                                 </td>
                             </tr>
                             @endforeach

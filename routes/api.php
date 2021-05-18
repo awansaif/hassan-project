@@ -7,10 +7,8 @@ use App\Http\Controllers\Api\FedEventOrderController;
 use App\Http\Controllers\Api\HomeApiController;
 use App\Http\Controllers\Api\MembershipApiController;
 use App\Http\Controllers\Api\LinkApiController;
-use App\Http\Controllers\VideoController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Models\News;
 use App\Models\RecentNews;
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -18,15 +16,15 @@ use App\Models\RecentNews;
 // });
 
 //users api
-Route::post('login', [ApiController::class, 'login']);
-Route::post('signup', [ApiController::class, 'register']);
-Route::post('password-reset', [ApiController::class, 'password_reset']);
+Route::post('login', [UserController::class, 'login']);
+Route::post('signup', [UserController::class, 'register']);
+Route::post('password-reset', [UserController::class, 'password_reset']);
 
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('user', [ApiController::class, 'user']);
-    Route::post('update-user', [ApiController::class, 'update_user']);
-    Route::get('logout', [ApiController::class, 'logout']);
+    Route::get('user', [UserController::class, 'user']);
+    Route::post('update-user', [UserController::class, 'update']);
+    Route::get('logout', [UserController::class, 'logout']);
 });
 
 //link apis

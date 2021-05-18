@@ -40,27 +40,22 @@ use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
 use App\Http\Controllers\TeamController as ControllersTeamController;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
-Route::group(['middleware', 'guest'], function () {
-    Route::get('/', function () {
-        return redirect('Adminlogin');
-    });
+Route::group(['middleware' => 'guest:admin'], function () {
+
+    Route::get('/', [AuthController::class, 'create'])->name('login');
+    Route::post('/', [AuthController::class, 'login']);
 });
 
 
-Route::get('reset-password', function (Request $request) {
-    if (!$request->hasValidSignature()) {
-        abort(401);
-    } else {
-        return view('auth.passwords.reset');
-    }
-})->name('reset-password');
+
 Route::post('/reset-password', [LoginController::class, 'change_password']);
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => 'auth:admin'], function () {
 
 
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //link routers
     Route::resource('links', LinkController::class);
@@ -233,7 +228,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     // user routers
     Route::post('/admin/change-password', [AuthController::class, 'change_password']);
-    Route::view('/registered', 'registered', ['users' => User::all()]);
+    Route::view('/registered', 'pages.users.index');
 
 
     // memberships routes
@@ -270,11 +265,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/remove-team-score/{id}', [LiveScoreController::class, 'destroy']);
 });
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', [AuthController::class, 'create'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
 
 
 Route::group(['prefix' => 'team'], function () {
@@ -322,3 +312,12 @@ Route::group(['prefix' => 'team'], function () {
 
 
 Route::get('/show-stream', [StreamController::class, 'show_stream']);
+
+
+Route::get('reset-password', function (Request $request) {
+    if (!$request->hasValidSignature()) {
+        abort(401);
+    } else {
+        return view('auth.passwords.reset');
+    }
+})->name('reset-password');

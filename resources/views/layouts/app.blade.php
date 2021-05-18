@@ -44,7 +44,7 @@
                         <a class="mobile-search morphsearch-search" href="#">
                             <i class="ti-search"></i>
                         </a>
-                        <a href="/home">
+                        <a href="{{ Route('home') }}">
                             <img class="img-fluid" src="{{ asset('assets/images/logo.png')}}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options">
@@ -70,7 +70,7 @@
                                 <a href="#!">
                                     <img src="{{ asset('assets/images/avatar-4.jpg')}}" class="img-radius"
                                         alt="User-Profile-Image">
-                                    <span>{{ Auth::user()->name }}</span>
+                                    <span>{{ Auth::guard('admin')->user()->name }}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
@@ -110,7 +110,7 @@
                                 </li>
                                 <div class="pcoded-navigatio-lavel">Layout</div>
                                 <li class="">
-                                    <a href="/home">
+                                    <a href="{{ Route('home') }}">
                                         <span><i class="ti-home"></i></span>
                                         Dashboard
                                     </a>

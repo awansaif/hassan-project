@@ -45,197 +45,8 @@ use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    public function register(Request $request)
-    {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'date_of_birth' => 'required',
-            'gender'  => 'required',
-            'phone_number' => 'required',
-            'city'         => 'required',
-        ]);
-        if ($validator->fails()) {
-            $data = [
-                'success' => false,
-                'errors'  => $validator->errors()->all(),
-            ];
-            return response()->json($data);
-        } else {
-            $user = new User([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => hash::make($request->password),
-                'date_of_birth' => $request->date_of_birth,
-                'gender' => $request->gender,
-                'phone_number' => $request->phone_number,
-                'city' => $request->city,
-                'avatar' => "''",
-            ]);
-            if ($user->save()) {
-                $token = $user->createToken('laravel')->accessToken;
-                Mail::to($user->email)->send(new WelcomeMail);
-                $data = [
-                    'success' => true,
-                    'token'  => $token,
-                    'message' => 'Account is registered succcessfully',
-                    'data' => $user,
-
-                ];
-                return response()->json($data);
-            }
-        }
-    }
-
-    public function login(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $data = [
-                'success' => false,
-                'errors'  => $validator->errors()->all(),
-            ];
-            return response()->json($data);
-        } else {
-            if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1])) {
-
-                $token =  Auth::guard('web')->user()->createToken('laravel')->accessToken;
-                $response = [
-                    'success' => true,
-                    'token' => $token,
-                    'data' => User::where('id', Auth::guard('web')->user()->id)->first(),
-                ];
-                return response($response, 200);
-            } else {
-                $data = [
-                    'success' => false,
-                    'errors'  => ['Please try again'],
-                ];
-                return response()->json($data);
-            }
-        }
-    }
-
-    public function user(Request $request)
-    {
-        return response()->json($request->user());
-    }
-    public function update_user(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'avatar' => 'nullable|image',
-            'address' => 'nullable|max:255',
-            'phone_number'  => 'required',
-            'city'      => 'required',
-            'zip_code'  => 'nullable'
-        ]);
-
-        $validator->after(function ($validator) {
-            if (User::where('id', '!=', Auth::user()->id)->where('email', request('email'))->first()) {
-                $validator->errors()->add('email', 'Email already exists in record!');
-            }
-        });
-        if ($validator->fails()) {
-            $data = [
-                'success' => false,
-                'errors'  => $validator->errors()->all(),
-            ];
-            return response()->json($data);
-        } else {
-            if ($request->file('avatar')) {
-                $destination = 'User-avatars/';
-                $file = $request->file('avatar');
-                $file_name = time() . $file->getClientOriginalName();
-                $check = $file->move($destination, $file_name);
-
-                $update = User::where('id', Auth::user()->id)->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'avatar' => env('APP_URL') . $destination . $file_name,
-                    'address' => $request->address,
-                    'phone_number' => $request->phone_number,
-                    'city'     => $request->city,
-                    'zip_code' => $request->zip_code,
-                ]);
-                if ($update) {
-                    $data = [
-                        'success' => true,
-                        'message' => 'User updated successfully.'
-                    ];
-                    return response()->json($data);
-                }
-            } else {
-                $update = User::where('id', Auth::user()->id)->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address' => $request->address,
-                    'phone_number' => $request->phone_number,
-                    'city'     => $request->city,
-                    'zip_code' => $request->zip_code,
-                ]);
-                if ($update) {
-                    $data = [
-                        'success' => true,
-                        'message' => 'User updated successfully.'
-                    ];
-                    return response()->json($data);
-                }
-            }
-        }
-    }
-    public function logout(Request $request)
-    {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
-    }
-
-    public function password_reset(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|exists:users,email',
-        ]);
-        if ($validator->fails()) {
-            $data = [
-                'success' => false,
-                'response' => $validator->errors()->all()
-            ];
-            return response()->json($data);
-        }
-        else {
-            $user = User::where('email', $request->email)->first();
-            Mail::to($request->email)->send(new ResetPassword($user));
-
-            $data = [
-                'success' => true,
-                'response' => 'Please check your email',
-            ];
-            return response()->json($data);
-        }
-    }
-    public function broker()
-    {
-        return Password::broker();
-    }
-    protected function credentials(Request $request)
-    {
-        return $request->only('email');
-    }
 
 
 
@@ -280,17 +91,17 @@ class ApiController extends Controller
     public function all_products()
     {
         $products = Product::with('shops')
-                                ->where('stock', 1)
-                                ->orderby('id', 'DESC')
-                                ->get();
+            ->where('stock', 1)
+            ->orderby('id', 'DESC')
+            ->get();
         return response()->json($products);
     }
 
     public function product(Request $request)
     {
         $products = Product::with('shops')
-                                ->where('shop_id', $request->id)
-                                ->get();
+            ->where('shop_id', $request->id)
+            ->get();
         return response()->json($products);
     }
 
@@ -404,9 +215,9 @@ class ApiController extends Controller
     public function detail_cassifiche(Request $request)
     {
         $data = CassificheDetail::with('cassifiches')
-                                    ->where('cassifiche_id', $request->id)
-                                    ->orderBy('player_rank','ASC')
-                                    ->get();
+            ->where('cassifiche_id', $request->id)
+            ->orderBy('player_rank', 'ASC')
+            ->get();
         return response()->json($data);
     }
 
@@ -436,7 +247,7 @@ class ApiController extends Controller
 
     public function team_Score($id)
     {
-        $data = Team::with('scores')->where('id',$id)->get();
+        $data = Team::with('scores')->where('id', $id)->get();
         return response()->json($data);
     }
 }

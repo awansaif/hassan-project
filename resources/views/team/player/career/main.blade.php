@@ -1,7 +1,7 @@
 @extends('team.layouts.app')
 
 @section('title')
-{{ Auth::user()->name }} -- Career
+{{ Auth::guard('admin')->user()->name }}-- Career
 @endsection
 
 @section('content')
@@ -12,14 +12,15 @@
         <div class="container">
             <div class="p-4">
                 <h1 class="text-secondary font-weight-bold float-left">Career</h1>
-                <a href="{{ url('team/add-player-career', Request::route('id')) }}" class="btn btn-success float-right">Add</a>
+                <a href="{{ url('team/add-player-career', Request::route('id')) }}"
+                    class="btn btn-success float-right">Add</a>
 
 
                 <div class="table-responsive">
                     @if(Session::has('message'))
-                        <div class="alert alert-success">
-                            {{ Session::get('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
                     @endif
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -46,7 +47,8 @@
                                 <td>{{ $career->player_position }}</td>
                                 <td>
                                     <a href="{{ url('team/edit-career',$career->id) }}" class="btn btn-success">Edit</a>
-                                    <a href="{{ url('team/remove-career',$career->id) }}" class="btn btn-danger">Remove</a>
+                                    <a href="{{ url('team/remove-career',$career->id) }}"
+                                        class="btn btn-danger">Remove</a>
                                 </td>
                             </tr>
                             @endforeach
