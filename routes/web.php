@@ -70,12 +70,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/edit-news', [App\Http\Controllers\NewsController::class, 'update']);
     Route::delete('/remove-news', [App\Http\Controllers\NewsController::class, 'destroy']);
 
-    Route::get('/events', [EventController::class, 'index']);
-    Route::get('/add-event', [App\Http\Controllers\EventController::class, 'create']);
-    Route::post('/add-event', [App\Http\Controllers\EventController::class, 'store']);
-    Route::get('/remove-event', [EventController::class, 'destroy']);
-    Route::get('/edit-event', [EventController::class, 'edit']);
-    Route::post('/edit-event', [EventController::class, 'update']);
+    // event routes
+    Route::resource('event', EventController::class);
 
     // stream Routes
     Route::resource('streams', StreamController::class);

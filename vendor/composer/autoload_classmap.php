@@ -19,6 +19,7 @@ return array(
     'App\\Http\\Controllers\\Api\\LinkApiController' => $baseDir . '/app/Http/Controllers/Api/LinkApiController.php',
     'App\\Http\\Controllers\\Api\\MembershipApiController' => $baseDir . '/app/Http/Controllers/Api/MembershipApiController.php',
     'App\\Http\\Controllers\\Api\\ProductOrderController' => $baseDir . '/app/Http/Controllers/Api/ProductOrderController.php',
+    'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',

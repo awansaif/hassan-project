@@ -7,8 +7,8 @@
             <div class="page-wrapper">
                 <!-- Page body start -->
                 <div class="page-body">
-                    <h2 class="text-primary font-weight-bold float-left">Events List</h2>
-                    <a href="{{ url('add-event') }}" class="btn btn-success float-right">Add Event</a>
+                    <h2 class="text-secondary float-left">EVENT LIST</h2>
+                    <a href="{{ Route('event.create') }}" class="btn btn-success float-right">Add Event</a>
                     <br>
                     <br>
                     <hr>
@@ -31,6 +31,7 @@
                                     <th>Event Time</th>
                                     <th>Author Name</th>
                                     <th>Federation Name</th>
+                                    <th>Zip Code</th>
                                     <th>Author Image</th>
                                     <th>Action</th>
                                 </tr>
@@ -65,13 +66,21 @@
                                     <td>{{ $event->author_name }}</td>
                                     <td>{{ $event->federation_name }}</td>
                                     <td>
+                                        {{ $event->zip_code }}
+                                    </td>
+                                    <td>
                                         <div style="width: 60px; height:60px; border-radius:50%; overflow:hidden;">
                                             <img src="{{ $event->author_image }}" alt="" width="100%" height="100%">
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="/edit-event?id={{ $event->id }}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-event?id={{$event->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="{{ Route('event.edit',$event->id) }}" class="btn btn-primary">Edit</a>
+                                        <form action="{{ Route('event.destroy', $event->id) }}" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-danger"
+                                                onclick="return confirm('Are you sure to delete this?')">Remove</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

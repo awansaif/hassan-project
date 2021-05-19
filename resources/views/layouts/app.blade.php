@@ -166,7 +166,7 @@
 
                                 <div class="pcoded-navigatio-lavel">Events & Orders</div>
                                 <li>
-                                    <a href="{{ url('events') }}" class="nav nav-item">
+                                    <a href="{{ Route('event.index') }}" class="nav nav-item">
                                         <span>
                                             <i class="ti-ticket"></i>
                                         </span>
@@ -482,6 +482,7 @@
             $('#dataTable').DataTable();
         } );
     </script>
+    @yield('scripts')
 </body>
 
 </html>

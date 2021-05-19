@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventStoreRequest;
+use App\Http\Requests\EventUpdateRequest;
 use App\Models\Event;
 use App\Models\LatestEvent;
 use Illuminate\Http\Request;
@@ -16,9 +18,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
         $events = Event::orderBy('id', 'DESC')->get();
-        return view('pages.Events.main', compact('events'));
+        return view('pages.Events.index', compact('events'));
     }
 
     /**
@@ -28,8 +29,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
-        return view('pages.Events.add-event');
+        return view('pages.Events.create');
     }
 
     /**
@@ -38,103 +38,72 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EventStoreRequest $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'event_image' => 'required|image',
-            'secondary_event_mage' => 'required|image',
-            'event_short_description' => 'required',
-            'event_long_description'  => 'required',
-            'event_price'             => 'required',
-            'event_place'             => 'required',
-            'event_timing'            => 'required',
-            'aurthor_name'            => 'required',
-            'federation_name'         => 'required',
-            'author_image'            => 'required',
-            'further_detail'           => 'required',
-            'location_map_link'                => 'required|url',
-        ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            $destinationPath = 'event-pics/';
 
-            $event_pic = $request->file('event_image');
-            $event_file_name = time().$event_pic->getClientOriginalName();
-            $check = $event_pic->move($destinationPath,$event_file_name);
+        $eventImage = $this->fileUpload('images/', $request->file('event_image'));
+        $secondaryImage = $this->fileUpload('images/', $request->file('secondary_image'));
+        $authorImage = $this->fileUpload('images/', $request->file('author_image'));
 
-            $secondary_file = $request->file('secondary_event_mage');
-            $secondary_file_name = time().$secondary_file->getClientOriginalName();
-            $check = $secondary_file->move($destinationPath,$secondary_file_name);
+        $data = new Event;
+        $data->event_image = $eventImage;
+        $data->secondary_image = $secondaryImage;
+        $data->short_description = $request->event_short_description;
+        $data->long_decription = $request->event_long_description;
+        $data->even_price = $request->event_price;
+        $data->event_place = $request->event_place;
+        $data->event_timing = $request->event_timing;
+        $data->author_name = $request->aurthor_name;
+        $data->federation_name = $request->federation_name;
+        $data->author_image = $authorImage;
+        $data->further_detail = $request->further_detail;
+        $data->zip_code = $request->zip_code;
+        $data->location_map_link = $request->location_map_link;
+        $data->save();
 
-            $author_file = $request->file('author_image');
-            $author_file_name = time().$author_file->getClientOriginalName();
-            $check = $author_file->move($destinationPath,$author_file_name);
+        $data = new LatestEvent();
+        $data->event_image = $eventImage;
+        $data->secondary_image = $secondaryImage;
+        $data->short_description = $request->event_short_description;
+        $data->long_decription = $request->event_long_description;
+        $data->even_price = $request->event_price;
+        $data->event_place = $request->event_place;
+        $data->event_timing = $request->event_timing;
+        $data->author_name = $request->aurthor_name;
+        $data->federation_name = $request->federation_name;
+        $data->author_image = $authorImage;
+        $data->further_detail = $request->further_detail;
+        $data->location_map_link = $request->location_map_link;
+        $data->save();
 
-            $data = new Event;
-            $data->event_image = env('APP_URL'). $destinationPath . $event_file_name;
-            $data->secondary_image = env('APP_URL').$destinationPath . $secondary_file_name;
-            $data->short_description = $request->event_short_description;
-            $data->long_decription = $request->event_long_description;
-            $data->even_price = $request->event_price;
-            $data->event_place = $request->event_place;
-            $data->event_timing = $request->event_timing;
-            $data->author_name = $request->aurthor_name;
-            $data->federation_name = $request->federation_name;
-            $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
-            $data->further_detail = $request->further_detail;
-            $data->location_map_link = $request->location_map_link;
-            $data->save();
+        $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
+        $data = [
+            'to' => '/topics/all',
+            'notification' => [
+                'image' => $eventImage,
+                'body' => $request->event_short_description,
+                'place' => $request->event_place,
+            ]
 
-            $data = new LatestEvent();
-            $data->event_image = env('APP_URL'). $destinationPath . $event_file_name;
-            $data->secondary_image = env('APP_URL').$destinationPath . $secondary_file_name;
-            $data->short_description = $request->event_short_description;
-            $data->long_decription = $request->event_long_description;
-            $data->even_price = $request->event_price;
-            $data->event_place = $request->event_place;
-            $data->event_timing = $request->event_timing;
-            $data->author_name = $request->aurthor_name;
-            $data->federation_name = $request->federation_name;
-            $data->author_image = env('APP_URL'). $destinationPath . $author_file_name;
-            $data->further_detail = $request->further_detail;
-            $data->location_map_link = $request->location_map_link;
-            $data->save();
+        ];
+        $dataString = json_encode($data);
 
-            $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
-            $data = [
-                'to'=> '/topics/all',
-                'notification' => [
-                    'image' => env('APP_URL'). $destinationPath.$event_file_name,
-                    'body' => $request->event_short_description,
-                    'place' => $request->event_place,
-                    ]
+        $headers = [
+            'Authorization: key=' . $server_key,
+            'Content-Type: application/json',
+        ];
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
-                ];
-            $dataString = json_encode($data);
+        curl_exec($ch);
 
-            $headers = [
-                'Authorization: key='.$server_key,
-                'Content-Type: application/json',
-            ];
-            $url = 'https://fcm.googleapis.com/fcm/send';
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-
-            curl_exec($ch);
-
-            $request->session()->flash('message', 'Event data save successfully.');
-            return redirect()->back();
-
-        }
+        $request->session()->flash('message', 'Event saved successfully.');
+        return back();
     }
 
     /**
@@ -154,10 +123,11 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Event $event)
+    public function edit(Event $event)
     {
-        $data = Event::where('id', $request->id)->first();
-        return view('pages.Events.edit-event',compact('data'));
+        return view('pages.Events.update', [
+            'event' => $event
+        ]);
     }
 
     /**
@@ -167,86 +137,27 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(EventUpdateRequest $request, Event $event)
     {
-        $validator = Validator::make($request->all(), [
-            'event_image' => 'nullable|image',
-            'secondary_event_mage' => 'nullable|image',
-            'event_short_description' => 'required',
-            'event_long_description'  => 'required',
-            'event_price'             => 'required',
-            'event_place'             => 'required',
-            'event_timing'            => 'required',
-            'aurthor_name'            => 'required',
-            'federation_name'         => 'required',
-            'author_image'            => 'nullable',
-            'further_detail'           => 'required',
-            'location_map_link'                => 'required|url',
+
+        $event->update([
+            'event_image'        => $request->file('event_image') ? $this->fileUpload('images/', $request->file('event_image')) : $event->event_image,
+            'secondary_image'    => $request->file('secondary_image') ? $this->fileUpload('images/', $request->file('secondary_image')) : $event->secondary_image,
+            'short_description'  => $request->event_short_description,
+            'long_decription'    => $request->event_long_description,
+            'even_price'         => $request->event_price,
+            'event_place'   => $request->event_place,
+            'event_timing'  => $request->event_timing,
+            'author_name'   => $request->aurthor_name,
+            'federation_name'   => $request->federation_name,
+            'further_detail'    => $request->further_detail,
+            'location_map_link' => $request->location_map_link,
+            'author_image' => $request->file('author_image') ? $this->fileUpload('images/', $request->file('author_image')) : $event->author_image,
+            'zip_code'     => $request->zip_code,
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }else{
-            if($request->file('event_image'))
-            {
-                $destinationPath = 'event-pics/';
 
-                $event_pic = $request->file('event_image');
-                $event_file_name = time().$event_pic->getClientOriginalName();
-                $check = $event_pic->move($destinationPath,$event_file_name);
-
-                $update = Event::where('id', $request->event_id)->update([
-                    'event_image'    => env('APP_URL'). $destinationPath . $event_file_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-            if($request->file('secondary_event_mage'))
-            {
-                $destinationPath = 'event-pics/';
-
-                $event_pic = $request->file('secondary_event_mage');
-                $event_file_name = time().$event_pic->getClientOriginalName();
-                $check = $event_pic->move($destinationPath,$event_file_name);
-
-                $update = Event::where('id', $request->event_id)->update([
-                    'secondary_image'    => env('APP_URL'). $destinationPath . $event_file_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-            if($request->file('author_image'))
-            {
-                $destinationPath = 'event-pics/';
-
-                $event_pic = $request->file('author_image');
-                $event_file_name = time().$event_pic->getClientOriginalName();
-                $check = $event_pic->move($destinationPath,$event_file_name);
-
-                $update = Event::where('id', $request->event_id)->update([
-                    'author_image'    => env('APP_URL'). $destinationPath . $event_file_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-
-            Event::where('id', $request->event_id)->update([
-                'short_description' => $request->event_short_description,
-                'long_decription' => $request->event_long_description,
-                'even_price' => $request->event_price,
-                'event_place' => $request->event_place,
-                'event_timing' => $request->event_timing,
-                'author_name' => $request->aurthor_name,
-                'federation_name' => $request->federation_name,
-                'further_detail' => $request->further_detail,
-                'location_map_link' => $request->location_map_link,
-            ]);
-
-            $request->session()->flash('message', 'Event data updated successfully.');
-            return redirect()->back();
-
-
-        }
+        $request->session()->flash('message', 'Event updated successfully.');
+        return back();
     }
 
     /**
@@ -255,15 +166,17 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Event $event)
+    public function destroy(Event $event)
     {
-        //
-        $check = Event::where('id', $request->id)->delete();
-        if($check)
-        {
-            $request->session()->flash('message', 'Event data remove successfully.');
-            return redirect()->back();
-        }
+        $event->delete();
+        return back()->with(['message', 'Event deleted successfully']);
+    }
 
+
+    protected function fileUpload($destination, $file)
+    {
+        $file_name = time() . $file->getClientOriginalName();
+        $file->move($destination, $file_name);
+        return env('APP_URL') . $destination . $file_name;
     }
 }

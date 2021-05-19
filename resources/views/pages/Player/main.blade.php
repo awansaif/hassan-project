@@ -42,7 +42,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        {{ $player->countries->country }}
+                                        {{ $player->country->country }}
                                     </td>
                                     <td>
                                         <div style="width: 100px; height:100px;">
@@ -93,3 +93,4 @@
     </div>
 </div>
 @endsection
+

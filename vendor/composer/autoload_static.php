@@ -616,6 +616,7 @@ class ComposerStaticInitd73db6b06fdc1b7790e0df3c97996f06
         'App\\Http\\Controllers\\Api\\LinkApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/LinkApiController.php',
         'App\\Http\\Controllers\\Api\\MembershipApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MembershipApiController.php',
         'App\\Http\\Controllers\\Api\\ProductOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProductOrderController.php',
+        'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
