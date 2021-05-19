@@ -27,7 +27,6 @@ class UserController extends Controller
             'phone_number'   => 'required',
             'city'           => 'required',
             'zip_code'       => 'required',
-            'token'          => 'required',
         ]);
         if ($validator->fails()) {
             $data = [
@@ -58,7 +57,7 @@ class UserController extends Controller
                     'data' => $user,
 
                 ];
-                return response(data, 200);
+                return response($data, 200);
             }
         }
     }
