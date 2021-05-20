@@ -317,3 +317,36 @@ Route::get('reset-password', function (Request $request) {
         return view('auth.passwords.reset');
     }
 })->name('reset-password');
+
+
+// Route::get('notification-test/', function () {
+//     $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
+//     $data = [
+//         'registration_ids' => [
+//             'eGtOdN4xR7iJUlWQ8Oyds8:APA91bF6tFM8ABSWDk4wFga5SMJgF4QMsxsGB207B_U0W0mBE8ntdkiY6mZ_OmP0af7iE1gHxdLRXr91kpFWOBxHlo0ws8fEz_q2jVd28JFo9MS_7BwMyiOtyCj1Zxcibb5gpUVzm1wz',
+//             'dar-J-bCTWiKxnhOUP86Hm:APA91bE5omdjdppjPFR0Q8TYn-EYOmE292kDs6knhicAVm5RXzaJyPWoIV-SwbLfPyf8vk89FmRTnX_wNn554Jx_eOCjHk_DbluCFvO-dwCbeHuwooTjqV81soIpoGOUXAZYV2avDUh0',
+//         ],
+//         'notification' => [
+//             'image' => 'image',
+//             'body' => 'sent to multiple users send device test',
+//             'place' => '$request->event_place',
+//         ]
+
+//     ];
+//     $dataString = json_encode($data);
+
+//     $headers = [
+//         'Authorization: key=' . $server_key,
+//         'Content-Type: application/json',
+//     ];
+//     $url = 'https://fcm.googleapis.com/fcm/send';
+//     $ch = curl_init();
+//     curl_setopt($ch, CURLOPT_URL, $url);
+//     curl_setopt($ch, CURLOPT_POST, true);
+//     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+//     curl_exec($ch);
+//     echo "sent";
+// });

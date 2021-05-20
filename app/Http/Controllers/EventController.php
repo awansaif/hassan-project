@@ -6,6 +6,7 @@ use App\Http\Requests\EventStoreRequest;
 use App\Http\Requests\EventUpdateRequest;
 use App\Models\Event;
 use App\Models\LatestEvent;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,9 +77,10 @@ class EventController extends Controller
         $data->location_map_link = $request->location_map_link;
         $data->save();
 
+        $tokens = User::where('zip_code', $request->zip_code)->get();
         $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
         $data = [
-            'to' => '/topics/all',
+            'registration_ids' => $tokens,
             'notification' => [
                 'image' => $eventImage,
                 'body' => $request->event_short_description,
