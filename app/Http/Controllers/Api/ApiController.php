@@ -153,6 +153,7 @@ class ApiController extends Controller
         $clubDetail = ClubDetail::with('clubs')->where('club_id', $request->id)->first();
         return response()->json([
             'clubDetail' => $clubDetail,
+            'fedeations' => FederationMovement::where('club_id', $request->id)->get(),
             'players'    => Player::where('club_id', $request->id)->get()
         ]);
     }

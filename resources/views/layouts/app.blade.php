@@ -319,22 +319,13 @@
 
                                 <div class="pcoded-navigatio-lavel">Federations</div>
 
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
-                                        <span><i class="ti-angle-right"></i></span>
-                                        <span>Federation Movement</span>
-                                        <span class="pcoded-mcaret"></span>
+                                <li>
+                                    <a href="{{ Route('federationmovement.index') }}">
+                                        <span>
+                                            <i class="ti-wordpress"></i>
+                                        </span>
+                                        Federation Movement
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="/federation-movement">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext"
-                                                    data-i18n="nav.basic-components.alert">Movements</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
 
                                 <li class="pcoded-hasmenu">

@@ -135,12 +135,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('/edit-club-detail', [ClubDetailController::class, 'update']);
     Route::get('/remove-club-detail', [ClubDetailController::class, 'destroy']);
 
-    Route::get('/federation-movement', [FederationMovementController::class, 'index']);
-    Route::get('/add-federation-movement', [FederationMovementController::class, 'create']);
-    Route::post('/add-federation-movement', [FederationMovementController::class, 'store']);
-    Route::get('/edit-movement', [FederationMovementController::class, 'edit']);
-    Route::post('/edit-movement', [FederationMovementController::class, 'update']);
-    Route::delete('/remove-movement', [FederationMovementController::class, 'destroy']);
+    Route::resource('federationmovement', FederationMovementController::class);
 
     Route::get('/federation-news', [FederationNewsController::class, 'index']);
     Route::get('/add-federation-news', [FederationNewsController::class, 'create']);

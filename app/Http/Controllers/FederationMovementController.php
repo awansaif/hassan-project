@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlbodroCategory;
-use App\Models\AlbodroItem;
 use App\Models\Cassifiche;
-use App\Models\CassificheDetail;
 use App\Models\FederaationSponsor;
 use App\Models\FederationEvent;
 use App\Models\FederationMovement;
 use App\Models\FederationNews;
+use App\Models\MainClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,9 +21,9 @@ class FederationMovementController extends Controller
      */
     public function index()
     {
-        //
-        $federations = FederationMovement::orderBy('id', 'DESC')->get();
-        return view('pages.FederationMovement.main',compact('federations'));
+        return view('pages.FederationMovement.index', [
+            'federations' => FederationMovement::with('club')->orderBy('id', 'DESC')->get()
+        ]);
     }
 
     /**
@@ -35,7 +34,9 @@ class FederationMovementController extends Controller
     public function create()
     {
         //
-        return view('pages.FederationMovement.create');
+        return view('pages.FederationMovement.create', [
+            'clubs' => MainClub::with('clubs')->get()
+        ]);
     }
 
     /**
@@ -46,37 +47,23 @@ class FederationMovementController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
+        $request->validate([
+            'club' => 'required|exists:clubs,id',
             'name' => 'required',
             'image' => 'required|image',
             'icon'  => 'required|image',
             'latest_event' => 'required|date|after:today'
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else{
-            $destinationPath = 'federation-image/';
-
-            $image = $request->file('image');
-            $image_name = time().$image->getClientOriginalName();
-            $check = $image->move($destinationPath,$image_name);
-
-            $icon = $request->file('icon');
-            $icon_name = time().$icon->getClientOriginalName();
-            $icon->move($destinationPath, $icon_name);
-
-            $data = new FederationMovement();
-            $data->name = $request->name;
-            $data->image = env('APP_URL'). $destinationPath . $image_name;
-            $data->icon  = env('APP_URL'). $destinationPath . $icon_name;
-            $data->latest_event = $request->latest_event;
-            $data->save();
-            $request->session()->flash('message', 'Federation movement add successfully');
-            return redirect()->back();
-        }
+        FederationMovement::create([
+            'name'  => $request->name,
+            'image' => $this->fileUpload('images/', $request->file('image')),
+            'icon'  => $this->fileUpload('images/', $request->file('icon')),
+            'latest_event'  => $request->latest_event,
+            'club_id'  => $request->club
+        ]);
+        return redirect()->back()->with([
+            'message' => 'Federation movement add successfully'
+        ]);
     }
 
     /**
@@ -96,11 +83,12 @@ class FederationMovementController extends Controller
      * @param  \App\Models\FederationMovement  $federationMovement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, FederationMovement $federationMovement)
+    public function edit($id)
     {
-        //
-        $data = FederationMovement::where('id', $request->id)->first();
-        return view('pages.FederationMovement.edit', compact('data'));
+        return view('pages.FederationMovement.edit', [
+            'federation' => FederationMovement::find($id),
+            'clubs' => MainClub::with('clubs')->get()
+        ]);
     }
 
     /**
@@ -110,78 +98,26 @@ class FederationMovementController extends Controller
      * @param  \App\Models\FederationMovement  $federationMovement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FederationMovement $federationMovement)
+    public function update(Request $request, $id)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'name'         => 'required',
-            'image'        => 'nullable|image',
-            'icon'         => 'nullable|image',
-            'latest_event' => 'required',
+        $request->validate([
+            'club' => 'required|exists:clubs,id',
+            'name' => 'required',
+            'image' => 'nullable|image',
+            'icon'  => 'nullable|image',
+            'latest_event' => 'required|date|after:today'
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else{
-            $destinationPath = 'federation-image/';
-            if($request->hasFile('image') && $request->hasFile('icon'))
-            {
 
-                $image = $request->file('image');
-                $image_name = time().$image->getClientOriginalName();
-                $image->move($destinationPath, $image_name);
-
-                $icon = $request->file('icon');
-                $icon_name = time().$icon->getClientOriginalName();
-                $icon->move($destinationPath,$icon_name);
-                FederationMovement::where('id', $request->id)->update([
-                    'name'  => $request->name,
-                    'image' => env('APP_URL').$destinationPath.$image_name,
-                    'icon'  => env('APP_URL').$destinationPath.$icon_name,
-                    'latest_event' => $request->latest_event,
-                ]);
-                $request->session()->flash('message', 'Federation movement updated successfully.');
-                return redirect()->back();
-            }
-            elseif($request->hasFile('image'))
-            {
-                $image = $request->file('image');
-                $image_name = time().$image->getClientOriginalName();
-                $image->move($destinationPath, $image_name);
-
-                FederationMovement::where('id', $request->id)->update([
-                    'name' => $request->name,
-                    'image' => env('APP_URL').$destinationPath.$image_name,
-                    'latest_event' => $request->latest_event,
-                ]);
-                $request->session()->flash('message', 'Federation movement updated successfully.');
-                return redirect()->back();
-            }
-            elseif($request->hasFile('icon'))
-            {
-                $icon = $request->file('icon');
-                $icon_name = time().$icon->getClientOriginalName();
-                $icon->move($destinationPath, $icon_name);
-
-                FederationMovement::where('id', $request->id)->update([
-                    'name' => $request->name,
-                    'icon'  => env('APP_URL').$destinationPath.$icon_name,
-                    'latest_event' => $request->latest_event,
-                ]);
-                $request->session()->flash('message', 'Federation movement updated successfully.');
-                return redirect()->back();
-            }
-            else
-            {
-                FederationMovement::where('id', $request->id)->update([
-                    'name'         => $request->name,
-                    'latest_event' => $request->latest_event,
-                ]);
-                $request->session()->flash('message', 'Federation movement updated successfully.');
-                return redirect()->back();
-            }
-        }
+        $federation = FederationMovement::find($id);
+        $federation->update([
+            'club_id' => $request->club,
+            'name' => $request->name,
+            'image' => $request->file('image') ? $this->fileUpload('images/', $request->file('image')) : $federation->image,
+            'icon'  => $request->file('icon') ? $this->fileUpload('images/', $request->file('icon')) : $federation->icon,
+            'latest_event' => $request->latest_event
+        ]);
+        $request->session()->flash('message', 'Federation movement updated successfully.');
+        return redirect()->back();
     }
 
     /**
@@ -190,19 +126,26 @@ class FederationMovementController extends Controller
      * @param  \App\Models\FederationMovement  $federationMovement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, FederationMovement $federationMovement)
+    public function destroy($id)
     {
-        $check = FederationMovement::where('id', $request->id)->delete();
-        FederaationSponsor::where('federation_id', $request->id)->delete();
-        FederationEvent::where('federation_id', $request->id)->delete();
-        FederationNews::where('federation_id', $request->id)->delete();
-        // CassificheDetail::where('cassifiche_id', $cassifiche->id)->delete();
-        Cassifiche::where('federation_id', $request->id)->delete();
-        AlbodroCategory::where('federation_id', $request->id)->delete();
-        if($check)
-        {
-            $request->session()->flash('message', 'Federation Movement data save successfully.');
-            return redirect()->back();
-        }
+        $federation = FederationMovement::find($id);
+        FederaationSponsor::where('federation_id', $id)->delete();
+        FederationEvent::where('federation_id', $id)->delete();
+        FederationNews::where('federation_id', $id)->delete();
+        Cassifiche::where('federation_id', $id)->delete();
+        AlbodroCategory::where('federation_id', $id)->delete();
+
+        $federation->delete();
+        return back()->with([
+            'message' => 'Federation Movement removed successfully.'
+        ]);
+    }
+
+    protected function fileUpload($destination, $file)
+    {
+        $file_name = date('Y-m-d') . 'T' . time() . '.' . $file->getClientOriginalName();
+        $file->move($destination, $file_name);
+
+        return env('APP_URL') . $destination . $file_name;
     }
 }

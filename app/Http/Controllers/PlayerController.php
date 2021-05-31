@@ -8,8 +8,6 @@ use App\Models\Career;
 use App\Models\Player;
 use App\Models\Country;
 use App\Models\MainClub;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PlayerController extends Controller
 {

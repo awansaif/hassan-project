@@ -10,7 +10,8 @@ Federation Movement
                 <!-- Page body start -->
                 <div class="page-body">
                     <h2 class="text-primary float-left">Movement List</h2>
-                    <a href="/add-federation-movement" class="btn btn-success float-right">Add Movement</a>
+                    <a href="{{ Route('federationmovement.create') }}" class="btn btn-success float-right">Add
+                        Movement</a>
                     <br>
                     <br>
                     <hr>
@@ -27,6 +28,7 @@ Federation Movement
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Club</th>
                                     <th>Name</th>
                                     <th>Icon</th>
                                     <th>Image</th>
@@ -38,20 +40,23 @@ Federation Movement
                                 @foreach ($federations as $key => $federation)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $federation->club? $federation->club->name : '' }}</td>
                                     <td>{{ $federation->name }}</td>
                                     <td><img src="{{ $federation->icon }}" alt="" width="100px" height="100px"></td>
                                     <td>
-                                        <img src="{{ $federation->image }}"  width="100px" height="100px">
+                                        <img src="{{ $federation->image }}" width="100px" height="100px">
                                     </td>
                                     <td>{{ $federation->latest_event }}</td>
                                     <td>
-                                        <a href="/edit-movement?id={{ $federation->id }}"
+                                        <a href="{{ Route('federationmovement.edit', $federation->id) }}"
                                             class="btn btn-primary">Edit</a>
                                         <form style="display: inline-block"
-                                            action="/remove-movement?id={{ $federation->id }}" method="POST">
+                                            action="{{ Route('federationmovement.destroy', $federation->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn-danger btn">Remove</button>
+                                            <button class="btn-danger btn"
+                                                onclick="return confirm('Are you sure to remove this?')">Remove</button>
                                         </form>
                                     </td>
                                 </tr>
