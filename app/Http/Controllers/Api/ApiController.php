@@ -46,17 +46,6 @@ use Illuminate\Support\Facades\Mail;
 class ApiController extends Controller
 {
 
-
-
-
-
-
-
-
-
-
-
-
     public function all_news()
     {
         //
@@ -160,9 +149,12 @@ class ApiController extends Controller
 
     public function club_detail(Request $request)
     {
-        // dd($request->id);
+
         $clubDetail = ClubDetail::with('clubs')->where('club_id', $request->id)->first();
-        return response()->json($clubDetail);
+        return response()->json([
+            'clubDetail' => $clubDetail,
+            'players'    => Player::where('club_id', $request->id)->get()
+        ]);
     }
 
     public function federation_movements()

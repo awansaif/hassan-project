@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MainClubRequest;
 use App\Models\MainClub;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,8 @@ class MainClubController extends Controller
      */
     public function index()
     {
-        //
         $clubs = MainClub::orderBy('id', 'DESC')->get();
-        return view('pages.MainClub.main',compact('clubs'));
+        return view('pages.MainClub.main', compact('clubs'));
     }
 
     /**
@@ -26,7 +26,6 @@ class MainClubController extends Controller
      */
     public function create()
     {
-        //
         return view('pages.MainClub.create');
     }
 
@@ -36,16 +35,13 @@ class MainClubController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MainClubRequest $request)
     {
-        //
-        $data = new MainClub();
-        $data->club_name = $request->name;
-        $data->save();
+        MainClub::create([
+            'club_name' => $request->name
+        ]);
         $request->session()->flash('message', 'Main Club add successfully.');
-        return redirect()->back();
-
-
+        return back();
     }
 
     /**
@@ -65,11 +61,11 @@ class MainClubController extends Controller
      * @param  \App\Models\MainClub  $mainClub
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,MainClub $mainClub)
+    public function edit($id)
     {
-        //
-        $data = MainClub::where('id', $request->id)->first();
-        return view('pages.MainClub.edit',compact('data'));
+        return view('pages.MainClub.edit', [
+            'club' => MainClub::find($id)
+        ]);
     }
 
     /**
@@ -79,15 +75,16 @@ class MainClubController extends Controller
      * @param  \App\Models\MainClub  $mainClub
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MainClub $mainClub)
+    public function update(Request $request, $id)
     {
-        //
-        $update = MainClub::where('id', $request->club_id)->update([
-            'club_name' => $request->name,
+        $request->validate([
+            'name' => 'required|unique:main_clubs,club_name,' . $id
+        ]);
+        MainClub::find($id)->update([
+            'club_name' => $request->name
         ]);
         $request->session()->flash('message', 'Main Club updated successfully.');
-        return redirect()->back();
-
+        return back();
     }
 
     /**
@@ -96,12 +93,10 @@ class MainClubController extends Controller
      * @param  \App\Models\MainClub  $mainClub
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, MainClub $mainClub)
+    public function destroy(Request $request, $id)
     {
-        //
-        $check = MainClub::where('id', $request->id)->delete();
+        MainClub::find($id)->delete();
         $request->session()->flash('message', 'Main Club removed successfully.');
         return redirect()->back();
-
     }
 }

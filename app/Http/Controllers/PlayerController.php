@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PlayerStoreRequest;
+use App\Http\Requests\PlayerUpdateRequest;
+use App\Models\Career;
 use App\Models\Player;
 use App\Models\Country;
+use App\Models\MainClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,8 +20,9 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        $players = Player::with('country')->orderBy('id', 'DESC')->get();
-        return view('pages.Player.main', compact('players'));
+        return view('pages.Player.index', [
+            'players' => Player::with('country', 'club')->orderBy('id', 'DESC')->get()
+        ]);
     }
 
     /**
@@ -27,9 +32,11 @@ class PlayerController extends Controller
      */
     public function create()
     {
-        //
-        $countries = Country::get();
-        return view('pages.Player.add-player', compact('countries'));
+
+        return view('pages.Player.create', [
+            'countries' => Country::get(),
+            'clubs' => MainClub::with('clubs')->get()
+        ]);
     }
 
     /**
@@ -38,59 +45,23 @@ class PlayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlayerStoreRequest $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'country_name' => 'required',
-            'player_name'  => 'required',
-            'player_image' => 'required|image',
-            'player_role'  => 'required',
-            'club_name'    => 'required',
-            'club_image'   => 'required|image',
-            'player_favorite_shot' => 'required',
-            'player_favorite_table' => 'required',
-            'sponser_image_one'  => 'required|image',
-            'sponser_image_two'  => 'required|image',
+        Player::create([
+            'country_id'     => $request->country_name,
+            'player_name'    => $request->player_name,
+            'player_picture' => $this->fileUpload('images/', $request->file('player_image')),
+            'player_role' => $request->player_role,
+            'club_id'   => $request->club,
+            'club_image'  =>  $this->fileUpload('images/', $request->file('club_image')),
+            'player_favorite_shot'   => $request->player_favorite_shot,
+            'player_favourite_table' => $request->player_favorite_table,
+            'sponser_image_one' =>  $this->fileUpload('images/', $request->file('sponser_image_one')),
+            'sponser_image_two' =>  $this->fileUpload('images/', $request->file('sponser_image_two')),
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)
-                ->withInput();
-        } else {
 
-            $destinationPath = 'player-pics/';
-
-            $player_image = $request->file('player_image');
-            $player_image_name = time() . $player_image->getClientOriginalName();
-            $check = $player_image->move($destinationPath, $player_image_name);
-
-            $club_image = $request->file('club_image');
-            $club_image_name = time() . $club_image->getClientOriginalName();
-            $check = $club_image->move($destinationPath, $club_image_name);
-
-            $sponser_image_one = $request->file('sponser_image_one');
-            $sponser_image_one_name = time() . $sponser_image_one->getClientOriginalName();
-            $check = $sponser_image_one->move($destinationPath, $sponser_image_one_name);
-
-            $sponser_image_two = $request->file('sponser_image_two');
-            $sponser_image_two_name = time() . $sponser_image_two->getClientOriginalName();
-            $check = $sponser_image_two->move($destinationPath, $sponser_image_two_name);
-
-            $data = new Player;
-            $data->country_id = $request->country_name;
-            $data->player_name = $request->player_name;
-            $data->player_picture = env('APP_URL') . $destinationPath . $player_image_name;
-            $data->player_role = $request->player_role;
-            $data->club_name   = $request->club_name;
-            $data->club_image   = env('APP_URL') . $destinationPath . $club_image_name;
-            $data->player_favorite_shot = $request->player_favorite_shot;
-            $data->player_favourite_table = $request->player_favorite_table;
-            $data->sponser_image_one = env('APP_URL') . $destinationPath . $sponser_image_one_name;
-            $data->sponser_image_two = env('APP_URL') . $destinationPath . $sponser_image_two_name;
-            $data->save();
-            $request->session()->flash('message', 'Player add successfully.');
-            return redirect()->back();
-        }
+        $request->session()->flash('message', 'Player add successfully.');
+        return back();
     }
 
     /**
@@ -101,7 +72,10 @@ class PlayerController extends Controller
      */
     public function show(player $player)
     {
-        //
+        return view('pages.Player.career.index', [
+            'careers' => Career::with('player')->where('player_id', $player->id)->get(),
+            'player'  => $player->id
+        ]);
     }
 
     /**
@@ -110,10 +84,13 @@ class PlayerController extends Controller
      * @param  \App\Models\player  $player
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, player $player)
+    public function edit(player $player)
     {
-        $data = player::where('id', $request->id)->first();
-        return view('pages.Player.edit', compact('data'))->with('countries', Country::all());
+        return view('pages.Player.edit', [
+            'player' => $player,
+            'countries' => Country::get(),
+            'clubs' => MainClub::with('clubs')->get()
+        ]);
     }
 
     /**
@@ -123,86 +100,23 @@ class PlayerController extends Controller
      * @param  \App\Models\player  $player
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, player $player)
+    public function update(PlayerUpdateRequest $request, player $player)
     {
-        $validator = Validator::make($request->all(), [
-            'country_name' => 'required',
-            'player_name'  => 'required',
-            'player_image' => 'nullable|image',
-            'player_role'  => 'required',
-            'club_name'    => 'required',
-            'club_image'   => 'nullable|image',
-            'player_favorite_shot' => 'required',
-            'player_favorite_table' => 'required',
-            'sponser_image_one'  => 'nullable|image',
-            'sponser_image_two'  => 'nullable|image',
+        $player->update([
+            'country_id'     => $request->country_name,
+            'player_name'    => $request->player_name,
+            'player_picture' => $request->file('player_image') ? $this->fileUpload('images/', $request->file('player_image')) : $player->player_picture,
+            'player_role' => $request->player_role,
+            'club_id'   => $request->club,
+            'club_image'  =>  $request->file('club_image') ? $this->fileUpload('images/', $request->file('club_image')) : $player->club_image,
+            'player_favorite_shot'   => $request->player_favorite_shot,
+            'player_favourite_table' => $request->player_favorite_table,
+            'sponser_image_one' => $request->file('sponser_image_one') ? $this->fileUpload('images/', $request->file('sponser_image_one')) : $player->sponser_image_one,
+            'sponser_image_two' => $request->file('sponser_image_two') ? $this->fileUpload('images/', $request->file('sponser_image_two')) : $player->sponser_image_two,
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            if ($request->file('player_image')) {
-                $destinationPath = 'player-pics/';
 
-                $player_image = $request->file('player_image');
-                $player_image_name = time() . $player_image->getClientOriginalName();
-                $check = $player_image->move($destinationPath, $player_image_name);
-
-                $update = player::where('id', $request->player_id)->update([
-                    'player_picture'    => env('APP_URL') . $destinationPath . $player_image_name
-                ]);
-            }
-            if ($request->file('club_image')) {
-                $destinationPath = 'player-pics/';
-
-                $club_image = $request->file('club_image');
-                $club_image_name = time() . $club_image->getClientOriginalName();
-                $check = $club_image->move($destinationPath, $club_image_name);
-
-                $update = player::where('id', $request->player_id)->update([
-                    'club_image'    => env('APP_URL') . $destinationPath . $club_image_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-            if ($request->file('sponser_image_one')) {
-                $destinationPath = 'player-pics/';
-
-                $sponser_image_one = $request->file('sponser_image_one');
-                $sponser_image_one_name = time() . $sponser_image_one->getClientOriginalName();
-                $check = $sponser_image_one->move($destinationPath, $sponser_image_one_name);
-
-                $update = player::where('id', $request->player_id)->update([
-                    'sponser_image_one'    => env('APP_URL') . $destinationPath . $sponser_image_one_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-            if ($request->file('sponser_image_two')) {
-                $destinationPath = 'player-pics/';
-
-                $sponser_image_two = $request->file('sponser_image_two');
-                $sponser_image_two_name = time() . $sponser_image_two->getClientOriginalName();
-                $check = $sponser_image_two->move($destinationPath, $sponser_image_two_name);
-
-                $update = player::where('id', $request->player_id)->update([
-                    'sponser_image_two'    => env('APP_URL') . $destinationPath . $sponser_image_two_name
-                ]);
-                // $request->session()->flash('message', 'Event data save successfully.');
-                // return redirect()->back();
-            }
-
-            player::where('id', $request->player_id)->update([
-                'country_id' => $request->country_name,
-                'player_name' => $request->player_name,
-                'player_role' => $request->player_role,
-                'club_name'   => $request->club_name,
-                'player_favorite_shot' => $request->player_favorite_shot,
-                'player_favourite_table' => $request->player_favorite_table,
-            ]);
-
-            $request->session()->flash('message', 'Player data save successfully.');
-            return redirect()->back();
-        }
+        $request->session()->flash('message', 'Player updated successfully.');
+        return back();
     }
 
     /**
@@ -211,12 +125,18 @@ class PlayerController extends Controller
      * @param  \App\Models\player  $player
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, player $player)
+    public function destroy(player $player)
     {
-        $check = player::where('id', $request->id)->delete();
-        if ($check) {
-            $request->session()->flash('message', 'Player data remove successfully.');
-            return redirect()->back();
-        }
+        $player->delete();
+        return back()->with('message', 'Player removed successfully.');
+    }
+
+
+    protected function fileUpload($destination, $file)
+    {
+        $file_name = date('Y-m-d') . 'T' . time() . $file->getClientOriginalName();
+        $file->move($destination, $file_name);
+
+        return env('APP_URL') . $destination . $file_name;
     }
 }

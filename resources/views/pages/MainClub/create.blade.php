@@ -11,10 +11,10 @@ Main Clubs
                 <div class="page-body">
                     <div class="row mt-5">
                         <div class="col-sm-6 m-auto">
-                            <a href="/main-club" class="btn btn-primary float-left">Back</a>
+                            <a href="{{ Route('mainclub.index') }}" class="btn btn-primary float-left">Back</a>
                             <h2 class="text-center text-muted">Add Main Club</h2>
                             <hr>
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" action="{{ Route('mainclub.store') }}" enctype="multipart/form-data">
                                 @if(Session::has('message'))
                                 <div class="alert alert-success">
                                     {{ Session::get('message') }}

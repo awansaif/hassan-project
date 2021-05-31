@@ -16,9 +16,10 @@ class CareerController extends Controller
      */
     public function index(Request $request)
     {
-        $playerCareers = Player::with('career')->where('id', $request->id)->first();
-        $player = Player::where('id', $request->id)->first();
-        return view('pages.Player.player-career', compact('playerCareers'))->with('player' , $player);
+        return view('pages.Player.career.index', [
+            'careers' =>
+            Career::with('player')->where('player_id', $request->id)->get()
+        ]);
     }
 
 
@@ -29,9 +30,8 @@ class CareerController extends Controller
      */
     public function create()
     {
-        //
         $players = Player::orderBy('id', 'DESC')->get();
-        return view('pages.Player.add-career',compact('players'));
+        return view('pages.Player.career.add', compact('players'));
     }
 
     /**
@@ -42,38 +42,25 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'player' => 'required',
+        $player  = $request->player;
+        $request->validate([
             'nation_icon'  => 'required|image',
             'tounament_year' => 'required',
-            'tournament_name'            => 'required',
+            'tournament_name' => 'required',
             'sport_movement'   => 'required',
             'player_position'  => 'required',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }
-        else{
-            $file = $request->file('nation_icon');
-            $destinationPath = 'player-pics/';
-            $file_name = time().$file->getClientOriginalName();
-            $check = $file->move($destinationPath,$file_name);
 
-
-            $data = new Career;
-            $data->player_id = $request->player;
-            $data->nation_icon = env('APP_URL'). $destinationPath.$file_name;
-            $data->tounament_year = $request->tounament_year;
-            $data->tournament_name = $request->tournament_name;
-            $data->sport_movement = $request->sport_movement;
-            $data->player_position = $request->player_position;
-            $data->save();
-            $request->session()->flash('message', 'Player Career add successfully.');
-            return redirect()->back();
-        }
+        Career::create([
+            'player_id' => $player,
+            'nation_icon'       => $request->file('nation_icon') ? $this->fileUpload('images/', $request->file('nation_icon')) : $career->nation_icon,
+            'tounament_year'    => $request->tounament_year,
+            'tournament_name'   => $request->tournament_name,
+            'sport_movement'    => $request->sport_movement,
+            'player_position'   => $request->player_position,
+        ]);
+        $request->session()->flash('message', 'Player Career add successfully.');
+        return back();
     }
 
     /**
@@ -93,10 +80,11 @@ class CareerController extends Controller
      * @param  \App\Models\Career  $career
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Career $career)
+    public function edit($id)
     {
-        $career = Career::where('id', $request->id)->first();
-        return view('pages.Player.edit-career', compact('career'));
+        return view('pages.Player.career.edit', [
+            'career' => Career::find($id)
+        ]);
     }
 
     /**
@@ -106,42 +94,26 @@ class CareerController extends Controller
      * @param  \App\Models\Career  $career
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Career $career)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'nation_icon'  => 'nullable|image',
             'tounament_year' => 'required',
             'tournament_name' => 'required',
             'sport_movement'   => 'required',
             'player_position'  => 'required',
         ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)
-                        ->withInput();
-        }else{
-            if($request->file('nation_icon'))
-            {
-                $file = $request->file('nation_icon');
-                $destinationPath = 'player-pics/';
-                $file_name = time().$file->getClientOriginalName();
-                $check = $file->move($destinationPath,$file_name);
+        $career = Career::find($id);
+        $career->update([
+            'nation_icon'       => $request->file('nation_icon') ? $this->fileUpload('images/', $request->file('nation_icon')) : $career->nation_icon,
+            'tounament_year'    => $request->tounament_year,
+            'tournament_name'   => $request->tournament_name,
+            'sport_movement'    => $request->sport_movement,
+            'player_position'   => $request->player_position,
+        ]);
 
-                $update = Career::where('id', $request->playerCareerId)->update([
-                    'nation_icon'    => env('APP_URL'). $destinationPath . $file_name
-                ]);
-            }
-            $update = Career::where('id', $request->playerCareerId)->update([
-                'tounament_year' => $request->tounament_year,
-                'tournament_name' => $request->tournament_name,
-                'sport_movement' => $request->sport_movement,
-                'player_position' => $request->player_position,
-            ]);
-
-            $request->session()->flash('message', 'Career updated successfully.');
-            return redirect()->back();
-
-        }
+        $request->session()->flash('message', 'Career updated successfully.');
+        return back();
     }
 
     /**
@@ -150,13 +122,18 @@ class CareerController extends Controller
      * @param  \App\Models\Career  $career
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $check = Career::where('id', $request->id)->delete();
-        if($check)
-        {
-            $request->session()->flash('message', 'Player Career data remove successfully.');
-            return redirect()->back();
-        }
+
+        Career::find($id)->delete();
+        return back()->with('message', 'Player Career remove successfully.');
+    }
+
+    protected function fileUpload($destination, $file)
+    {
+        $file_name = date('Y-m-d') . 'T' . time() . $file->getClientOriginalName();
+        $file->move($destination, $file_name);
+
+        return env('APP_URL') . $destination . $file_name;
     }
 }

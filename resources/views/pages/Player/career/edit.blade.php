@@ -12,8 +12,9 @@ Player Career
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="mb-2">
-                        <h2 class="float-left font-weight-bold text-secondary">Update Career</h2>
-                        <a href="{{ url('players') }}" class="btn btn-success float-right">Back</a>
+                        <h2 class="float-left  text-secondary">UPDATE CAREER</h2>
+                        <a href="{{ Route('player.show', $career->player_id) }}"
+                            class="btn btn-success float-right">Back</a>
                     </div>
                     <br>
                     <br>
@@ -32,10 +33,10 @@ Player Career
                         </ul>
                     </div>
                     @endif
-                    <form id="event-form" method="post" enctype="multipart/form-data">
+                    <form action="{{ Route('playercareer.update', $career->id) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="playerCareerId" value="{{ $career->id }}">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nation Icon<span style="color:#ff0000">
                                     *</span></label>
@@ -218,7 +219,7 @@ Player Career
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary float-right">Update Player Career</button>
+                        <button type="submit" class="btn btn-primary float-right">Update Career</button>
                     </form>
 
                 </div>

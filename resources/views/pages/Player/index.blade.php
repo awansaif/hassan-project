@@ -8,8 +8,8 @@
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="mb-3">
-                        <h2 class="font-weight-bold-text-secondary float-left">Players</h2>
-                        <a href="{{ url('add-player') }}" class="btn btn-success float-right">Add Player</a>
+                        <h2 class="text-secondary float-left">PLAYERS</h2>
+                        <a href="{{ Route('player.create') }}" class="btn btn-success float-right">Add Player</a>
                     </div>
                     <br>
                     <br>
@@ -23,24 +23,23 @@
                         <table class="table table-striped table-bordered" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Player's Country Name</th>
-                                    <th>Player's Image</th>
-                                    <th>Player's Name</th>
-                                    <th>Player's Role</th>
-                                    <th>Player's Club </th>
-                                    <th>Player's Club Image</th>
-                                    <th>Player's Favorite Shot</th>
-                                    <th>Player's Favorite Table</th>
-                                    <th>Sponser Image Top</th>
-                                    <th>Sponser Image Bottom</th>
+                                    <th class="text-center"><i class="ti-view-list"></i></th>
+                                    <th>Country</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Club </th>
+                                    <th>Image</th>
+                                    <th>Favorite Shot</th>
+                                    <th>Favorite Table</th>
+                                    <th>Sponsers</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($players as $key => $player)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td class="text-center">{{ $key + 1 }}</td>
                                     <td>
                                         {{ $player->country->country }}
                                     </td>
@@ -51,10 +50,10 @@
                                     </td>
                                     <td>{{ $player->player_name }}</td>
                                     <td>{{ $player->player_role }}</td>
-                                    <td>{{ $player->lub_name }}</td>
+                                    <td>{{ $player->club->name }}</td>
                                     <td>
                                         <div style="width: 60px; height:60px; border-radius:50%; overflow:hidden;">
-                                            <img src="{{ $player->club_image }}" alt="" width="100%" height="100%">
+                                            <img src="{{ $player->club->image }}" alt="" width="100%" height="100%">
                                         </div>
                                     </td>
                                     <td>{{ $player->player_favorite_shot }}</td>
@@ -64,27 +63,42 @@
                                             <img src="{{ $player->sponser_image_one }}" alt="" width="100%"
                                                 height="100%">
                                         </div>
-                                    </td>
-                                    <td>
                                         <div style="width: 60px; height:60px; border-radius:50%; overflow:hidden;">
                                             <img src="{{ $player->sponser_image_two }}" alt="" width="100%"
                                                 height="100%">
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="/player-career?id={{ $player->id }}" class="btn btn-info">Player
+                                        <a href="{{ Route('player.show', $player->id) }}" class="btn btn-info">Player
                                             Career</a>
-                                        <a href="/edit-player?id={{ $player->id }}" class="btn btn-primary">Edit</a>
-                                        <form style="display: inline-block" action="/remove-player?id={{ $player->id }}"
-                                            method="POST">
+                                        <a href="{{ Route('player.edit', $player->id) }}"
+                                            class="btn btn-primary">Edit</a>
+                                        <form style="display: inline-block"
+                                            action="{{ Route('player.destroy', $player->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn-danger btn">Remove</button>
+                                            <button class="btn-danger btn"
+                                                onclick="return confirm('Are you sure to delete this?')">Remove</button>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center"><i class="ti-view-list"></i></th>
+                                    <th>Country</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Club </th>
+                                    <th>Image</th>
+                                    <th>Favorite Shot</th>
+                                    <th>Favorite Table</th>
+                                    <th>Sponsers</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -93,4 +107,3 @@
     </div>
 </div>
 @endsection
-

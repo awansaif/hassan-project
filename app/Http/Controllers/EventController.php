@@ -77,10 +77,13 @@ class EventController extends Controller
         $data->location_map_link = $request->location_map_link;
         $data->save();
 
-        $tokens = User::where('zip_code', $request->zip_code)->get();
+        $tokens = User::select('token')->where('zip_code', $request->zip_code)->where('token', '!=', null)->get();
+        foreach ($tokens as $token) {
+            $tok[] = $token->token;
+        }
         $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
         $data = [
-            'registration_ids' => $tokens,
+            'registration_ids' => $tok,
             'notification' => [
                 'image' => $eventImage,
                 'body' => $request->event_short_description,
@@ -103,7 +106,6 @@ class EventController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
         curl_exec($ch);
-
         $request->session()->flash('message', 'Event saved successfully.');
         return back();
     }

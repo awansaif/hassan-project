@@ -22,6 +22,7 @@ use App\Http\Controllers\AlbodroItemController;
 use App\Http\Controllers\FederationNewsController;
 use App\Http\Controllers\AlbodroCategoryController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\CassificheDetailController;
 use App\Http\Controllers\CollectionDetailController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\FedEventOrderController;
 use App\Http\Controllers\LinkOrderController;
 use App\Http\Controllers\LiveScoreController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\PlayerController as ControllersPlayerController;
 use App\Http\Controllers\Team\ClubController as TeamClubController;
 use App\Http\Controllers\Team\HomeController as TeamHome;
 use App\Http\Controllers\Team\PlayerController;
@@ -83,15 +85,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/update-stock', [ProductController::class, 'update_stock']);
     Route::resource('products', ProductController::class);
 
-
-    Route::get('/add-player', [App\Http\Controllers\PlayerController::class, 'create']);
-    Route::get('/players', [App\Http\Controllers\PlayerController::class, 'index']);
-    Route::post('/add-player', [App\Http\Controllers\PlayerController::class, 'store']);
-    Route::get('/edit-player', [App\Http\Controllers\PlayerController::class, 'edit']);
-    Route::post('/edit-player', [App\Http\Controllers\PlayerController::class, 'update']);
-    Route::delete('/remove-player', [App\Http\Controllers\PlayerController::class, 'destroy']);
+    // player routes
+    Route::resource('player', ControllersPlayerController::class);
 
 
+    Route::resource('playercareer', CareerController::class);
     Route::get('/add-player-career', [App\Http\Controllers\CareerController::class, 'create']);
     Route::post('/add-player-career', [App\Http\Controllers\CareerController::class, 'store']);
     Route::get('/player-career', [App\Http\Controllers\CareerController::class, 'index']);
@@ -121,12 +119,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/remove-sponsor', [SponsorController::class, 'destroy']);
 
     // main club routers
-    Route::get('/main-club', [MainClubController::class, 'index']);
-    Route::get('/add-main-club', [MainClubController::class, 'create']);
-    Route::post('/add-main-club', [MainClubController::class, 'store']);
-    Route::get('/edit-main-club', [MainClubController::class, 'edit']);
-    Route::post('/edit-main-club', [MainClubController::class, 'update']);
-    Route::get('/remove-main-club', [MainClubController::class, 'destroy']);
+    Route::resource('mainclub', MainClubController::class);
 
     Route::get('/club', [ClubController::class, 'index']);
     Route::get('/club-create', [ClubController::class, 'create']);
@@ -319,34 +312,36 @@ Route::get('reset-password', function (Request $request) {
 })->name('reset-password');
 
 
-// Route::get('notification-test/', function () {
-//     $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
-//     $data = [
-//         'registration_ids' => [
-//             'eGtOdN4xR7iJUlWQ8Oyds8:APA91bF6tFM8ABSWDk4wFga5SMJgF4QMsxsGB207B_U0W0mBE8ntdkiY6mZ_OmP0af7iE1gHxdLRXr91kpFWOBxHlo0ws8fEz_q2jVd28JFo9MS_7BwMyiOtyCj1Zxcibb5gpUVzm1wz',
-//             'dar-J-bCTWiKxnhOUP86Hm:APA91bE5omdjdppjPFR0Q8TYn-EYOmE292kDs6knhicAVm5RXzaJyPWoIV-SwbLfPyf8vk89FmRTnX_wNn554Jx_eOCjHk_DbluCFvO-dwCbeHuwooTjqV81soIpoGOUXAZYV2avDUh0',
-//         ],
-//         'notification' => [
-//             'image' => 'image',
-//             'body' => 'sent to multiple users send device test',
-//             'place' => '$request->event_place',
-//         ]
+Route::get('notification-test/', function () {
+    $server_key = 'AAAAcSDZJio:APA91bHu8_DuPYeZ9FliemNRJqNbMD9SYhAqVCKoWPRx9Vp2l1wQyT3Z1goJkRzddP10tMIUtKdUQOupTJq88Vv3ilBtj58Je-82PWRZmJQ4qCJSG_ZZjD9OeKOlQs3cNCGU05AqYwRA';
+    $data = [
+        'registration_ids' => [
+            'Eefuf44jf4S3qTwMckNvyAZg:APA91bFj2rYcxTZrmpqD5f8uWA_DeWbtA91745hPUuMCr1PYcrDh7tPsRRc_7S2Pdm7I5AwPxgP9sezPvMGqJdY22D_mBrKJfjasjt8Pj3-s-JY1QgNradczuxBs3fFxoxqPqmGBHAIg',
+            'cPynblXTRFyQomtcVYVQQ3:APA91bHx47B5GU1TFbMVYca7XBbI3xTaz8qY8JGANOpPedOvBdzsjGPrSa5NA5ZCTmbfHKN-hk9POJ8oD95Uo2NQgdo2rxh9vt91TNcP1NWvki8NPplpznDlKmgeulQXB_TpHj0l1EBa',
+            'eGtOdN4xR7iJUlWQ8Oyds8:APA91bF6tFM8ABSWDk4wFga5SMJgF4QMsxsGB207B_U0W0mBE8ntdkiY6mZ_OmP0af7iE1gHxdLRXr91kpFWOBxHlo0ws8fEz_q2jVd28JFo9MS_7BwMyiOtyCj1Zxcibb5gpUVzm1wz',
+            'dar-J-bCTWiKxnhOUP86Hm:APA91bE5omdjdppjPFR0Q8TYn-EYOmE292kDs6knhicAVm5RXzaJyPWoIV-SwbLfPyf8vk89FmRTnX_wNn554Jx_eOCjHk_DbluCFvO-dwCbeHuwooTjqV81soIpoGOUXAZYV2avDUh0',
+        ],
+        'notification' => [
+            'image' => 'image',
+            'body' => 'sent to multiple users send device test',
+            'place' => '$request->event_place',
+        ]
 
-//     ];
-//     $dataString = json_encode($data);
+    ];
+    $dataString = json_encode($data);
 
-//     $headers = [
-//         'Authorization: key=' . $server_key,
-//         'Content-Type: application/json',
-//     ];
-//     $url = 'https://fcm.googleapis.com/fcm/send';
-//     $ch = curl_init();
-//     curl_setopt($ch, CURLOPT_URL, $url);
-//     curl_setopt($ch, CURLOPT_POST, true);
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+    $headers = [
+        'Authorization: key=' . $server_key,
+        'Content-Type: application/json',
+    ];
+    $url = 'https://fcm.googleapis.com/fcm/send';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
-//     curl_exec($ch);
-//     echo "sent";
-// });
+    curl_exec($ch);
+    echo "sent";
+});

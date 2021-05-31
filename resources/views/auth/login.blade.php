@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Admin-login
+UifaAdmin
 @endsection
 @section('content')
 <section class="login bg-primary common-img-bg">

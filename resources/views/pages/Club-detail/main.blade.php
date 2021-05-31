@@ -12,8 +12,9 @@ Club Detail
                     <div class="mb-2">
                         <h2 class="text-muted float-left">Club Detail</h2>
 
-                        <a href="/add-club-detail?id={{  Request('id') }}" class="btn btn-success ml-2 float-right">Add
-                            Detail</a>
+                        {{-- <a href="/add-club-detail?id={{  Request('id') }}" class="btn btn-success ml-2
+                        float-right">Add --}}
+                        {{-- Detail</a> --}}
                     </div>
                     <br>
                     <br>
@@ -24,7 +25,7 @@ Club Detail
                     </div>
                     @endif
                     <div class=" table-responsive">
-                        <table class="table table-striped table-bordered" id="dataTable">
+                        <table class="table table-striped table-bordered nowrap" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -32,7 +33,9 @@ Club Detail
                                     <th>Sponsor</th>
                                     <th>Image</th>
                                     <th>Name</th>
-                                    <th>Action</th>
+                                    <th>Description</th>
+                                    <th>Location</th>
+                                    <th>Table Characteristic</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,11 +46,14 @@ Club Detail
                                         {{ $club->clubs->name }}
                                     </td>
                                     <td>
+                                        @if($club->sponsor_images)
+
                                         @foreach(json_decode($club->sponsor_images) as $sponsor)
                                         <div style="width: 100px; height:100px; float:left;">
                                             <img src="{{ $sponsor }}" class="card-img">
                                         </div>
                                         @endforeach
+                                        @endif
                                     </td>
                                     <td>
                                         <div style="width: 100px; height:100px; float:left;">
@@ -58,15 +64,36 @@ Club Detail
                                         {{ $club->name }}
                                     </td>
                                     <td>
-                                        {{-- <a href="/edit-club?id={{ $club->id }}" class="btn btn-primary">Edit
-                                        </a>
-                                        --}}
-                                        <a href="/remove-club-detail?id={{$club->id}}" class="btn btn-danger">
-                                            Remove</a>
+                                        {{ $club->description }}
                                     </td>
+                                    <td>
+                                        {{ $club->location }}
+                                    </td>
+                                    <td>
+                                        {{ $club->table_chara }}
+                                    </td>
+                                    {{-- <td><a href="/edit-club?id={{ $club->id }}" class="btn btn-primary">Edit
+                                    </a>
+                                    --}}
+                                    {{-- <a href="/remove-club-detail?id={{$club->id}}" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure to delete this?')">
+                                    Remove</a>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Club</th>
+                                    <th>Sponsor</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Location</th>
+                                    <th>Table Characteristic</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

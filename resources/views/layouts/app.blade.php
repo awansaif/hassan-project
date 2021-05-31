@@ -274,7 +274,7 @@
 
                                 <div class="pcoded-navigatio-lavel">Sponsors & Players</div>
                                 <li>
-                                    <a href="{{ url('main-club') }}">
+                                    <a href="{{ Route('mainclub.index') }}">
                                         <span>
                                             <i class="ti-cloud"></i>
                                         </span>
@@ -290,7 +290,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('players') }}">
+                                    <a href="{{ Route('player.index') }}">
                                         <span>
                                             <i class="ti-game"></i>
                                         </span>

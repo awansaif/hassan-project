@@ -670,6 +670,8 @@ class ComposerStaticInitd73db6b06fdc1b7790e0df3c97996f06
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\EventStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/EventStoreRequest.php',
+        'App\\Http\\Requests\\EventUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/EventUpdateRequest.php',
         'App\\Mail\\MembershipMail' => __DIR__ . '/../..' . '/app/Mail/MembershipMail.php',
         'App\\Mail\\ResetPassword' => __DIR__ . '/../..' . '/app/Mail/ResetPassword.php',
         'App\\Mail\\SendLink' => __DIR__ . '/../..' . '/app/Mail/SendLink.php',

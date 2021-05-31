@@ -73,6 +73,8 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Http\\Requests\\EventStoreRequest' => $baseDir . '/app/Http/Requests/EventStoreRequest.php',
+    'App\\Http\\Requests\\EventUpdateRequest' => $baseDir . '/app/Http/Requests/EventUpdateRequest.php',
     'App\\Mail\\MembershipMail' => $baseDir . '/app/Mail/MembershipMail.php',
     'App\\Mail\\ResetPassword' => $baseDir . '/app/Mail/ResetPassword.php',
     'App\\Mail\\SendLink' => $baseDir . '/app/Mail/SendLink.php',

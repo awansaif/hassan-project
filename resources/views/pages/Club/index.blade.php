@@ -13,7 +13,7 @@ Club
                         <h2 class="text-muted float-left">Club List</h2>
                         <a href="club-create?id={{Request('id')}}" class="btn btn-success ml-2 float-right">Add
                             Club</a>
-                        <a href="{{ url('main-club') }}" class="btn btn-primary float-right">Back</a>
+                        <a href="{{ Route('mainclub.index') }}" class="btn btn-primary float-right">Back</a>
                     </div>
                     <br>
                     <br>
@@ -53,7 +53,9 @@ Club
                                     <td>
                                         <a href="/club-detail?id={{ $club->id }}" class="btn btn-success">Detail</a>
                                         <a href="/edit-club?id={{ $club->id }}" class="btn btn-primary">Edit</a>
-                                        <a href="/remove-club?id={{$club->id}}" class="btn btn-danger"> Remove</a>
+                                        <a href="/remove-club?id={{$club->id}}" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure to delete this? All relevant data aslo delete.')">
+                                            Remove</a>
                                     </td>
                                 </tr>
                                 @endforeach

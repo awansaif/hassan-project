@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Player
+Update Player
 @endsection
 
 @section('content')
@@ -12,143 +12,161 @@ Player
 
                 <!-- Page body start -->
                 <div class="page-body">
+                    <div class="mb-2">
+                        <a href="{{ Route('player.index') }}" class="btn btn-primary float-left">BACK</a>
+                        <h2 class="text-center text-secondary">Update PLAYER</h2>
+                    </div>
+                    <hr>
+                    @if(Session::has('message'))
+                    <div class="alert alert-success">
+                        {{ Session::get('message') }}
+                    </div>
+                    @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="row">
-                        <div class="col-sm-12">
-                            <!-- Basic Form Inputs card start -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <!--- <h5>Basic Form Inputs</h5>
-	                            <span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
-                                    <div class="card-header-right"><i class="icofont icofont-spinner-alt-5"></i></div>
+                        <div class="col-sm-8">
+                            <form method="post" action="{{ Route('player.update', $player->id) }}"
+                                enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
 
-                                    <div class="card-header-right">
-                                        <i class="icofont icofont-spinner-alt-5"></i>
+                                <label>Country
+                                    <span style="color:#ff0000">*</span>
+                                </label>
+                                <select name="country_name" class="form-control custom-select">
+                                    <option value="" selected disabled>Choose Country for player.....</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{ $country->id }}"
+                                        {{ $player->country->id == $country->id? 'selected': '' }}>
+                                        {{ $country->country }}</option>
+                                    @endforeach
+                                </select>
+
+                                <label>
+                                    Image
+                                    <span style="color:#ff0000">*</span>
+                                </label>
+                                <input type="file" class="form-control" id="player-img" name="player_image"
+                                    accept="image/*">
+
+                                <label>Name
+                                    <span style="color:#ff0000">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" name="player_name" placeholder="Eric"
+                                    value="{{ $player->player_name }}">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Role
+                                            <span style="color:#ff0000">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="player_role"
+                                            placeholder="Footballer" value="{{ $player->player_role }}">
                                     </div>
+                                    <div class="col-sm-6">
+                                        <label>Club
+                                            <span style="color:#ff0000">*</span>
+                                        </label>
 
-                                </div>
-                                <div class="card-block">
-                                    <!--- <h4 class="sub-title">Basic Inputs</h4> -->
-
-                                    @if(Session::has('message'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('message') }}
-                                    </div>
-                                    @endif
-                                    @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
+                                        <select name="club" id="club" class="form-control custom-select">
+                                            <option value="" selected disabled>Choose club for player....</option>
+                                            @foreach ($clubs as $club)
+                                            <optgroup label="{{ $club->club_name }}">
+                                                @foreach ($club->clubs as $club)
+                                                <option value="{{ $club->id }}"
+                                                    {{ $player->club->id == $club->id ? 'selected' : '' }}>
+                                                    {{ $club->name  }}</option>
+                                                @endforeach
+                                            </optgroup>
                                             @endforeach
-                                        </ul>
+                                        </select>
                                     </div>
-                                    @endif
-                                    <form method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="player_id" value="{{ $data->id }}" >
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Country Name<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <select name="country_name" class="form-control custom-select">
-                                                    @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->country }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Image<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="player_image">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Name<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-2">
-                                                <input type="text" class="form-control" name="player_name"
-                                                    placeholder="Eric" value="{{ $data->player_name }}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Role<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-2">
-                                                <input type="text" class="form-control" name="player_role"
-                                                    placeholder="Footballer" value="{{ $data->player_role }}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Club<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-2">
-                                                <input type="text" class="form-control" name="club_name"
-                                                    value="{{ $data->club_name }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Club Image<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="club_image">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Favorite Shot<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="player_favorite_shot"
-                                                    value="{{ $data->player_favorite_shot }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Player's Favorite Table<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="player_favorite_table"
-                                                    value="{{ $data->player_favourite_table }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Sponser Image Top<span
-                                                    style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-8">
-                                                <input type="file" class="form-control" name="sponser_image_one">
-                                            </div>
-                                            <label class="col-sm-2 col-form-label" style="margin-left:3%">Sponser Image
-                                                Bottom<span style="color:#ff0000"> *</span></label>
-                                            <div class="col-sm-8">
-                                                <input type="file" class="form-control" name="sponser_image_two">
-                                            </div>
-                                        </div>
-
-
-
-                                        <button type="submit" class="btn btn-primary float-right"
-                                            id="primary-popover-content" data-container="body" data-toggle="popover"
-                                            title="Primary color states" data-placement="bottom">Update Player</button>
-
-
-                                    </form>
-
                                 </div>
-                            </div>
 
+
+                                <label>Club Image
+                                    <span style="color:#ff0000">*</span>
+                                </label>
+
+                                <input type="file" class="form-control" name="club_image" accept="image/*">
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label>Favorite Shot
+                                            <span style="color:#ff0000">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="player_favorite_shot"
+                                            value="{{ $player->player_favorite_shot }}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Favorite Table
+                                            <span style="color:#ff0000">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="player_favorite_table"
+                                            value="{{ $player->player_favourite_table }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label>Sponser Image Top
+                                            <span style="color:#ff0000">*</span>
+                                        </label>
+                                        <input type="file" class="form-control" name="sponser_image_one"
+                                            accept="image/*">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Sponser Image Bottom
+                                            <span style="color:#ff0000"> *</span>
+                                        </label>
+                                        <input type="file" class="form-control" name="sponser_image_two"
+                                            accept="image/*">
+                                    </div>
+                                </div>
+
+
+
+                                <button class="btn btn-primary float-right">Update Player</button>
+
+
+                            </form>
+                        </div>
+                        <div class="col-sm-4">
+                            <h2 class="text-secondary text-center">Player Image</h2>
+                            <img src="{{ $player->player_picture }}" id="player-img-dis" alt="" width="100%"
+                                height="220px">
                         </div>
                     </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+@endsection
 
+@section('scripts')
+<script>
+    const playerImg = document.querySelector("#player-img")
+    const playerImgdis = document.querySelector("#player-img-dis")
+    playerImg.addEventListener('change', (e) => {
+
+        let file = e.target.files[0]
+        let url = URL.createObjectURL(file)
+
+        playerImgdis.setAttribute('src', url)
+
+    })
+</script>
 @endsection

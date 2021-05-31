@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\ClubDetail;
 use App\Models\MainClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +17,8 @@ class ClubController extends Controller
      */
     public function index(Request $req)
     {
-        //
         $clubs = Club::with('clubs')->where('club_id', $req->id)->orderBy('id', 'DESC')->get();
-        return view('pages.Club.main', compact('clubs'));
+        return view('pages.Club.index', compact('clubs'));
     }
 
     /**
@@ -39,31 +39,38 @@ class ClubController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'image' => 'required|image|mimes:png,jpg',
+        $request->validate([
+            'club_name' => 'required',
+            'club_image' => 'required|image|mimes:png,jpg',
             'country' => 'required',
+            'description' => 'required',
+            'location'  => 'required',
+            'table_chara' => 'required',
+            'sponsor.*' => 'required|image|mimes:png,jpg',
+            'image' => 'required|image|mimes:png,jpg',
+            'name'  => 'required',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            if ($request->file('image')) {
-                $images = $request->file('image');
-                $new_name = rand() . '.' . $images->getClientOriginalExtension();
-                $images->move(public_path('club-images'), $new_name);
-                $image =  env('APP_URL') . 'club-images/' . $new_name;
+        $club = Club::create([
+            'club_id'   => $request->id,
+            'name'      => $request->club_name,
+            'image'   => $this->fileUpload('images/', $request->file('club_image')),
+            'country' => $request->country,
+        ]);
 
-                $data = new Club;
-                $data->club_id = $request->id;
-                $data->name = $request->name;
-                $data->image = $image;
-                $data->country = $request->country;
-                $data->save();
-                $request->session()->flash('message', 'Club data save successfully.');
-                return redirect()->back();
-            }
-        }
+
+        // save club detail
+        ClubDetail::create([
+            'club_id'        => $club->id,
+            'sponsor_images' => $this->MultifileUpload('images/', $request->file('sponsor')),
+            'image' => $this->fileUpload('images/', $request->file('image')),
+            'name'  => $request->name,
+            'description'   => $request->description,
+            'location'      => $request->location,
+            'table_chara'   => $request->table_chara,
+        ]);
+
+        $request->session()->flash('message', 'Club and its detail saved successfully.');
+        return back();
     }
 
     /**
@@ -85,9 +92,10 @@ class ClubController extends Controller
      */
     public function edit(Request $request, Club $club)
     {
-        //
-        $data = Club::where('id', $request->id)->first();
-        return view('pages.Club.edit', compact('data'));
+        return view('pages.Club.edit', [
+            'club' => Club::where('id', $request->id)->first(),
+            'detail' => ClubDetail::where('club_id', $request->id)->first()
+        ]);
     }
 
     /**
@@ -99,36 +107,42 @@ class ClubController extends Controller
      */
     public function update(Request $request, Club $club)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg',
+        $request->validate([
+            'club_name' => 'required',
+            'club_image' => 'nullable|image|mimes:png,jpg',
             'country' => 'required',
+            'description' => 'required',
+            'location'  => 'required',
+            'table_chara' => 'required',
+            'sponsor.*' => 'nullable|image|mimes:png,jpg',
+            'image' => 'nullable|image|mimes:png,jpg',
+            'name'  => 'required',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            if ($request->file('image')) {
-                $images = $request->file('image');
-                $new_name = rand() . '.' . $images->getClientOriginalExtension();
-                $images->move(public_path('club-images'), $new_name);
-                $image =  env('APP_URL') . 'club-images/' . $new_name;
-                $update = Club::where('id', $request->club_id)->update([
-                    'name' => $request->name,
-                    'image' => $image,
-                    'country' => $request->country
-                ]);
-                $request->session()->flash('message', 'Club data updated successfully.');
-                return redirect()->back();
-            } else {
-                $update = Club::where('id', $request->club_id)->update([
-                    'name' => $request->name,
-                    'country' => $request->country
-                ]);
-                $request->session()->flash('message', 'Club data updated successfully.');
-                return redirect()->back();
-            }
-        }
+
+        $club = Club::find($request->club_id);
+        $club->update([
+            'name' => $request->club_name,
+            'image' => $request->file('club_image') ? $this->fileUpload('images/', $request->file('club_image')) : $club->image,
+            'country' => $request->country
+        ]);
+
+        //update club detail
+        $detail = ClubDetail::where('club_id', $club->id)->first();
+        $sponsorImage = $detail->sponsor_images ?  $detail->sponsor_images : '';
+        $Image = $detail->image ?  $detail->image : "";
+        ClubDetail::updateOrCreate([
+            'club_id' => $club->id
+        ], [
+            'club_id'        => $club->id,
+            'sponsor_images' => $request->file('sponsor') ? $this->MultifileUpload('images/', $request->file('sponsor')) : $sponsorImage,
+            'image' => $request->file('image') ? $this->fileUpload('images/', $request->file('image')) : $Image,
+            'name'  => $request->name,
+            'description'   => $request->description,
+            'location'      => $request->location,
+            'table_chara'   => $request->table_chara,
+        ]);
+        $request->session()->flash('message', 'Club data updated successfully.');
+        return back();
     }
 
     /**
@@ -139,9 +153,24 @@ class ClubController extends Controller
      */
     public function destroy(Request $request, Club $club)
     {
-        //
-        $delete = Club::where('id', $request->id)->delete();
+        Club::where('id', $request->id)->delete();
         $request->session()->flash('message', 'Club data deleted successfully.');
-        return redirect()->back();
+        return back();
+    }
+
+    protected function fileUpload($destination, $file)
+    {
+        $file_name = date('Y-m-d') . 'T' . time() . '.' . $file->getClientOriginalExtension();
+        $file->move($destination, $file_name);
+        return env('APP_URL') . $destination . $file_name;
+    }
+    protected function MultifileUpload($destination, $files)
+    {
+        for ($i = 0; $i < count($files); $i++) {
+            $file_name = date('Y-m-d') . 'T' . time() . '.' . $files[$i]->getClientOriginalExtension();
+            $files[$i]->move($destination, $file_name);
+            $file[] =  env('APP_URL') . $destination . $file_name;
+        }
+        return json_encode($file);
     }
 }

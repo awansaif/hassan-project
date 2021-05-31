@@ -12,8 +12,8 @@ Player Career
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="mb-2">
-                        <h2 class="float-left font-weight-bold text-secondary">Add Career</h2>
-                        <a href="{{ url('players') }}" class="btn btn-success float-right">Back</a>
+                        <h2 class="float-left font-weight-bold text-secondary">ADD CAREER</h2>
+                        <a href="{{ Route('player.index') }}" class="btn btn-success float-right">Back</a>
                     </div>
                     <br>
                     <br>
@@ -32,7 +32,8 @@ Player Career
                         </ul>
                     </div>
                     @endif
-                    <form id="event-form" method="post" enctype="multipart/form-data">
+                    <form action="{{ Route('playercareer.store','player=' ) }}{{ Request::get('player') }}"
+                        method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">
@@ -40,6 +41,7 @@ Player Career
                             </label>
                             <div class="col-sm-10">
                                 <select class="form-control custom-select" name="player">
+                                    <option value="" selected disabled>Choose your player ....</option>
                                     @foreach($players as $player)
                                     <option {{ Request::get('player') == $player->id ? 'selected' : ''  }}
                                         value="{{ $player->id }}">{{ $player->player_name }}</option>
@@ -229,9 +231,7 @@ Player Career
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary float-right" id="primary-popover-content"
-                            data-container="body" data-toggle="popover" title="Primary color states"
-                            data-placement="bottom">Add Player Career</button>
+                        <button type="submit" class="btn btn-primary float-right">Add Career</button>
                     </form>
 
                 </div>

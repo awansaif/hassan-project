@@ -10,9 +10,9 @@ Career
                 <!-- Page body start -->
                 <div class="page-body">
                     <div class="mb-4">
-                        <h2 class="font-weight-bold text-secondary float-left">Player Career</h2>
-                        <a href="/add-player-career?player={{ Request::get('id') }}"
-                            class="btn btn-success float-right">Add Player
+                        <h2 class="text-secondary float-left">PLAYER CAREER</h2>
+                        <a href="{{ Route('playercareer.create','player=' ) }}{{ $player }}"
+                            class="btn btn-success float-right">Add
                             Career</a>
                     </div>
                     <br>
@@ -28,7 +28,7 @@ Career
                         <table class="table table-striped table-bordered" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th><i class="ti-view-list"></i></th>
                                     <th>Player Name</th>
                                     <th>Nation Icon</th>
                                     <th>Tournament Year</th>
@@ -39,34 +39,46 @@ Career
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($playerCareers->career as $key => $playerCareer)
+                                @foreach ($careers as $key => $career)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $player->player_name }}</td>
+                                    <td class="text-center">{{ $key + 1 }}</td>
+                                    <td>{{ $career->player->player_name }}</td>
                                     <td>
                                         <div style="width: 100px; height:100px;">
-                                            <img src="{{ $playerCareer->nation_icon }}" alt=" " width="100%"
-                                                height="auto">
+                                            <img src="{{ $career->nation_icon }}" alt=" " width="100%" height="auto">
                                         </div>
                                     </td>
-                                    <td>{{ $playerCareer->tounament_year }}</td>
-                                    <td>{{ $playerCareer->tournament_name }}</td>
-                                    <td>{{ $playerCareer->sport_movement }}</td>
-                                    <td>{{ $playerCareer->player_position }}</td>
+                                    <td>{{ $career->tounament_year }}</td>
+                                    <td>{{ $career->tournament_name }}</td>
+                                    <td>{{ $career->sport_movement }}</td>
+                                    <td>{{ $career->player_position }}</td>
                                     <td>
-                                        <a href="/edit-career?id={{ $playerCareer->id }}"
+                                        <a href="{{ Route('playercareer.edit', $career->id) }}"
                                             class="btn btn-primary">Edit</a>
 
                                         <form style="display: inline-block"
-                                            action="/remove-career?id={{ $playerCareer->id }}" method="POST">
+                                            action="{{ Route('playercareer.destroy',$career->id ) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn-danger btn">Remove</button>
+                                            <button class="btn-danger btn"
+                                                onclick="return confirm('Are you sure to delete this?') ">Remove</button>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><i class="ti-view-list"></i></th>
+                                    <th>Player Name</th>
+                                    <th>Nation Icon</th>
+                                    <th>Tournament Year</th>
+                                    <th>Tournament Name </th>
+                                    <th>Sport Movement</th>
+                                    <th>Player Position</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
