@@ -17,7 +17,7 @@ class ClubClassificationController extends Controller
      */
     public function index()
     {
-        return view('pages.club.classification.index', [
+        return view('pages.Club.classification.index', [
             'classification' => ClubClassification::with(['club' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('club_id', 'DESC')->get()
@@ -71,7 +71,7 @@ class ClubClassificationController extends Controller
      */
     public function edit(ClubClassification $clubClassification)
     {
-        return view('pages.club.classification.edit', [
+        return view('pages.Club.classification.edit', [
             'clubs' => MainClub::with('clubs')->orderBy('club_name', 'ASC')->get(),
             'classification' => $clubClassification
         ]);
