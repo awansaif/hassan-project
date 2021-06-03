@@ -31,7 +31,7 @@ class ClubClassificationController extends Controller
      */
     public function create()
     {
-        return view('pages.club.classification.create', [
+        return view('pages.Club.classification.create', [
             'clubs' => MainClub::with('clubs')->orderBy('club_name', 'ASC')->get()
         ]);
     }
@@ -58,7 +58,7 @@ class ClubClassificationController extends Controller
      */
     public function show($id)
     {
-        return view('pages.club.classification.show', [
+        return view('pages.Club.classification.show', [
             'classification' => ClubClassification::where('club_id', $id)->get()
         ]);
     }
