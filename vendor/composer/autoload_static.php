@@ -686,6 +686,7 @@ class ComposerStaticInitd73db6b06fdc1b7790e0df3c97996f06
         'App\\Models\\Cassifiche' => __DIR__ . '/../..' . '/app/Models/Cassifiche.php',
         'App\\Models\\CassificheDetail' => __DIR__ . '/../..' . '/app/Models/CassificheDetail.php',
         'App\\Models\\Club' => __DIR__ . '/../..' . '/app/Models/Club.php',
+        'App\\Models\\ClubClassification' => __DIR__ . '/../..' . '/app/Models/ClubClassification.php',
         'App\\Models\\ClubDetail' => __DIR__ . '/../..' . '/app/Models/ClubDetail.php',
         'App\\Models\\Collection' => __DIR__ . '/../..' . '/app/Models/Collection.php',
         'App\\Models\\CollectionDetail' => __DIR__ . '/../..' . '/app/Models/CollectionDetail.php',

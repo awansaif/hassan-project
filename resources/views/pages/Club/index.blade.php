@@ -32,6 +32,7 @@ Club
                                     <th>Name</th>
                                     <th>image</th>
                                     <th>Country</th>
+                                    <th>Classification</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -50,6 +51,10 @@ Club
 
                                     </td>
                                     <td>{{ $club->country }}</td>
+                                    <td>
+                                        <a href="{{ Route('club-classification.show', $club->id) }}"
+                                            class="btn btn-secondary">Classification</a>
+                                    </td>
                                     <td>
                                         <a href="/club-detail?id={{ $club->id }}" class="btn btn-success">Detail</a>
                                         <a href="/edit-club?id={{ $club->id }}" class="btn btn-primary">Edit</a>

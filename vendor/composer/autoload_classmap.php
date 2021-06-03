@@ -89,6 +89,7 @@ return array(
     'App\\Models\\Cassifiche' => $baseDir . '/app/Models/Cassifiche.php',
     'App\\Models\\CassificheDetail' => $baseDir . '/app/Models/CassificheDetail.php',
     'App\\Models\\Club' => $baseDir . '/app/Models/Club.php',
+    'App\\Models\\ClubClassification' => $baseDir . '/app/Models/ClubClassification.php',
     'App\\Models\\ClubDetail' => $baseDir . '/app/Models/ClubDetail.php',
     'App\\Models\\Collection' => $baseDir . '/app/Models/Collection.php',
     'App\\Models\\CollectionDetail' => $baseDir . '/app/Models/CollectionDetail.php',

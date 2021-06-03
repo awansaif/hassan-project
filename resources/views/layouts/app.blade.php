@@ -272,13 +272,21 @@
                                 </li>
 
 
-                                <div class="pcoded-navigatio-lavel">Sponsors & Players</div>
+                                <div class="pcoded-navigatio-lavel">Clubs & Players</div>
                                 <li>
                                     <a href="{{ Route('mainclub.index') }}">
                                         <span>
                                             <i class="ti-cloud"></i>
                                         </span>
                                         Clubs
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ Route('club-classification.index') }}">
+                                        <span>
+                                            <i class="ti-cloud"></i>
+                                        </span>
+                                        Club Classification
                                     </a>
                                 </li>
                                 <li>

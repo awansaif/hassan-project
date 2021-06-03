@@ -25,6 +25,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FederationEventController;
 use App\Http\Controllers\CassificheDetailController;
+use App\Http\Controllers\ClubClassificationController;
 use App\Http\Controllers\CollectionDetailController;
 use App\Http\Controllers\FederaationSponsorController;
 use App\Http\Controllers\FederationMovementController;
@@ -134,6 +135,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/edit-club-detail', [ClubDetailController::class, 'edit']);
     Route::post('/edit-club-detail', [ClubDetailController::class, 'update']);
     Route::get('/remove-club-detail', [ClubDetailController::class, 'destroy']);
+
+    Route::resource('club-classification', ClubClassificationController::class);
 
     Route::resource('federationmovement', FederationMovementController::class);
 

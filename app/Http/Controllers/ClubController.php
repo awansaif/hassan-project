@@ -17,8 +17,9 @@ class ClubController extends Controller
      */
     public function index(Request $req)
     {
-        $clubs = Club::with('clubs')->where('club_id', $req->id)->orderBy('id', 'DESC')->get();
-        return view('pages.Club.index', compact('clubs'));
+        return view('pages.Club.index', [
+            'clubs' => Club::with('clubs')->where('club_id', $req->id)->orderBy('id', 'DESC')->get()
+        ]);
     }
 
     /**
