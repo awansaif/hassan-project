@@ -28,6 +28,12 @@ class ClubClassification extends Model
         'trofee'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     public function club()
     {
         return $this->belongsTo(Club::class, 'club_id');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ClubApiControlller;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProductOrderController;
 use App\Http\Controllers\Api\EventOrderController;
@@ -45,9 +46,9 @@ Route::get('collection', [App\Http\Controllers\Api\ApiController::class, 'collec
 Route::get('collection/{id}', [App\Http\Controllers\Api\ApiController::class, 'collectionDetail']);
 Route::get('sponsors', [ApiController::class, 'sponsors']);
 Route::get('/federations', [ApiController::class, 'federations']);
-Route::get('/main-clubs', [ApiController::class, 'main_clubs']);
-Route::get('/clubs/{id}', [ApiController::class, 'clubs']);
-Route::get('/club-detail/{id}', [ApiController::class, 'club_detail']);
+Route::get('/main-clubs', [ClubApiControlller::class, 'main_clubs']);
+Route::get('/clubs/{id}', [ClubApiControlller::class, 'clubs']);
+Route::get('/club-detail/{id}', [ClubApiControlller::class, 'club_detail']);
 Route::get('/federation-movements', [ApiController::class, 'federation_movements']);
 Route::get('/federation-event/{id}', [ApiController::class, 'federation_events']);
 Route::get('/federation-news/{id}', [ApiController::class, 'federation_news']);
@@ -96,3 +97,8 @@ Route::post('membership', [MembershipApiController::class, 'member']);
 
 // home page api
 Route::get('/home', [HomeApiController::class, 'home']);
+
+
+// club classification api
+
+Route::get('club_classification', [ClubApiControlller::class, 'club_classification']);

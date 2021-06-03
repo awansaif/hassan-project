@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Http\Controllers\Controller;
-use App\Mail\ResetPassword;
-use App\Mail\WelcomeMail;
 use App\Models\AlbodroCategory;
 use App\Models\AlbodroItem;
 use App\Models\Cassifiche;
 use App\Models\CassificheDetail;
-use App\Models\Club;
-use App\Models\ClubDetail;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Stream;
@@ -23,7 +15,6 @@ use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Country;
 use App\Models\Player;
-use App\Models\User;
 use App\Models\Collection;
 use App\Models\CollectionDetail;
 use App\Models\FederaationSponsor;
@@ -33,15 +24,9 @@ use App\Models\FederationMovement;
 use App\Models\FederationNews;
 use App\Models\FlashNews;
 use App\Models\LatestEvent;
-use App\Models\LiveScore;
-use App\Models\MainClub;
 use App\Models\Sponsor;
 use App\Models\Team;
 use App\Models\Video;
-use Auth;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
@@ -136,27 +121,6 @@ class ApiController extends Controller
         return response()->json($federations);
     }
 
-    public function main_clubs()
-    {
-        $data = MainClub::with('clubs')->orderBy('id', 'DESC')->get();
-        return response()->json($data);
-    }
-    public function clubs(Request $request)
-    {
-        $clubs = Club::with('clubs')->where('club_id', $request->id)->orderBy('id', 'DESC')->get();
-        return response()->json($clubs);
-    }
-
-    public function club_detail(Request $request)
-    {
-
-        $clubDetail = ClubDetail::with('clubs')->where('club_id', $request->id)->first();
-        return response()->json([
-            'clubDetail' => $clubDetail,
-            'fedeations' => FederationMovement::where('club_id', $request->id)->get(),
-            'players'    => Player::where('club_id', $request->id)->get()
-        ]);
-    }
 
     public function federation_movements()
     {
